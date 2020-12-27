@@ -1,10 +1,13 @@
 ---
-
 - hosts: my_env
-
+  vars:
+    conf_dir: "{{ playbook_dir | dirname }}"
   tasks:
-
-  - name: Pull changes from autoconf Github repo
-    git:
-      repo: 'https://github.com/reksar/vim.git'
-      dest: "{{base_conf_dir}}/vim"
+  - name: Link .bashrc
+    shell: "ln -sf {{ conf_dir }}/linux/.bashrc ~"
+  - name: Link .dircolors
+    shell: "ln -sf {{ conf_dir }}/linux/.dircolors ~"
+  - name: Link .vimrc
+    shell: "ln -sf {{ conf_dir }}/vim/.vimrc ~"
+  - name: Link .vim
+    shell: "ln -sf {{ conf_dir }}/vim/.vim ~"

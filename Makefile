@@ -2,4 +2,4 @@
 
 .PHONY: deploy
 deploy:
-	ansible-playbook -i ansible/hosts -vv ansible/my_env_deploy.yml
+	ansible-playbook -vvv -i ansible/hosts ansible/my_env_deploy.yml
