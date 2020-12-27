@@ -1,0 +1,10 @@
+---
+
+- hosts: my_env
+
+  tasks:
+
+  - name: Pull changes from autoconf Github repo
+    git:
+      repo: 'https://github.com/reksar/vim.git'
+      dest: "{{base_conf_dir}}/vim"
