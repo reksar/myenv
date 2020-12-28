@@ -40,28 +40,60 @@ case "$TERM" in
     xterm-color|*-256color) color_prompt=yes;;
 esac
 
-# uncomment for a colored prompt, if the terminal has the capability; turned
-# off by default to not distract the user: the focus in a terminal window
-# should be on the output of commands, not on the prompt
-#force_color_prompt=yes
+#######################################
+# Bash promt customization.
+# Globals:
+# 	PS1
+#######################################
+set_bash_prompt() {
 
-if [ -n "$force_color_prompt" ]; then
-    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-	# We have color support; assume it's compliant with Ecma-48
-	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-	# a case would tend to support setf rather than setaf.)
-	color_prompt=yes
-    else
-	color_prompt=
-    fi
-fi
+  # Must come first!
+  local last_status_code=$?
+
+  # Colors
+  local RED='\[\e[1;31m\]'
+  local YELLOW='\[\e[1;33m\]'
+  local WHITE='\[\e[1;37m\]'
+  local RESET_COLOR='\[\e[0m\]'
+
+  local exit_status_icon="$exit_status_color$exit_status_char"
+
+  if [[ $EUID == 0 ]]; then
+    # super user
+	local host_color=$RED
+    local host_name="\\h"
+	local promt_marker='#'
+  else
+	local host_color=$WHITE
+    local host_name="\\u@\\h"
+	local promt_marker='$'
+  fi
+
+  local host="$host_color$host_name"
+
+  if [[ $last_status_code == 0 ]]; then
+    local status_color=$WHITE
+	local status_text=""
+  else
+    local status_color=$RED
+	local status_text="ERR $last_status_code "
+  fi
+
+  local last_status="$status_color$status_text"
+
+  local working_dir="$YELLOW\\w"
+
+  PS1="$host $working_dir\n"
+  PS1+="$last_status$promt_marker "
+  PS1+="$RESET_COLOR"
+}
 
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+	PROMPT_COMMAND='set_bash_prompt'
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
-unset color_prompt force_color_prompt
+unset color_prompt
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
