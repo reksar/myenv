@@ -45,6 +45,11 @@ esac
 # Globals:
 # 	PS1
 #######################################
+
+parse_git_branch() {
+     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+}
+
 set_bash_prompt() {
 
   # Must come first!
@@ -52,6 +57,7 @@ set_bash_prompt() {
 
   # Colors
   local RED='\[\e[1;31m\]'
+  local GREEN='\[\e[1;32m\]'
   local YELLOW='\[\e[1;33m\]'
   local WHITE='\[\e[1;37m\]'
   local RESET_COLOR='\[\e[0m\]'
@@ -69,8 +75,6 @@ set_bash_prompt() {
 	local promt_marker='$'
   fi
 
-  local host="$host_color$host_name"
-
   if [[ $last_status_code == 0 ]]; then
     local status_color=$WHITE
 	local status_text=""
@@ -80,10 +84,10 @@ set_bash_prompt() {
   fi
 
   local last_status="$status_color$status_text"
-
   local working_dir="$YELLOW\\w"
+  local git_branch="$GREEN$(parse_git_branch)"
 
-  PS1="$host $working_dir\n"
+  PS1="$working_dir $git_branch\n"
   PS1+="$last_status$promt_marker "
   PS1+="$RESET_COLOR"
 }
