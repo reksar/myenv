@@ -35,16 +35,16 @@ if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
+#-----------------------------------------------------------------------------
+# Bash promt customization.
+# Globals:
+# 	PS1
+#-----------------------------------------------------------------------------
+
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
     xterm-color|*-256color) color_prompt=yes;;
 esac
-
-#######################################
-# Bash promt customization.
-# Globals:
-# 	PS1
-#######################################
 
 parse_git_branch() {
      git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
@@ -87,7 +87,13 @@ set_bash_prompt() {
   local working_dir="$YELLOW\\w"
   local git_branch="$GREEN$(parse_git_branch)"
 
-  PS1="$working_dir $git_branch\n"
+  if test -z "$VIRTUAL_ENV" ; then
+	  local python_venv=""
+  else
+      local python_venv="${YELLOW}[`basename \"$VIRTUAL_ENV\"`]"
+  fi
+
+  PS1="$working_dir $git_branch $python_venv\n"
   PS1+="$last_status$promt_marker "
   PS1+="$RESET_COLOR"
 }
@@ -97,7 +103,9 @@ if [ "$color_prompt" = yes ]; then
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
+
 unset color_prompt
+#-----------------------------------------------------------------------------
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
