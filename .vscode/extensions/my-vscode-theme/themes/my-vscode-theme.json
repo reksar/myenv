@@ -49,7 +49,7 @@
     {
       "scope": "constant.rgb-value",
       "settings": {
-        "foreground": "#baae8f"
+        "foreground": "#d35d41"
       }
     },
     {
@@ -70,7 +70,7 @@
         "punctuation.tag"
       ],
       "settings": {
-        "foreground": "#d35d41"
+        "foreground": "#baae8f"
       }
     },
     {
@@ -132,21 +132,25 @@
       }
     },
     {
-      "scope": "string",
+      "scope": [
+		  "string",
+	  	  "punctuation.definition.string.begin",
+	  	  "punctuation.definition.string.end"
+	  ],
       "settings": {
-        "foreground": "#ebdbb2"
+        "foreground": "#af875f"
       }
     },
     {
       "scope": "string.tag",
       "settings": {
-        "foreground": "#ebdbb2"
+        "foreground": "#d35d41"
       }
     },
     {
       "scope": "string.value",
       "settings": {
-        "foreground": "#ebdbb2"
+        "foreground": "#d35d41"
       }
     },
     {
@@ -164,13 +168,13 @@
     {
       "scope": "string.quasi",
       "settings": {
-        "foreground": "#d35d41"
+        "foreground": "#777777"
       }
     },
     {
       "scope": "string.entity",
       "settings": {
-        "foreground": "#9e9e39"
+        "foreground": "#777777"
       }
     },
     {
@@ -220,7 +224,7 @@
     {
       "scope": "keyword.operator",
       "settings": {
-        "foreground": "#d35d41"
+        "foreground": "#baae8f"
       }
     },
     {
@@ -259,7 +263,7 @@
         "support.type"
       ],
       "settings": {
-        "foreground": "#af875f",
+        "foreground": "#d08f48",
 		"fontStyle": "italic"
       }
     },
@@ -330,9 +334,10 @@
       }
     },
     {
+      "name": "Function builtin",
       "scope": "support.function.builtin",
       "settings": {
-        "foreground": "#af875f",
+        "foreground": "#9e9e39",
 		"fontStyle": "italic"
       }
     },
@@ -390,7 +395,7 @@
     {
       "scope": "punctuation.quoted",
       "settings": {
-        "foreground": "#baae8f"
+        "foreground": "#777777"
       }
     },
     {
@@ -410,23 +415,23 @@
         "fontStyle": "underline"
       }
     },
-    // ----------------------------------------
-    //            LANGUAGE SPECIFIC
-    // ----------------------------------------
-    // PYTHON ----------------------------------------
+    // ------------------------------------------------------------------------
+    // LANGUAGE SPECIFIC
+    // ------------------------------------------------------------------------
+    // PYTHON -----------------------------------------------------------------
     {
-      "name": "Python function",
+      "name": "Python function declaration",
       "scope": [
-        "meta.function.python",
-        "entity.name.function.python"
+        "source.python meta.function.python",
+        "source.python entity.name.function.python"
       ],
       "settings": {
         "foreground": "#9e9e39"
       }
     },
     {
-      "name": "Python Function Call",
-      "scope": "meta.function-call.generic",
+      "name": "Python function call",
+      "scope": "source.python meta.function-call.generic",
       "settings": {
         "foreground": "#9e9e39"
       }
@@ -434,9 +439,9 @@
     {
       "name": "Python Function and Class definition keywords",
       "scope": [
-        "storage.type.function.python",
-        "storage.modifier.declaration",
-        "storage.type.class.python"
+        "source.python storage.type.function.python",
+        "source.python storage.modifier.declaration",
+        "source.python storage.type.class.python"
       ],
       "settings": {
         "foreground": "#baae8f",
@@ -444,17 +449,19 @@
       }
     },
     {
-      "name": "Python Function Arguments",
-      "scope": "meta.function-call.arguments",
+      "name": "Python function arguments",
+      "scope": [
+		  "source.python meta.function-call.arguments"
+	  ],
       "settings": {
-        "foreground": "#af875f"
+        "foreground": "#d08f48"
       }
     },
     {
-      "name": "Python Function decorator",
+      "name": "Python function decorator",
       "scope": [
-		  "entity.name.function.decorator",
-		  "support.type.python"
+		  "source.python entity.name.function.decorator",
+		  "source.python support.type.python"
 	  ],
       "settings": {
         "foreground": "#9e9e39",
@@ -462,27 +469,41 @@
       }
     },
     {
-      "name": "Python ALL CAPS",
-      "scope": "constant.other.caps",
+      "name": "Python all CAPS",
+      "scope": "source.python constant.other.caps",
       "settings": {
-		"foreground": "#af875f",
+		"foreground": "#baae8f",
         "fontStyle": "normal"
       }
     },
     {
-      "name": "Python Docstring",
-      "scope": "string.quoted.docstring.multi.python",
+      "name": "Python docstring",
+      "scope": [
+		  "source.python string.quoted.docstring.multi.python",
+		  "source.python string.quoted.double.block.python",
+		  "source.python punctuation.definition.string.begin.python",
+		  "source.python punctuation.definition.string.end.python"
+	  ],
       "settings": {
         "foregroung": "#777777"
       }
     },
     {
-      "name": "Python self",
+      "name": "Python string",
       "scope": [
-		"variable.language.special.self.python",
-		"variable.parameter.function.language.special.self.python",
-		"variable.language.special.cls.python",
-		"variable.parameter.function.language.special.cls.python"
+		  "source.python string.quoted.single.single-line.python"
+	  ],
+      "settings": {
+        "foregroung": "#d35d41"
+      }
+    },
+    {
+      "name": "Python self, cls",
+      "scope": [
+		"source.python variable.language.special.self.python",
+		"source.python variable.parameter.function.language.special.self.python",
+		"source.python variable.language.special.cls.python",
+		"source.python variable.parameter.function.language.special.cls.python"
 	  ],
       "settings": {
 		"fontStyle": "bold"
@@ -490,7 +511,10 @@
     },
     {
 	  "name": "Python logical operator",
-      "scope": "keyword.operator.logical.python",
+      "scope": [
+		"source.python keyword.operator.logical.python",
+		"source.python constant.language.python"
+	  ],
       "settings": {
         "foreground": "#baae8f",
         "fontStyle": "bold"
@@ -967,7 +991,7 @@
     "selection.background": "#689d6a80",
     "errorForeground": "#d35d41",
     // BUTTON
-    "button.background": "#45858880",
+    "button.background": "#73742780",
     "button.foreground": "#baae8f",
     "button.hoverBackground": "#45858860",
     // DROPDOWN
@@ -1020,7 +1044,7 @@
     "activityBar.foreground": "#baae8f",
     "activityBar.border": "#3c3836",
     "activityBarBadge.background": "#737427",
-    "activityBarBadge.foreground": "#baae8f",
+    "activityBarBadge.foreground": "#000000",
     // EDITOR GROUPS
     "editorGroup.background": "#3c3836",
     "editorGroup.border": "#3c3836",
@@ -1136,8 +1160,8 @@
     "terminal.ansiBrightRed": "#d35d41",
     "terminal.ansiGreen": "#98971a",
     "terminal.ansiBrightGreen": "#9e9e39",
-    "terminal.ansiYellow": "#af875f",
-    "terminal.ansiBrightYellow": "#af875f",
+    "terminal.ansiYellow": "#d08f48",
+    "terminal.ansiBrightYellow": "#d08f48",
     "terminal.ansiBlue": "#458588",
     "terminal.ansiBrightBlue": "#d08f48",
     "terminal.ansiMagenta": "#b16286",
@@ -1171,7 +1195,7 @@
     "notification.errorBackground": "#d35d41",
     "notification.errorForeground": "#21201d",
     // EXTENSIONS
-    "extensionButton.prominentBackground": "#b8bb2680",
+    "extensionButton.prominentBackground": "#00000080",
     "extensionButton.prominentHoverBackground": "#b8bb2630",
     // OTHERS
     "textLink.foreground": "#d08f48",
