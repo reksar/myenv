@@ -1,0 +1,32 @@
+{
+    "workbench.startupEditor": "newUntitledFile",
+    "workbench.editorAssociations": [
+        {
+            "viewType": "jupyter.notebook.ipynb",
+            "filenamePattern": "*.ipynb"
+        }
+    ],
+    "editor.wordWrapColumn": 80,
+    "workbench.colorTheme": "My VSCode Theme",
+    "editor.rulers": [
+        80
+    ],
+    "terminal.integrated.fontSize": 18,
+    "workbench.iconTheme": "vs-seti",
+    "editor.fontSize": 18,
+    "window.zoomLevel": 0,
+    "git.ignoreMissingGitWarning": true,
+    "terminal.integrated.shell.windows": "C:\\Windows\\System32\\cmd.exe",
+
+	"[json]": {
+	  "editor.tabSize": 2
+	},
+	"[sass]": {
+	  "editor.tabSize": 2
+	},
+	"[html]": {
+	  "editor.tabSize": 2
+	},
+	"[javascript]": {
+	  "editor.tabSize": 2
+}
