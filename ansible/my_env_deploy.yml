@@ -1,8 +1,13 @@
 ---
+
 - hosts: my_env
+
   vars:
     conf_dir: "{{ playbook_dir | dirname }}"
+    user: "{{ lookup('env', 'USER') }}"
+
   tasks:
+
   - name: Link .bashrc
     shell: "ln -sf {{ conf_dir }}/linux/.bashrc ~"
   - name: Link .dircolors
@@ -11,3 +16,17 @@
     shell: "ln -sf {{ conf_dir }}/vim/.vimrc ~"
   - name: Link .vim
     shell: "ln -sf {{ conf_dir }}/vim/.vim ~"
+
+  - name: Ensure docker group exists
+    group:
+      name: docker
+      state: present
+    become: true
+  - name: Ensure current user in docker group
+    user:
+      name: "{{ user }}"
+      groups:
+        docker
+      append: true
+    become: true
+
