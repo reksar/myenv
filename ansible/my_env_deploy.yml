@@ -12,6 +12,8 @@
     shell: "ln -sf {{ conf_dir }}/linux/.bashrc ~"
   - name: Link .dircolors
     shell: "ln -sf {{ conf_dir }}/linux/.dircolors ~"
+  - name: Link .tmux.conf
+    shell: "ln -sf {{ conf_dir }}/linux/.tmux.conf ~"
   - name: Link .vimrc
     shell: "ln -sf {{ conf_dir }}/vim/.vimrc ~"
   - name: Link .vim
