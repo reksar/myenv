@@ -38,13 +38,13 @@ fi
 
 #--- Bash promt customization. ------------------------------------------------
 
-# set a fancy prompt (non-color, unless we know we "want" color)
+# set a fancy prompt
 case "$TERM" in
   xterm-color|*-256color) is_color_promt=yes;;
 esac
 
 parse_git_branch() {
-  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1) /'
 }
 
 set_bash_prompt() {
@@ -81,17 +81,16 @@ set_bash_prompt() {
   fi
 
   local last_status="$status_color$status_text"
-  local working_dir="$YELLOW\\w"
+  local working_dir="$YELLOW\\w "
   local git_branch="$GREEN$(parse_git_branch)"
 
   if test -z "$VIRTUAL_ENV" ; then
 	  local python_venv=""
   else
-		local python_venv="${YELLOW}[`basename \"$VIRTUAL_ENV\"`]"
+		local python_venv="${YELLOW}[`basename \"$VIRTUAL_ENV\"`] "
   fi
 
-  PS1="$working_dir $git_branch $python_venv\n"
-  PS1+="$last_status$promt_marker "
+  PS1="\n$working_dir$git_branch$python_venv$last_status$promt_marker "
   PS1+="$RESET_COLOR"
 }
 
