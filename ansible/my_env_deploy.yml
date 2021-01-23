@@ -32,3 +32,28 @@
       append: true
     become: true
 
+  - name: Ensure QTerminal colors dir exists
+    stat:
+      path: /usr/share/qtermwidget5/color-schemes/
+    register: qtermcolors
+  - name: Copy my QTerminal colorscheme
+    copy:
+      src: "{{ conf_dir }}/linux/lxqt/QTerminal.colorscheme"
+      dest: "{{ qtermcolors.stat.path }}"
+    when: qtermcolors.stat.exists
+    become: true
+  - name: Set 256-colored terminal
+    ini_file:
+      path: ~/.config/qterminal.org/qterminal.ini
+      section: General
+      option: Term
+      value: xterm-256color
+    when: qtermcolors.stat.exists
+  - name: Set my colorscheme in QTerminal settings
+    ini_file:
+      path: ~/.config/qterminal.org/qterminal.ini
+      section: General
+      option: colorScheme
+      value: QTerminal
+    when: qtermcolors.stat.exists
+
