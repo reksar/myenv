@@ -2,7 +2,7 @@
 
 .PHONY: deploy
 deploy:
-	ansible-playbook -vvv --ask-become-pass \
+	ansible-playbook --ask-become-pass \
 		-i ansible/hosts ansible/my_env_deploy.yml
 
 .PHONY: clean
