@@ -1155,7 +1155,7 @@
     "statusBar.prominentHoverBackground": "#689d6a70",
     // INTEGRATED TERMINAL
     "terminal.ansiBlack": "#21201d",
-    "terminal.ansiBrightBlack": "#000000",
+    "terminal.ansiBrightBlack": "#fe8019",
     "terminal.ansiRed": "#d35d41",
     "terminal.ansiBrightRed": "#d35d41",
     "terminal.ansiGreen": "#98971a",
