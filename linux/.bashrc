@@ -4,8 +4,8 @@
 
 # If not running interactively, don't do anything
 case $- in
-    *i*) ;;
-      *) return;;
+	*i*) ;;
+	*) return;;
 esac
 
 # don't put duplicate lines or lines starting with space in the history.
@@ -35,19 +35,16 @@ if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
-#-----------------------------------------------------------------------------
-# Bash promt customization.
-# Globals:
-# 	PS1
-#-----------------------------------------------------------------------------
 
-# set a fancy prompt (non-color, unless we know we "want" color)
+#--- Bash promt customization. ------------------------------------------------
+
+# set a fancy prompt
 case "$TERM" in
-    xterm-color|*-256color) color_prompt=yes;;
+  xterm-color|*-256color) is_color_promt=yes;;
 esac
 
 parse_git_branch() {
-     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1) /'
 }
 
 set_bash_prompt() {
@@ -65,76 +62,78 @@ set_bash_prompt() {
   local exit_status_icon="$exit_status_color$exit_status_char"
 
   if [[ $EUID == 0 ]]; then
-    # super user
-	local host_color=$RED
+		# super user
+		local host_color=$RED
     local host_name="\\h"
-	local promt_marker='#'
+		local promt_marker='#'
   else
-	local host_color=$WHITE
+		local host_color=$WHITE
     local host_name="\\u@\\h"
-	local promt_marker='$'
+		local promt_marker='$'
   fi
 
   if [[ $last_status_code == 0 ]]; then
     local status_color=$WHITE
-	local status_text=""
+		local status_text=""
   else
     local status_color=$RED
-	local status_text="ERR $last_status_code "
+		local status_text="ERR $last_status_code "
   fi
 
   local last_status="$status_color$status_text"
-  local working_dir="$YELLOW\\w"
+  local working_dir="$YELLOW\\w "
   local git_branch="$GREEN$(parse_git_branch)"
 
   if test -z "$VIRTUAL_ENV" ; then
 	  local python_venv=""
   else
-      local python_venv="${YELLOW}[`basename \"$VIRTUAL_ENV\"`]"
+		local python_venv="${YELLOW}[`basename \"$VIRTUAL_ENV\"`] "
   fi
 
-  PS1="$working_dir $git_branch $python_venv\n"
-  PS1+="$last_status$promt_marker "
+  PS1="\n$working_dir$git_branch$python_venv$last_status$promt_marker "
   PS1+="$RESET_COLOR"
 }
 
-if [ "$color_prompt" = yes ]; then
-	PROMPT_COMMAND='set_bash_prompt'
+if [ "$is_color_promt" = yes ]; then
+  PROMPT_COMMAND='set_bash_prompt'
 else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+  PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
 
-unset color_prompt
-#-----------------------------------------------------------------------------
 
-# If this is an xterm set the title to user@host:dir
-case "$TERM" in
-xterm*|rxvt*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-    ;;
-*)
-    ;;
-esac
-
-# enable color support of ls and also add handy aliases
+# enable `ls` color support, add handy aliases
 if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto --group-directories-first'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
-
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
+	test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+	alias ls='ls --color=auto --group-directories-first'
+	alias dir='dir --color=auto'
+	alias vdir='vdir --color=auto'
+	alias grep='grep --color=auto'
+	alias fgrep='fgrep --color=auto'
+	alias egrep='egrep --color=auto'
 fi
+
 
 # colored GCC warnings and errors
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
+unset is_color_promt
+
 
 # some more ls aliases
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
+
+
+# If this is an xterm set the title to user@host:dir
+case "$TERM" in
+xterm*|rxvt*)
+	PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+  ;;
+*)
+	;;
+esac
+
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -144,10 +143,9 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
+#if [ -f ~/.bash_aliases ]; then
+#    . ~/.bash_aliases
+#fi
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -159,3 +157,4 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+

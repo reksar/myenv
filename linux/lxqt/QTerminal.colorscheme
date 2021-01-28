@@ -1,0 +1,70 @@
+[General]
+Description=QTerminal
+
+[Background]
+Color=33,32,29
+
+[BackgroundIntense]
+Color=104,104,104
+
+[Foreground]
+Color=235,219,178
+
+[ForegroundIntense]
+Color=249,245,215
+
+; black
+[Color0]
+Color=24,23,20
+
+[Color0Intense]
+Color=29,32,33
+
+; red
+[Color1]
+Color=211,93,65
+
+[Color1Intense]
+Color=231,76,60
+
+; green
+[Color2]
+Color=158,158,57
+
+[Color2Intense]
+Color=46,204,113
+
+; yellow
+[Color3]
+Color=208,143,68
+
+[Color3Intense]
+Color=241,196,15
+
+; blue
+[Color4]
+Color=150,167,167
+
+[Color4Intense]
+Color=52,152,219
+
+; magenta
+[Color5]
+Color=138,138,138
+
+[Color5Intense]
+Color=155,89,182
+
+; aqua
+[Color6]
+Color=122,160,133
+
+[Color6Intense]
+Color=26,188,156
+
+; grey
+[Color7]
+Color=119,119,119
+
+[Color7Intense]
+Color=238,238,236
