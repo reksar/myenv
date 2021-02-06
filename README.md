@@ -1,8 +1,8 @@
 # Autoconf
 
-Configure Linux workspace with Ansible.
+Configures Linux workspace with Ansible.
 
-## Use
+## Using
 
 ```
 git clone --recurse-submodules https://github.com/reksar/autoconf.git
@@ -14,7 +14,9 @@ make
 
 ## Requirements
 
-ansible
+- ansible
 
-make
+- make
+
+- sudo
 
