@@ -7,5 +7,6 @@ deploy:
 
 .PHONY: clean
 clean:
+	# Ansible creates *.retry files when something goes wrong.
 	find . -type f -name '*.retry' -delete
 
