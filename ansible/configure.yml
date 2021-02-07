@@ -1,6 +1,6 @@
 ---
 
-- hosts: my_env
+- hosts: my_hosts
 
   vars:
     autoconf: "{{ playbook_dir | dirname }}"
@@ -9,16 +9,19 @@
 
   tasks:
 
-  - name: Link .bashrc
-    shell: "ln -sf {{ autoconf }}/linux/.bashrc ~"
-  - name: Link .dircolors
-    shell: "ln -sf {{ autoconf }}/linux/.dircolors ~"
-  - name: Link .tmux.conf
-    shell: "ln -sf {{ autoconf }}/linux/.tmux.conf ~"
-  - name: Link .vimrc
-    shell: "ln -sf {{ autoconf }}/vim/.vimrc ~"
-  - name: Link .vim
-    shell: "ln -sf {{ autoconf }}/vim/.vim ~"
+  - name: Link configs at ~
+    loop:
+      - linux/.bashrc
+      - linux/.dircolors
+      - linux/.gitconfig
+      - linux/.tmux.conf
+      - vim/.vim
+      - vim/.vimrc
+    file:
+      src: "{{ autoconf }}/{{ item }}"
+      dest: "~/{{ item | basename }}"
+      state: link
+      force: true
 
   - name: Ensure docker group exists
     group:
@@ -40,23 +43,24 @@
           path: /usr/share/qtermwidget5/color-schemes/
         register: qtermcolors
       - name: Copy my QTerminal colorscheme
+        when: qtermcolors.stat.exists
         copy:
           src: "{{ autoconf }}/linux/lxqt/QTerminal.colorscheme"
           dest: "{{ qtermcolors.stat.path }}"
-        when: qtermcolors.stat.exists
         become: true
       - name: Configure QTerminal colors
+        when: qtermcolors.stat.exists
+        loop:
+          - {key: "Term", val: "xterm-256color"}
+          - {key: "colorScheme", val: "QTerminal"}
         ini_file:
           path: ~/.config/qterminal.org/qterminal.ini
           section: General
           option: "{{ item.key }}"
           value: "{{ item.val }}"
-        loop:
-          - {key: "Term", val: "xterm-256color"}
-          - {key: "colorScheme", val: "QTerminal"}
-        when: qtermcolors.stat.exists
 
-  - name: Configure LXQT desktop
+  - name: Configure LXQT desktop environment
+    when: desktop is match(".*/lxqt")
     vars:
       vim_desktop: in-vim.desktop
     block:
@@ -66,11 +70,6 @@
           dest: "~/.local/share/applications/{{ vim_desktop }}"
           state: link
       - name: Set default file associations for Vim
-        ini_file:
-          path: ~/.config/mimeapps.list
-          section: Default Applications
-          option: "{{ item }}"
-          value: "{{ vim_desktop }};"
         loop:
           - text/plain
           - text/markdown
@@ -82,8 +81,12 @@
           - application/javascript
           - application/json
           - application/x-yaml
+        ini_file:
+          path: ~/.config/mimeapps.list
+          section: Default Applications
+          option: "{{ item }}"
+          value: "{{ vim_desktop }};"
       - name: Update desktop database
         shell: update-desktop-database
         become: true
-    when: desktop is match(".*/lxqt")
 

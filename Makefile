@@ -1,9 +1,11 @@
-.DEFAULT_GOAL := deploy
+.DEFAULT_GOAL := configure
 
-.PHONY: deploy
-deploy:
-	ansible-playbook --ask-become-pass \
-		-i ansible/hosts ansible/my_env_deploy.yml
+.PHONY: configure
+configure:
+	ansible-playbook \
+		--ask-become-pass \
+		-i ansible/hosts \
+		ansible/configure.yml
 
 .PHONY: clean
 clean:
