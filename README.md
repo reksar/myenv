@@ -6,7 +6,7 @@ Configures Linux workspace with Ansible.
 
 - Deploys configuration from `linux` dir.  
 
-- Makes some extra configuration, described in `ansible/my_env_deploy.yml`.  
+- Makes some extra configuration, described in `ansible/configure.yml`.  
 
 When make sense to ship whole configuration file, makes a link, so you can edit it as well here as at destination place.  
 
