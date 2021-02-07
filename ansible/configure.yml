@@ -81,6 +81,7 @@
           - application/javascript
           - application/json
           - application/x-yaml
+          - application/x-shellscript
         ini_file:
           path: ~/.config/mimeapps.list
           section: Default Applications
