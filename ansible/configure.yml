@@ -80,6 +80,7 @@
             - application/json
             - application/x-yaml
             - application/x-shellscript
+            - application/x-desktop
         block:
         - name: Add Vim desktop entry
           file:
