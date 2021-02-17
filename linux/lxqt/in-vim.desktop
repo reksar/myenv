@@ -5,9 +5,8 @@ GenericName=Open in Vim
 Comment=Open in Vim
 Icon=gvim
 TryExec=vim
-Exec=qterminal -e vim
+Exec=bash -c "qterminal -w $(dirname $1) -e vim $1" -a %f
 Terminal=false
 Categories=Utility;TextEditor;
 Keywords=Text;Editor;
 MimeType=text/plain;text/x-makefile;text/x-c++hdr;text/x-c++src;text-x-c++;text/x-chrd;text/x-csrc;text/x-c;text/css;text/x-sass;text/x-scss;text/x-iptables;text/x-java;text/x-log;text/x-python;text/x-python3;text/x-readme;
-
