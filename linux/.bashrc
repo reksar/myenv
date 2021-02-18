@@ -101,7 +101,7 @@ else
 fi
 
 
-# enable `ls` color support, add handy aliases
+# enable color support, add handy aliases
 if [ -x /usr/bin/dircolors ]; then
 	test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
 	alias ls='ls --color=auto --group-directories-first'
@@ -120,7 +120,7 @@ unset is_color_promt
 
 
 # some more ls aliases
-alias ll='ls -alF'
+alias ll='ls -alF --time-style=long-iso'
 alias la='ls -A'
 alias l='ls -CF'
 
