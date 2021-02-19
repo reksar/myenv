@@ -158,3 +158,8 @@ if ! shopt -oq posix; then
   fi
 fi
 
+
+# Makes a Git repo from given subdir $1 and rewrites current repo.
+git-submodule () {
+	git filter-branch --subdirectory-filter $1 -- --all
+}
