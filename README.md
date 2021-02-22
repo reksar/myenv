@@ -1,4 +1,4 @@
-# Autoconf  
+# My conf  
 
 Configures Linux workspace with Ansible.  
 
@@ -14,9 +14,9 @@ When make sense to ship whole configuration file, makes a link, so you can edit 
 
 
 ```  
-git clone --recurse-submodules https://github.com/reksar/autoconf.git  
+git clone --recurse-submodules https://github.com/reksar/myconf.git  
 
-cd autoconf  
+cd myconf  
 
 make  
 ```
