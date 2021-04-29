@@ -22,17 +22,21 @@
     "git.ignoreMissingGitWarning": true,
     "terminal.integrated.shell.windows": "C:\\Windows\\System32\\cmd.exe",
 
-	"[json]": {
-	  "editor.tabSize": 2
-	},
-	"[sass]": {
-	  "editor.tabSize": 2
-	},
-	"[html]": {
-	  "editor.tabSize": 2
-	},
-	"[javascript]": {
+  "[json]": {
     "editor.tabSize": 2
   },
-  "editor.minimap.enabled": false
+  "[sass]": {
+    "editor.tabSize": 2
+  },
+  "[html]": {
+    "editor.tabSize": 2
+  },
+  "[javascript]": {
+    "editor.tabSize": 2
+  },
+  "[csharp]": {
+    "editor.rulers": [120]
+  },
+
+  "editor.minimap.enabled": true
 }
