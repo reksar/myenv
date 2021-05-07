@@ -10,10 +10,12 @@
             "filenamePattern": "*.ipynb"
         }
     ],
+
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
     "editor.wordWrapColumn": 80,
-    "editor.rulers": [
-        80
-    ],
+    "editor.rulers": [80],
+
     "terminal.integrated.fontSize": 18,
     "workbench.iconTheme": "vs-seti",
     "editor.fontSize": 18,
