@@ -244,11 +244,11 @@
   },
 
   {
-    "name": "access modifier like public",
     "scope": [
       "storage.modifier"
     ],
     "settings": {
+      "foreground": "#baae8f",
       "fontStyle": "bold"
     }
   },
