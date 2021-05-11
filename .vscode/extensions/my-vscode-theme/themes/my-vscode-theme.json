@@ -604,7 +604,7 @@
   // C / C++ (c cpp) ---------------------------------------------------------
 
   {
-    "name": "defined constant",
+    "name": "typedef constant",
     "scope": "meta.body.function.definition.cpp",
     "settings": {
       "foreground": "#689d6a"
@@ -615,6 +615,53 @@
     "scope": "support.function.C99",
     "settings": {
       "foreground": "#fabd2f"
+    }
+  },
+
+  // Assembler (asm) ---------------------------------------------------------
+
+  {
+    "scope": "source.asm.x86_64 entity.name.section",
+    "settings": {
+      "fontStyle": "bold"
+    }
+  },
+
+  {
+    "scope": "entity.name.function.asm",
+    "settings": {
+      "foreground": "#afaf3f"
+    }
+  },
+
+  {
+    "scope": "support.function.asm",
+    "settings": {
+      "foreground": "#e0aa2b"
+    }
+  },
+
+  {
+    "scope": "constant.language.register.general-purpose.asm",
+    "settings": {
+      "foreground": "#d08f48"
+    }
+  },
+
+  {
+    "scope": [
+      "constant.numeric.hex.asm",
+      "constant.numeric.decimal.asm"
+    ],
+    "settings": {
+      "foreground": "#d35d41"
+    }
+  },
+
+  {
+    "scope": "storage.type.asm",
+    "settings": {
+      "foreground": "#689d6a"
     }
   },
 
