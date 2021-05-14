@@ -618,6 +618,16 @@
     }
   },
 
+  {
+    "scope": [
+      "storage.type.class.cpp",
+      "storage.type.struct.cpp"
+    ],
+    "settings": {
+      "fontStyle": "bold"
+    }
+  },
+
   // Assembler (asm) ---------------------------------------------------------
 
   {
