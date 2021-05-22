@@ -686,6 +686,30 @@
     }
   },
 
+  // BATCH (bat) -------------------------------------------------------------
+
+  {
+    "scope": [
+      "punctuation.definition.variable.begin.batchfile",
+      "punctuation.definition.variable.end.batchfile"
+    ],
+    "settings": {
+      "foreground": "#d08f48",
+      "fontStyle": "none"
+    }
+  },
+
+  {
+    "scope": [
+      "meta.expression.set.batchfile",
+      "keyword.operator.arithmetic.batchfile",
+      "punctuation.definition.variable.batchfile"
+    ],
+    "settings": {
+      "foreground": "#e0aa2b"
+    }
+  },
+
   // SHELL ----------------------------------------
   {
     "scope": "source.shell keyword.operator.logical",
