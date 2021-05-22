@@ -1,0 +1,27 @@
+{        
+  "name": "My Color Themes",
+	"displayName": "My Color Themes",
+	"description": "My Color Themes",
+	"version": "1.56.2",
+  "publisher": "Me",
+	"engines": {
+		"vscode": "^1.40.1"
+	},
+	"categories": [
+		"Themes"
+	],
+  "contributes": {
+    "themes": [
+      {
+        "label": "Motley",
+        "uiTheme": "vs-dark",
+        "path": "./themes/motley.json"
+      },
+      {
+        "label": "Low Color",
+        "uiTheme": "vs-dark",
+        "path": "./themes/lowcolor.json"
+      }
+    ]
+  }
+}
