@@ -14,7 +14,8 @@
 
   {
     "scope": [
-      "comment"
+      "comment",
+      "punctuation.definition.comment"
     ],
     "settings": {
       "foreground": "#787271",
