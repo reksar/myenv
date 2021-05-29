@@ -14,7 +14,10 @@
 
   {
     "scope": [
-      "emphasis"
+      "emphasis",
+      "storage.type.asm",
+      "storage.modifier.specifier",
+      "storage.type.built-in.primitive"
     ],
     "settings": {
       "fontStyle": "italic"
@@ -24,6 +27,37 @@
   {
     "scope": [
       "strong",
+      "variable.other.normal.shell"
+    ],
+    "settings": {
+      "fontStyle": "bold"
+    }
+  },
+
+  {
+    "scope": [
+      "string.quoted.double.xml",
+      "string.quoted.double.json.comments"
+    ],
+    "settings": {
+      "foreground": "#baae8f"
+    }
+  },
+
+  {
+    "scope": [
+      // Shell (sh)
+      "storage.modifier.shell",
+      "support.function.builtin.shell"
+    ],
+    "settings": {
+      "foreground": "#baae8f",
+      "fontStyle": "italic"
+    }
+  },
+
+  {
+    "scope": [
       "entity.name.type",
       "punctuation.section.parens.begin.bracket.round",
       "punctuation.section.parens.end.bracket.round",
@@ -45,19 +79,14 @@
       "keyword.operator.word.mnemonic.general-purpose.data-transfer",
       "keyword.operator.word.mnemonic.general-purpose.binary-arithmetic",
       "keyword.operator.word.mnemonic.sse2.simd-integer.mov",
-      "keyword.operator.word.mnemonic.general-purpose.control-transfer"
+      "keyword.operator.word.mnemonic.general-purpose.control-transfer",
+      // XML (xml, html)
+      "punctuation.definition.tag.xml",
+      "entity.name.tag.localname.xml"
     ],
     "settings": {
+      "foreground": "#baae8f",
       "fontStyle": "bold"
-    }
-  },
-
-  {
-    "scope": [
-      "string.quoted.double.json.comments"
-    ],
-    "settings": {
-      "foreground": "#baae8f"
     }
   },
 
@@ -68,17 +97,6 @@
     ],
     "settings": {
       "foreground": "#777777",
-      "fontStyle": "italic"
-    }
-  },
-
- {
-    "scope": [
-      "storage.modifier.specifier",
-      "storage.type.built-in.primitive",
-      "storage.type.asm"
-    ],
-    "settings": {
       "fontStyle": "italic"
     }
   },
