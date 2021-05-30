@@ -3,7 +3,44 @@
 "name": "Motley",
 "type": "dark",
 
+"semanticHighlighting": true,
+"semanticTokenColors": {
+  // Python (py)
+  "module:python": "#7daea3",
+  "class.decorator:python": "#689d6a"
+},
+
 "tokenColors": [
+
+  {
+    "scope": [
+      "emphasis"
+    ],
+    "settings": {
+      "fontStyle": "italic"
+    }
+  },
+
+  {
+    "scope": [
+      "strong",
+      "markup.bold"
+    ],
+    "settings": {
+      "fontStyle": "bold"
+    }
+  },
+
+  {
+    "scope": [
+      "*url*",
+      "*link*",
+      "*uri*"
+    ],
+    "settings": {
+      "fontStyle": "underline"
+    }
+  },
 
   {
     "settings": {
@@ -14,26 +51,59 @@
 
   {
     "scope": [
-      "emphasis",
-      "variable.parameter",
-      "meta.parameter.type.variable",
-      "meta.function-call.arguments"
+      "punctuation.separator.dot-access",
+      "punctuation.separator.delimiter.comma",
+      "punctuation.section.parameters.begin.bracket.round",
+      "punctuation.section.parameters.end.bracket.round",
+      "punctuation.section.block.begin.bracket.curly",
+      "punctuation.section.block.end.bracket.curly",
+      "punctuation.definition.begin.bracket.square",
+      "punctuation.definition.end.bracket.square",
+      "punctuation.section.parens.begin.bracket.round",
+      "punctuation.section.parens.end.bracket.round",
+      "punctuation.section.arguments.begin.bracket.round.function.call",
+      "punctuation.section.arguments.end.bracket.round.function.call",
+      "punctuation.section.arguments.begin.bracket.round.operator",
+      "punctuation.section.arguments.end.bracket.round.operator",
+      // C++ (cpp)
+      "punctuation.terminator.statement.cpp"
     ],
     "settings": {
+      "foreground": "#baae8f",
+      "fontStyle": "none"
+    }
+  },
+
+  {
+    "scope": [
+      "storage.modifier",
+      "storage.type.class",
+      "storage.type.function",
+      "storage.type.struct",
+      "keyword.operator",
+      "keyword.control.import",
+      "keyword.control.directive.include",
+      "meta.parameter.type.variable"
+    ],
+    "settings": {
+      "foreground": "#baae8f",
       "fontStyle": "italic"
     }
   },
 
   {
     "scope": [
-      "strong",
       "keyword",
       "keyword.control",
-      "keyword.operator",
-      "storage.modifier",
-      "punctuation.definition.tag.xml"
+      "keyword.operator.logical",
+      "keyword.operator.assignment",
+      "keyword.operator.comparison",
+      "keyword.operator.ternary",
+      "punctuation.definition.tag.xml",
+      "punctuation.definition.directive"
     ],
     "settings": {
+      "foreground": "#baae8f",
       "fontStyle": "bold"
     }
   },
@@ -41,6 +111,7 @@
   {
     "scope": [
       "constant",
+      "keyword.other.unit.hexadecimal",
       "support.constant",
       "constant.rgb-value",
       "string.tag",
@@ -65,10 +136,37 @@
       "entity.name.variable.property",
       "entity.name.variable.local",
       "entity.name.variable.parameter",
-      "entity.other.attribute-name.localname.xml"
+      "entity.other.attribute-name.localname.xml",
+      "meta.attribute"
     ],
     "settings": {
       "foreground": "#d08f48"
+    }
+  },
+
+  {
+    "scope": [
+      "variable.parameter"
+    ],
+    "settings": {
+      "foreground": "#d08f48",
+      "fontStyle": "italic"
+    }
+  },
+
+  {
+    "scope": [
+      "keyword.type",
+      "support.type",
+      "entity.name.class",
+      "entity.name.type.class",
+      "storage.type.cs",
+      "storage.type.string",
+      "storage.type.built-in.primitive"
+    ],
+    "settings": {
+      "foreground": "#7dadae",
+      "fontStyle": "none"
     }
   },
 
@@ -81,7 +179,8 @@
       "entity.name.type.namespace"
     ],
     "settings": {
-      "foreground": "#ebdbb2"
+      "foreground": "#ebdbb2",
+      "fontStyle": "none"
     }
   },
 
@@ -89,12 +188,14 @@
     "scope": [
       "entity.name.method",
       "entity.name.method.function-call",
+      "entity.name.function",
       "entity.name.function.call",
       "entity.name.function.definition",
-      "entity.name.function.cs"
+      "support.function.magic",
+      "meta.function-call.generic"
     ],
     "settings": {
-      "foreground": "#e0aa2b"
+      "foreground": "#afaf3f"
     }
   },
 
@@ -104,10 +205,6 @@
       "meta.preprocessor.string",
       "meta.preprocessor.numeric",
       "entity.name.tag.localname.xml",
-      // Python (py)
-      "source.python meta.function.python",
-      "source.python entity.name.function.python",
-      "source.python meta.function-call.generic",
       // Markdown (md)
       "markup.inserted",
       // Git
@@ -120,10 +217,7 @@
 
   {
     "scope": [
-      "support.function.builtin",
-      // Python (py)
-      "source.python entity.name.function.decorator",
-      "source.python support.type.python"
+      "support.function.builtin"
     ],
     "settings": {
       "foreground": "#9e9e39",
@@ -134,7 +228,8 @@
   {
     "scope": [
       "comment",
-      "punctuation.definition.comment"
+      "punctuation.definition.comment",
+      "string.quoted.docstring.multi"
     ],
     "settings": {
       "foreground": "#777777",
@@ -146,10 +241,11 @@
     "scope": [
       "punctuation.quoted",
       // Python (py)
-      "source.python string.quoted.docstring.multi.python",
       "source.python string.quoted.double.block.python",
       "source.python punctuation.definition.string.begin.python",
-      "source.python punctuation.definition.string.end.python"
+      "source.python punctuation.definition.string.end.python",
+      // C++ (cpp)
+      "punctuation.separator.pointer-access"
     ],
     "settings": {
       "foreground": "#777777"
@@ -158,12 +254,14 @@
 
   {
     "scope": [
-      "*url*",
-      "*link*",
-      "*uri*"
+      "entity.name.function.preprocessor",
+      // Python (py)
+      "punctuation.definition.decorator.python",
+      // C++ (cpp)
+      "meta.body.function.definition.cpp"
     ],
     "settings": {
-      "fontStyle": "underline"
+      "foreground": "#689d6a"
     }
   },
 
@@ -258,33 +356,6 @@
     }
   },
 
-
-  {
-    "name": "default type",
-    "scope": [
-      "keyword.type",
-      "support.type",
-      "storage.type.built-in.primitive"
-    ],
-    "settings": {
-      "foreground": "#afaf3f",
-      "fontStyle": "none"
-    }
-  },
-
-  {
-    "name": "class name",
-    "scope": [
-      "entity.name.class",
-      "entity.name.type.class",
-      "storage.type.cs"
-    ],
-    "settings": {
-      "foreground": "#afaf3f",
-      "fontStyle": "none"
-    }
-  },
-
   {
     "scope": "prototype",
     "settings": {
@@ -295,75 +366,6 @@
   // ------------------------------------------------------------------------
   // LANGUAGE SPECIFIC
   // ------------------------------------------------------------------------
-
-  // --- Python (py) --------------------------------------------------------
-
-  {
-    "name": "function and class definition keywords",
-    "scope": [
-      "source.python storage.type.function.python",
-      "source.python storage.modifier.declaration",
-      "source.python storage.type.class.python"
-    ],
-    "settings": {
-      "foreground": "#baae8f",
-      "fontStyle": "bold"
-    }
-  },
-
-  {
-    "name": "function arguments",
-    "scope": [
-      "source.python meta.function-call.arguments"
-    ],
-    "settings": {
-      "foreground": "#d08f48"
-    }
-  },
-
-  {
-    "name": "all CAPS",
-    "scope": "source.python constant.other.caps",
-    "settings": {
-      "foreground": "#baae8f",
-      "fontStyle": "normal"
-    }
-  },
-
-  {
-    "name": "Python string",
-    "scope": [
-      "source.python string.quoted.single.single-line.python"
-    ],
-    "settings": {
-      "foregroung": "#d35d41"
-    }
-  },
-
-  {
-    "name": "self, cls",
-    "scope": [
-      "source.python variable.language.special.self.python",
-      "source.python variable.parameter.function.language.special.self.python",
-      "source.python variable.language.special.cls.python",
-      "source.python variable.parameter.function.language.special.cls.python"
-    ],
-    "settings": {
-      "fontStyle": "bold"
-    }
-  },
-
-  {
-  "name": "logical operator",
-    "scope": [
-      "source.python keyword.operator.logical.python",
-      "source.python constant.language.python"
-    ],
-    "settings": {
-      "foreground": "#baae8f",
-      "fontStyle": "bold"
-    }
-  },
 
   // --- Markdown (md) -------------------------------------------------------
 
@@ -386,12 +388,7 @@
       "foreground": "#d3869b"
     }
   },
-  {
-    "scope": "markup.bold",
-    "settings": {
-      "fontStyle": "bold"
-    }
-  },
+
   {
     "scope": "markup.heading",
     "settings": {
@@ -458,33 +455,6 @@
     ],
     "settings": {
       "foreground": "#baae8f"
-    }
-  },
-
-  // C / C++ (c cpp) ---------------------------------------------------------
-
-  {
-    "name": "typedef constant",
-    "scope": "meta.body.function.definition.cpp",
-    "settings": {
-      "foreground": "#689d6a"
-    }
-  },
-
-  {
-    "scope": "support.function.C99",
-    "settings": {
-      "foreground": "#fabd2f"
-    }
-  },
-
-  {
-    "scope": [
-      "storage.type.class.cpp",
-      "storage.type.struct.cpp"
-    ],
-    "settings": {
-      "fontStyle": "bold"
     }
   },
 
