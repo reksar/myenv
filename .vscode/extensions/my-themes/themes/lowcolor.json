@@ -58,7 +58,11 @@
   {
     "scope": [
       "entity.name.type",
+      "keyword.operator.at",
+      "keyword.operator.pipe",
+      "keyword.operator.ternary",
       "keyword.operator.assignment",
+      "keyword.operator.redirection",
       "storage.type.built-in.primitive",
       "punctuation.section.parens.begin.bracket.round",
       "punctuation.section.parens.end.bracket.round",
@@ -82,7 +86,9 @@
       "keyword.operator.word.mnemonic.general-purpose.control-transfer",
       // XML (xml, html)
       "punctuation.definition.tag.xml",
-      "entity.name.tag.localname.xml"
+      "entity.name.tag.localname.xml",
+      // Batch (bat)
+      "meta.group.batchfile"
     ],
     "settings": {
       "foreground": "#baae8f",

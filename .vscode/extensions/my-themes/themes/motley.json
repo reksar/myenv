@@ -95,12 +95,18 @@
     "scope": [
       "keyword",
       "keyword.control",
+      "keyword.operator.at",
+      "keyword.operator.pipe",
       "keyword.operator.logical",
+      "keyword.operator.ternary",
       "keyword.operator.assignment",
       "keyword.operator.comparison",
-      "keyword.operator.ternary",
+      "keyword.operator.conditional",
+      "keyword.operator.redirection",
       "punctuation.definition.tag.xml",
-      "punctuation.definition.directive"
+      "punctuation.definition.directive",
+      // Batch (bat)
+      "meta.group.batchfile"
     ],
     "settings": {
       "foreground": "#baae8f",
@@ -140,7 +146,8 @@
       "meta.attribute"
     ],
     "settings": {
-      "foreground": "#d08f48"
+      "foreground": "#d08f48",
+      "fontStyle": "none"
     }
   },
 
@@ -192,10 +199,12 @@
       "entity.name.function.call",
       "entity.name.function.definition",
       "support.function.magic",
-      "meta.function-call.generic"
+      "meta.function-call.generic",
+      "meta.expression.set"
     ],
     "settings": {
-      "foreground": "#afaf3f"
+      "foreground": "#afaf3f",
+      "fontStyle": "none"
     }
   },
 
@@ -258,10 +267,15 @@
       // Python (py)
       "punctuation.definition.decorator.python",
       // C++ (cpp)
-      "meta.body.function.definition.cpp"
+      "meta.body.function.definition.cpp",
+      // Batch (bat)
+      "punctuation.definition.variable.begin.batchfile",
+      "punctuation.definition.variable.end.batchfile",
+      "keyword.operator.arithmetic.batchfile"
     ],
     "settings": {
-      "foreground": "#689d6a"
+      "foreground": "#689d6a",
+      "fontStyle": "none"
     }
   },
 
@@ -502,30 +516,6 @@
     "scope": "storage.type.asm",
     "settings": {
       "foreground": "#689d6a"
-    }
-  },
-
-  // BATCH (bat) -------------------------------------------------------------
-
-  {
-    "scope": [
-      "punctuation.definition.variable.begin.batchfile",
-      "punctuation.definition.variable.end.batchfile"
-    ],
-    "settings": {
-      "foreground": "#d08f48",
-      "fontStyle": "none"
-    }
-  },
-
-  {
-    "scope": [
-      "meta.expression.set.batchfile",
-      "keyword.operator.arithmetic.batchfile",
-      "punctuation.definition.variable.batchfile"
-    ],
-    "settings": {
-      "foreground": "#e0aa2b"
     }
   },
 
