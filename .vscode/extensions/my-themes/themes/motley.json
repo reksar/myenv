@@ -200,7 +200,9 @@
       "entity.name.function.definition",
       "support.function.magic",
       "meta.function-call.generic",
-      "meta.expression.set"
+      "meta.expression.set",
+      // Batch (bat)
+      "keyword.other.special-method.batchfile"
     ],
     "settings": {
       "foreground": "#afaf3f",
@@ -236,6 +238,21 @@
 
   {
     "scope": [
+      "punctuation.quoted",
+      // Python (py)
+      "source.python string.quoted.double.block.python",
+      "source.python punctuation.definition.string.begin.python",
+      "source.python punctuation.definition.string.end.python",
+      // C++ (cpp)
+      "punctuation.separator.pointer-access"
+    ],
+    "settings": {
+      "foreground": "#777777"
+    }
+  },
+
+  {
+    "scope": [
       "comment",
       "punctuation.definition.comment",
       "string.quoted.docstring.multi"
@@ -248,16 +265,11 @@
 
   {
     "scope": [
-      "punctuation.quoted",
-      // Python (py)
-      "source.python string.quoted.double.block.python",
-      "source.python punctuation.definition.string.begin.python",
-      "source.python punctuation.definition.string.end.python",
-      // C++ (cpp)
-      "punctuation.separator.pointer-access"
+      "keyword.command.rem.batchfile"
     ],
     "settings": {
-      "foreground": "#777777"
+      "foreground": "#777777",
+      "fontStyle": "bold"
     }
   },
 
