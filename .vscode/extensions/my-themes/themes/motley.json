@@ -169,7 +169,10 @@
       "entity.name.type.class",
       "storage.type.cs",
       "storage.type.string",
-      "storage.type.built-in.primitive"
+      "storage.type.built-in.primitive",
+      // Batch (bat)
+      "variable.parameter.batchfile",
+      "variable.parameter.repeat.batchfile"
     ],
     "settings": {
       "foreground": "#7dadae",
@@ -202,7 +205,8 @@
       "meta.function-call.generic",
       "meta.expression.set",
       // Batch (bat)
-      "keyword.other.special-method.batchfile"
+      "keyword.other.special-method.batchfile",
+      "meta.block.repeat.batchfile"
     ],
     "settings": {
       "foreground": "#afaf3f",
@@ -281,6 +285,7 @@
       // C++ (cpp)
       "meta.body.function.definition.cpp",
       // Batch (bat)
+      "punctuation.definition.variable.batchfile",
       "punctuation.definition.variable.begin.batchfile",
       "punctuation.definition.variable.end.batchfile",
       "keyword.operator.arithmetic.batchfile"
