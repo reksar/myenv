@@ -81,10 +81,11 @@
       "storage.type.class",
       "storage.type.function",
       "storage.type.struct",
-      "keyword.operator",
       "keyword.control.import",
       "keyword.control.directive.include",
-      "meta.parameter.type.variable"
+      "meta.parameter.type.variable",
+      // C++ (cpp)
+      "keyword.operator.sizeof"
     ],
     "settings": {
       "foreground": "#baae8f",
@@ -129,7 +130,19 @@
       "variable.arguments"
     ],
     "settings": {
-      "foreground": "#d35d41"
+      "foreground": "#d35d41",
+      "fontStyle": "none"
+    }
+  },
+
+  {
+    "scope": [
+      "constant.numeric.hexadecimal.c",
+      "constant.numeric.hexadecimal.cpp"
+    ],
+    "settings": {
+      "foreground": "#d35d41",
+      "fontStyle": "bold"
     }
   },
 
