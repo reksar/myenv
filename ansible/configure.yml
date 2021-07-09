@@ -12,6 +12,7 @@
   - name: Link configs at ~
     loop:
       - linux/.bashrc
+      - linux/.bash_aliases
       - linux/.dircolors
       - linux/.gitconfig
       - linux/.tmux.conf

@@ -36,14 +36,9 @@ if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
 fi
 
 
-#--- Bash promt customization. ------------------------------------------------
+#--- Bash promt --------------------------------------------------------------
 
-# set a fancy prompt
-case "$TERM" in
-  xterm-color|*-256color) is_color_promt=yes;;
-esac
-
-parse_git_branch() {
+get_current_git_branch() {
   git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1) /'
 }
 
@@ -82,7 +77,7 @@ set_bash_prompt() {
 
   local last_status="$status_color$status_text"
   local working_dir="$YELLOW\\w "
-  local git_branch="$GREEN$(parse_git_branch)"
+  local git_branch="$GREEN$(get_current_git_branch)"
 
   if test -z "$VIRTUAL_ENV" ; then
 	  local python_venv=""
@@ -94,58 +89,42 @@ set_bash_prompt() {
   PS1+="$RESET_COLOR"
 }
 
-if [ "$is_color_promt" = yes ]; then
+
+# If this is an xterm set the promt to user@host:dir
+case "$TERM" in
+  xterm*|rxvt*)
+    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+    ;;
+  *)
+    ;;
+esac
+
+case "$TERM" in
+  xterm-color|*-256color)
+    is_term_colored=yes
+    ;;
+esac
+
+if [ "$is_term_colored" = yes ]; then
+
+  # set a fancy prompt
   PROMPT_COMMAND='set_bash_prompt'
+
+  # colored GCC warnings and errors
+  export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
 else
   PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
 
+unset is_term_colored
 
-# enable color support, add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-	test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-	alias ls='ls --color=auto --group-directories-first'
-	alias dir='dir --color=auto'
-	alias vdir='vdir --color=auto'
-	alias grep='grep --color=auto'
-	alias fgrep='fgrep --color=auto'
-	alias egrep='egrep --color=auto'
-fi
-
-
-# colored GCC warnings and errors
-#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-
-unset is_color_promt
-
-
-# some more ls aliases
-alias ll='ls -alF --time-style=long-iso'
-alias la='ls -A'
-alias l='ls -CF'
-
-
-# If this is an xterm set the title to user@host:dir
-case "$TERM" in
-xterm*|rxvt*)
-	PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-  ;;
-*)
-	;;
-esac
-
-
-# Add an "alert" alias for long running commands.  Use like so:
-#   sleep 10; alert
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 # Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
-#if [ -f ~/.bash_aliases ]; then
-#    . ~/.bash_aliases
-#fi
+if [ -f ~/.bash_aliases ]; then
+  . ~/.bash_aliases
+fi
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -158,8 +137,3 @@ if ! shopt -oq posix; then
   fi
 fi
 
-
-# Makes a Git repo from given subdir $1 and rewrites current repo.
-git-submodule () {
-	git filter-branch --subdirectory-filter $1 -- --all
-}
