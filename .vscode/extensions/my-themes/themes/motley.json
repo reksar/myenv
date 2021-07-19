@@ -81,9 +81,14 @@
       "storage.type.class",
       "storage.type.function",
       "storage.type.struct",
+      "storage.type.enum",
+      "storage.type.modifier.access.control",
+      "meta.parameter.type.variable",
       "keyword.control.import",
       "keyword.control.directive.include",
-      "meta.parameter.type.variable",
+      "keyword.control.directive.conditional",
+      "keyword.control.directive.define",
+      "keyword.control.directive.endif",
       // C++ (cpp)
       "keyword.operator.sizeof"
     ],
