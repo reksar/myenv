@@ -52,19 +52,21 @@
   {
     "scope": [
       "punctuation.separator.dot-access",
+      "punctuation.separator.pointer-access",
       "punctuation.separator.delimiter.comma",
-      "punctuation.section.parameters.begin.bracket.round",
-      "punctuation.section.parameters.end.bracket.round",
-      "punctuation.section.block.begin.bracket.curly",
-      "punctuation.section.block.end.bracket.curly",
-      "punctuation.definition.begin.bracket.square",
+      "punctuation.separator.namespace.access",
       "punctuation.definition.end.bracket.square",
-      "punctuation.section.parens.begin.bracket.round",
+      "punctuation.definition.begin.bracket.square",
       "punctuation.section.parens.end.bracket.round",
-      "punctuation.section.arguments.begin.bracket.round.function.call",
-      "punctuation.section.arguments.end.bracket.round.function.call",
-      "punctuation.section.arguments.begin.bracket.round.operator",
+      "punctuation.section.parens.begin.bracket.round",
+      "punctuation.section.parameters.end.bracket.round",
+      "punctuation.section.parameters.begin.bracket.round",
       "punctuation.section.arguments.end.bracket.round.operator",
+      "punctuation.section.arguments.begin.bracket.round.operator",
+      "punctuation.section.arguments.end.bracket.round.function.call",
+      "punctuation.section.arguments.begin.bracket.round.function.call",
+      "punctuation.section.arguments.end.bracket.round.function.member",
+      "punctuation.section.arguments.begin.bracket.round.function.member",
       // C++ (cpp)
       "punctuation.terminator.statement.cpp",
       "storage.modifier.array.bracket"
@@ -112,6 +114,11 @@
       "keyword.operator.redirection",
       "punctuation.definition.tag.xml",
       "punctuation.definition.directive",
+      "punctuation.section.block.end.bracket.curly",
+      "punctuation.section.block.begin.bracket.curly",
+      "meta.parens",
+      "storage.modifier.pointer",
+      "storage.modifier.reference",
       // Batch (bat)
       "meta.group.batchfile"
     ],
@@ -265,9 +272,7 @@
       // Python (py)
       "source.python string.quoted.double.block.python",
       "source.python punctuation.definition.string.begin.python",
-      "source.python punctuation.definition.string.end.python",
-      // C++ (cpp)
-      "punctuation.separator.pointer-access"
+      "source.python punctuation.definition.string.end.python"
     ],
     "settings": {
       "foreground": "#777777"

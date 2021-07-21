@@ -78,6 +78,8 @@
       "punctuation.definition.dictionary.end",
       "punctuation.definition.array.begin",
       "punctuation.definition.array.end",
+      "punctuation.separator.dot-access",
+      "punctuation.separator.pointer-access",
       "punctuation.separator.dictionary.key-value",
       // Assembly (asm)
       "keyword.operator.word.mnemonic.general-purpose.data-transfer",
@@ -159,9 +161,7 @@
 
   {
     "scope": [
-      "string.quoted.double",
-      "punctuation.separator.dot-access",
-      "punctuation.separator.pointer-access"
+      "string.quoted.double"
     ],
     "settings": {
       "foreground": "#ebdbb2"
