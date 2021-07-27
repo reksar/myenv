@@ -87,10 +87,11 @@
       "storage.type.modifier.access.control",
       "meta.parameter.type.variable",
       "keyword.control.import",
+      "keyword.control.directive.endif",
+      "keyword.control.directive.pragma",
+      "keyword.control.directive.define",
       "keyword.control.directive.include",
       "keyword.control.directive.conditional",
-      "keyword.control.directive.define",
-      "keyword.control.directive.endif",
       // C++ (cpp)
       "keyword.operator.sizeof"
     ],
@@ -112,6 +113,7 @@
       "keyword.operator.comparison",
       "keyword.operator.conditional",
       "keyword.operator.redirection",
+      "keyword.operator.bitwise.shift.cpp",
       "punctuation.definition.tag.xml",
       "punctuation.definition.directive",
       "punctuation.section.block.end.bracket.curly",
@@ -119,6 +121,8 @@
       "meta.parens",
       "storage.modifier.pointer",
       "storage.modifier.reference",
+      "entity.name.function.operator",
+      "entity.name.function.operator.member",
       // Batch (bat)
       "meta.group.batchfile"
     ],
