@@ -79,6 +79,7 @@
             - text/x-makefile
             - text/x-chdr
             - text/x-csrc
+            - text/x-c++hdr
             - text/x-c++src
             - application/javascript
             - application/json
