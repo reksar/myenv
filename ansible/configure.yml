@@ -3,7 +3,7 @@
 - hosts: my_hosts
 
   vars:
-    autoconf: "{{ playbook_dir | dirname }}"
+    myconf: "{{ playbook_dir | dirname }}"
     user: "{{ lookup('env', 'USER') }}"
     desktop: "{{ lookup('env', 'DESKTOP_SESSION') }}"
 
@@ -19,7 +19,7 @@
       - vim/.vim
       - vim/.vimrc
     file:
-      src: "{{ autoconf }}/{{ item }}"
+      src: "{{ myconf }}/{{ item }}"
       dest: "~/{{ item | basename }}"
       state: link
       force: true
@@ -46,7 +46,7 @@
       - name: Copy QTerminal colorscheme
         when: qtermcolors.stat.exists
         copy:
-          src: "{{ autoconf }}/linux/lxqt/QTerminal.colorscheme"
+          src: "{{ myconf }}/linux/lxqt/QTerminal.colorscheme"
           dest: "{{ qtermcolors.stat.path }}"
         become: true
       - name: Set QTerminal colors
@@ -88,7 +88,7 @@
         block:
         - name: Add Vim desktop entry
           file:
-            src: "{{ autoconf }}/linux/lxqt/{{ vim_desktop }}"
+            src: "{{ myconf }}/linux/lxqt/{{ vim_desktop }}"
             dest: "~/.local/share/applications/{{ vim_desktop }}"
             state: link
         - name: Associate MIME types with Vim desktop entry
