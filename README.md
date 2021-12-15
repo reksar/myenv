@@ -1,16 +1,15 @@
 # My conf  
 
-Configures Linux workspace with Ansible.  
+Configures Linux workspace with  
+[Ansible](https://docs.ansible.com/ansible/latest/index.html):  
 
 - Adds `~/.vimrc` and `~/.vim/` from [Vim](https://github.com/reksar/vim)  
 submodule.
 
-- Deploys configuration from `linux` dir.  
+- Ships configuration files from `linux` dir as a *links*.  
 
 - Makes some extra configuration, described in `ansible/configure.yml`.  
 
-When make sense to ship whole configuration file, makes a link, so you can  
-edit it as well at this repo, as at destination place.  
 
 ## Using  
 
