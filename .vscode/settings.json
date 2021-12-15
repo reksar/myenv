@@ -1,23 +1,15 @@
 {
-    "workbench.startupEditor": "newUntitledFile",
-    "workbench.editorAssociations": [
-        {
-            "viewType": "jupyter.notebook.ipynb",
-            "filenamePattern": "*.ipynb"
-        }
-    ],
+  "editor.tabSize": 8,
+  "editor.insertSpaces": false,
+  "editor.wordWrapColumn": 80,
+  "editor.rulers": [80],
 
-    "editor.tabSize": 4,
-    "editor.insertSpaces": true,
-    "editor.wordWrapColumn": 80,
-    "editor.rulers": [80],
-
-    "terminal.integrated.fontSize": 18,
-    "workbench.iconTheme": "vs-seti",
-    "editor.fontSize": 18,
-    "window.zoomLevel": 0,
-    "git.ignoreMissingGitWarning": true,
-    "terminal.integrated.shell.windows": "C:\\Windows\\System32\\cmd.exe",
+  "terminal.integrated.fontSize": 18,
+  "workbench.iconTheme": "vs-seti",
+  "editor.fontSize": 18,
+  "window.zoomLevel": 0,
+  "git.ignoreMissingGitWarning": true,
+  "terminal.integrated.shell.windows": "C:\\Windows\\System32\\cmd.exe",
 
   "[json]": {
     "editor.tabSize": 2
@@ -39,7 +31,26 @@
     "editor.tabSize": 2
   },
 
-  "editor.minimap.enabled": true,
-  "workbench.colorTheme": "My VSCode Theme"
-}
+  "editor.minimap.enabled": false,
+  "explorer.confirmDelete": false,
 
+  // Vim
+  "vim.useSystemClipboard": true,
+  "workbench.startupEditor": "none",
+  "explorer.confirmDragAndDrop": false,
+  "workbench.editorAssociations": {
+    "*.ipynb": "jupyter.notebook.ipynb"
+  },
+  "workbench.colorTheme": "Low Color",
+  "editor.cursorStyle": "line",
+  "editor.lineNumbers": "on",
+  "editor.wordSeparators": "/\\()\"':,.;<>~!@#$%^&*|+=[]{}`?-",
+  "editor.wordWrap": "off",
+  "debug.terminal.clearBeforeReusing": true,
+  "debug.showSubSessionsInToolBar": true,
+  "debug.openDebug": "openOnSessionStart",
+  "debug.internalConsoleOptions": "openOnSessionStart",
+  "debug.showInStatusBar": "always",
+  "debug.console.closeOnEnd": true,
+  "terminal.integrated.tabs.enabled": false
+}
