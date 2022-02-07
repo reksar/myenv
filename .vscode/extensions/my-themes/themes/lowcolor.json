@@ -35,19 +35,47 @@
 
   {
     "scope": [
+      "entity.name.type",
+      "keyword.operator.increment",
+      "keyword.operator.decrement",
+      "storage.type.built-in.primitive",
       "string.quoted.double.xml",
-      "string.quoted.double.json.comments"
+      "string.quoted.double.json.comments",
+      // Makefile
+      "support.function.target.PHONY.makefile"
     ],
     "settings": {
-      "foreground": "#baae8f"
+      "foreground": "#baae8f",
+      "fontStyle": "normal"
     }
   },
 
   {
     "scope": [
+      "keyword.other.using.directive",
+      "keyword.other.namespace",
+      "keyword.control.directive.pragma",
+      "keyword.control.directive.include",
+      "storage.type.class",
+      "storage.type.struct",
+      "storage.type.namespace.directive",
+      "storage.type.modifier.access.public",
+      "storage.type.modifier.access.private",
+      "storage.type.modifier.access.protected",
+      "storage.type.modifier.access.control.public",
+      "storage.type.modifier.access.control.private",
       // Shell (sh)
       "storage.modifier.shell",
-      "support.function.builtin.shell"
+      "support.function.builtin.shell",
+      // Makefile
+      "support.function.shell.makefile",
+      // PHP (php)
+      "storage.modifier.php",
+      "storage.type.function.php",
+      "support.function.constructor.php",
+      "punctuation.section.embedded.begin.php",
+      "keyword.control.import.include.php",
+      "support.function.construct.php"
     ],
     "settings": {
       "foreground": "#baae8f",
@@ -57,13 +85,30 @@
 
   {
     "scope": [
-      "entity.name.type",
+      "meta.parens",
+      "keyword.control.if",
+      "keyword.control.try",
+      "keyword.control.for",
+      "keyword.control.while",
+      "keyword.control.catch",
+      "keyword.control.return",
       "keyword.operator.at",
       "keyword.operator.pipe",
+      "keyword.operator.logical",
       "keyword.operator.ternary",
+      "keyword.operator.ternary",
+      "keyword.operator.comparison",
       "keyword.operator.assignment",
       "keyword.operator.redirection",
-      "storage.type.built-in.primitive",
+      "constant.language.false",
+      "constant.language.true",
+      "constant.language.NULL",
+      "constant.numeric.hex.asm",
+      "constant.character.escape",
+      "constant.language.nullptr",
+      "constant.other.placeholder",
+      "constant.numeric.hexadecimal",
+      "keyword.other.unit.hexadecimal",
       "punctuation.section.parens.begin.bracket.round",
       "punctuation.section.parens.end.bracket.round",
       "punctuation.section.arguments.begin.bracket.round.function.call",
@@ -78,6 +123,7 @@
       "punctuation.definition.dictionary.end",
       "punctuation.definition.array.begin",
       "punctuation.definition.array.end",
+      "punctuation.definition.directive",
       "punctuation.separator.dot-access",
       "punctuation.separator.pointer-access",
       "punctuation.separator.dictionary.key-value",
@@ -90,7 +136,18 @@
       "punctuation.definition.tag.xml",
       "entity.name.tag.localname.xml",
       // Batch (bat)
-      "meta.group.batchfile"
+      "meta.group.batchfile",
+      // Makefile
+      "meta.scope.target.makefile",
+      "punctuation.definition.variable.makefile",
+      // YAML (yml)
+      "entity.name.tag.yaml",
+      // PHP (php)
+      "keyword.control.exception.php",
+      "keyword.control.exception.catch.php",
+      "keyword.control.die.php",
+      "keyword.other.new.php",
+      "keyword.operator.null-coalescing.php"
     ],
     "settings": {
       "foreground": "#baae8f",
@@ -111,38 +168,73 @@
 
   {
     "scope": [
-      "keyword.control.if",
-      "keyword.control.while",
-      "keyword.control.return",
-      "keyword.operator.logical",
-      "keyword.operator.ternary",
-      "keyword.operator.comparison",
+      "constant.language",
+      "constant.numeric.decimal",
+      "constant.character.escape",
       "storage.modifier.pointer",
       "constant.character.escape.json.comments",
-      // C++ (cpp)
-      "keyword.operator.cpp"
+      // Makefile
+      "meta.scope.function-call.makefile"
     ],
     "settings": {
-      "foreground": "#afaf3f"
+      //"foreground": "#a9301e",
+      "foreground": "#d35d41",
+      "fontStyle": "normal"
     }
   },
 
   {
     "scope": [
-      "constant.language.false",
-      "constant.language.true",
-      "constant.language.nullptr",
-      "constant.language.NULL",
-      "constant.character.escape",
-      "constant.other.placeholder",
-      "constant.numeric.decimal",
-      "constant.numeric.hexadecimal",
-      "constant.numeric.hex.asm",
-      "keyword.other.unit.hexadecimal",
-      "support.type.property-name.json.comments"
+      "variable",
+      "variable.name",
+      "variable.other",
+      "meta.attribute",
+      "entity.name.variable.field",
+      "entity.name.variable.local",
+      "entity.name.variable.property",
+      "entity.name.variable.parameter",
+      "entity.other.attribute-name.localname.xml",
+      "string.constant.other.placeholder",
+      "support.type.property-name.json.comments",
+      // Makefile
+      "variable.other.makefile"
     ],
     "settings": {
-      "foreground": "#d08f48"
+      "foreground": "#edcd98",
+      "fontStyle": "normal"
+    }
+  },
+
+  {
+    "scope": [
+      // PHP (php)
+      "entity.name.function.php",
+      "support.function.string.php",
+      "support.function.url.php",
+      "support.function.filter.php",
+      "support.function.array.php",
+      "support.function.errorfunc.php"
+    ],
+    "settings": {
+      "foreground": "#f3a56f",
+      "fontStyle": "normal"
+    }
+  },
+
+  {
+    "scope": [
+      "storage.type",
+      "keyword.operator.regexp",
+      "string.regexp.character-class",
+      // PHP (php)
+      "keyword.other.type.php",
+      "entity.name.type.class.php",
+      "support.class.exception.php",
+      "support.class.php"
+    ],
+    "settings": {
+      "foreground": "#caad79",
+      "fontStyle": "normal"
     }
   },
 
@@ -151,23 +243,28 @@
       "keyword.operator.wordlike",
       "keyword.operator.functionlike",
       "constant.language.json.comments",
-      "keyword.operator.increment",
-      "keyword.operator.decrement"
+      "storage.modifier.reference",
+      // C++ (cpp)
+      "keyword.operator.cpp",
+      // YAML (yml)
+      "punctuation.definition.block.sequence.item.yaml"
     ],
     "settings": {
-      "foreground": "#b18ccf"
+      "foreground": "#b18ccf",
+      "fontStyle": "normal"
     }
   },
 
   {
     "scope": [
-      "string.quoted.double"
+      "string.quoted.double",
+      "string.quoted.single",
+      "string.regexp.single-quoted"
     ],
     "settings": {
       "foreground": "#ebdbb2"
     }
   }
-
 ],
 
 "colors": {

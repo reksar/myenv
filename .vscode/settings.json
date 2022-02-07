@@ -31,11 +31,11 @@
     "editor.tabSize": 2
   },
 
-  "editor.minimap.enabled": false,
-  "explorer.confirmDelete": false,
-
   // Vim
   "vim.useSystemClipboard": true,
+
+  "editor.minimap.enabled": false,
+  "explorer.confirmDelete": false,
   "workbench.startupEditor": "none",
   "explorer.confirmDragAndDrop": false,
   "workbench.editorAssociations": {
