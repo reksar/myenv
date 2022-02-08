@@ -72,7 +72,7 @@
       // PHP (php)
       "storage.modifier.php",
       "storage.type.function.php",
-      "support.function.constructor.php",
+      "support.function.basic_functions.php",
       "punctuation.section.embedded.begin.php",
       "keyword.control.import.include.php",
       "support.function.construct.php"
@@ -145,6 +145,7 @@
       // PHP (php)
       "keyword.control.exception.php",
       "keyword.control.exception.catch.php",
+      "keyword.control.else.php",
       "keyword.control.die.php",
       "keyword.other.new.php",
       "keyword.operator.null-coalescing.php"
@@ -209,6 +210,7 @@
     "scope": [
       // PHP (php)
       "entity.name.function.php",
+      "support.function.constructor.php",
       "support.function.string.php",
       "support.function.url.php",
       "support.function.filter.php",
@@ -216,7 +218,7 @@
       "support.function.errorfunc.php"
     ],
     "settings": {
-      "foreground": "#f3a56f",
+      "foreground": "#e3b794",
       "fontStyle": "normal"
     }
   },
@@ -230,7 +232,8 @@
       "keyword.other.type.php",
       "entity.name.type.class.php",
       "support.class.exception.php",
-      "support.class.php"
+      "support.class.php",
+      "support.class.builtin.php"
     ],
     "settings": {
       "foreground": "#caad79",
@@ -251,6 +254,18 @@
     ],
     "settings": {
       "foreground": "#b18ccf",
+      "fontStyle": "normal"
+    }
+  },
+
+  {
+    "scope": [
+      // PHP (php)
+      "constant.other.php",
+      "support.constant.ext.php"
+    ],
+    "settings": {
+      "foreground": "#dac573",
       "fontStyle": "normal"
     }
   },
