@@ -52,10 +52,12 @@
 
   {
     "scope": [
-      "keyword.other.using.directive",
-      "keyword.other.namespace",
-      "keyword.control.directive.pragma",
       "keyword.control.directive.include",
+      "keyword.control.directive.pragma",
+      "keyword.control.foreach",
+      "keyword.other.namespace",
+      "keyword.other.use",
+      "keyword.other.using.directive",
       "storage.type.class",
       "storage.type.struct",
       "storage.type.namespace.directive",
@@ -210,12 +212,13 @@
     "scope": [
       // PHP (php)
       "entity.name.function.php",
-      "support.function.constructor.php",
-      "support.function.string.php",
-      "support.function.url.php",
-      "support.function.filter.php",
       "support.function.array.php",
-      "support.function.errorfunc.php"
+      "support.function.constructor.php",
+      "support.function.errorfunc.php",
+      "support.function.file.php",
+      "support.function.filter.php",
+      "support.function.string.php",
+      "support.function.url.php"
     ],
     "settings": {
       "foreground": "#e3b794",
