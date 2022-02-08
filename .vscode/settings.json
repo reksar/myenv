@@ -31,9 +31,6 @@
     "editor.tabSize": 2
   },
 
-  // Vim
-  "vim.useSystemClipboard": true,
-
   "editor.minimap.enabled": false,
   "explorer.confirmDelete": false,
   "workbench.startupEditor": "none",
@@ -52,5 +49,25 @@
   "debug.internalConsoleOptions": "openOnSessionStart",
   "debug.showInStatusBar": "always",
   "debug.console.closeOnEnd": true,
-  "terminal.integrated.tabs.enabled": false
+  "terminal.integrated.tabs.enabled": false,
+
+  // Extensinos
+
+  // Vim
+  "vim.useSystemClipboard": true,
+
+  // TODO Highlight
+  "todohighlight.keywords": [
+    {
+      "text": "TODO:",
+      "color": "#21201d",
+      "backgroundColor": "#d39d28"
+    },
+    {
+      "text": "FIXME:",
+      "color": "#21201d",
+      "backgroundColor": "#e46b27",
+      "overviewRulerColor": "#e46b27"
+    }
+  ]
 }
