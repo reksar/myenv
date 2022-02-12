@@ -1,5 +1,4 @@
 {
-
 "name": "Motley",
 "type": "dark",
 
@@ -221,7 +220,7 @@
       "support.class.exception.php"
     ],
     "settings": {
-      "foreground": "#7dadae",
+      "foreground": "#91be8d",
       "fontStyle": "none"
     }
   },
@@ -339,6 +338,26 @@
     "settings": {
       "foreground": "#777777",
       "fontStyle": "bold"
+    }
+  },
+
+  {
+    "scope": [
+      "constant.other"
+    ],
+    "settings": {
+      "foreground": "#df6a24",
+      "fontStyle": "none"
+    }
+  },
+
+  {
+    "scope": [
+      "support.other.namespace.php"
+    ],
+    "settings": {
+      "foreground": "#e2b139",
+      "fontStyle": "none"
     }
   },
 
