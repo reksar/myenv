@@ -1,83 +1,92 @@
 {
-
 "name": "Low Color",
 "type": "dark",
 
+"semanticHighlighting": true,
+
 "tokenColors": [
-
-  {
-    "settings": {
-      "foreground": "#baae8f",
-      "background": "#21201d"
-    }
-  },
-
   {
     "scope": [
-      "emphasis",
-      "storage.type.asm",
-      "storage.modifier.specifier"
+      "source.makefile",
+      "source.php",
+      "source.shell",
+      "source.yaml",
+      "text.html.markdown"
     ],
     "settings": {
-      "fontStyle": "italic"
+      "foreground": "#96925f"
     }
   },
 
   {
     "scope": [
-      "strong",
-      "variable.other.normal.shell"
-    ],
-    "settings": {
-      "fontStyle": "bold"
-    }
-  },
-
-  {
-    "scope": [
-      "entity.name.type",
-      "keyword.operator.increment",
-      "keyword.operator.decrement",
-      "storage.type.built-in.primitive",
-      "string.quoted.double.xml",
-      "string.quoted.double.json.comments",
+      "constant.other",
+      "meta.paragraph",
+      "variable.other",
+      "entity.name.function",
+      "keyword.operator.arithmetic",
+      "keyword.operator.assignment",
+      "keyword.operator.comparison",
+      "keyword.operator.key",
+      "keyword.operator.logical",
+      "keyword.operator.null-coalescing",
+      "keyword.operator.redirect",
+      "keyword.operator.string",
+      "keyword.operator.ternary",
+      "support.constant.ext",
+      "support.function.array",
+      "support.function.classobj",
+      "support.function.constructor",
+      "support.function.errorfunc",
+      "support.function.file",
+      "support.function.filter",
+      "support.function.info",
+      "support.function.streamsfuncs",
+      "support.function.string",
+      "support.function.url",
+      "support.function.var",
+      "support.function.zlib",
+      // PHP (php)
+      "support.function.php_pcre",
+      "meta.other.type.phpdoc support.class.php",
+      // YAML (yml)
+      "string.unquoted.plain.out.yaml",
       // Makefile
-      "support.function.target.PHONY.makefile"
+      "meta.scope.function-call.makefile",
+      "meta.scope.prerequisites.makefile",
+      "meta.scope.recipe.makefile",
+      // Shell (sh)
+      "meta.scope.if-block.shell",
+      "meta.scope.while-loop.shell"
     ],
     "settings": {
-      "foreground": "#baae8f",
-      "fontStyle": "normal"
+      "foreground": "#baae8f"
     }
   },
 
   {
     "scope": [
-      "keyword.control.directive.include",
-      "keyword.control.directive.pragma",
+      "keyword.control.import.include",
       "keyword.control.foreach",
       "keyword.other.namespace",
       "keyword.other.use",
-      "keyword.other.using.directive",
+      "keyword.other.use-as",
+      "storage.modifier",
       "storage.type.class",
-      "storage.type.struct",
-      "storage.type.namespace.directive",
-      "storage.type.modifier.access.public",
-      "storage.type.modifier.access.private",
-      "storage.type.modifier.access.protected",
-      "storage.type.modifier.access.control.public",
-      "storage.type.modifier.access.control.private",
-      // Shell (sh)
-      "storage.modifier.shell",
-      "support.function.builtin.shell",
+      "storage.type.const",
+      "storage.type.function",
+      "storage.type.trait",
+      "support.function.basic_functions",
+      "support.function.construct",
+      // PHP (php)
+      "punctuation.section.embedded.begin.php",
+      "storage.type.php",
+      "variable.language.this",
       // Makefile
       "support.function.shell.makefile",
-      // PHP (php)
-      "storage.modifier.php",
-      "storage.type.function.php",
-      "support.function.basic_functions.php",
-      "punctuation.section.embedded.begin.php",
-      "keyword.control.import.include.php",
-      "support.function.construct.php"
+      "support.function.target.PHONY.makefile",
+      // Shell (sh)
+      "support.function.builtin.shell"
     ],
     "settings": {
       "foreground": "#baae8f",
@@ -87,74 +96,84 @@
 
   {
     "scope": [
-      "meta.parens",
+      "keyword.control.else",
+      "keyword.control.exception",
       "keyword.control.if",
-      "keyword.control.try",
-      "keyword.control.for",
-      "keyword.control.while",
-      "keyword.control.catch",
+      "keyword.other.new",
       "keyword.control.return",
-      "keyword.operator.at",
-      "keyword.operator.pipe",
-      "keyword.operator.logical",
-      "keyword.operator.ternary",
-      "keyword.operator.ternary",
-      "keyword.operator.comparison",
-      "keyword.operator.assignment",
-      "keyword.operator.redirection",
-      "constant.language.false",
-      "constant.language.true",
-      "constant.language.NULL",
-      "constant.numeric.hex.asm",
-      "constant.character.escape",
-      "constant.language.nullptr",
-      "constant.other.placeholder",
-      "constant.numeric.hexadecimal",
-      "keyword.other.unit.hexadecimal",
-      "punctuation.section.parens.begin.bracket.round",
-      "punctuation.section.parens.end.bracket.round",
-      "punctuation.section.arguments.begin.bracket.round.function.call",
-      "punctuation.section.arguments.end.bracket.round.function.call",
-      "punctuation.section.parameters.begin.bracket.round",
-      "punctuation.section.parameters.end.bracket.round",
-      "punctuation.section.block.begin.bracket.curly",
-      "punctuation.section.block.end.bracket.curly",
-      "punctuation.definition.begin.bracket.square",
-      "punctuation.definition.end.bracket.square",
-      "punctuation.definition.dictionary.begin",
-      "punctuation.definition.dictionary.end",
-      "punctuation.definition.array.begin",
-      "punctuation.definition.array.end",
-      "punctuation.definition.directive",
-      "punctuation.separator.dot-access",
-      "punctuation.separator.pointer-access",
-      "punctuation.separator.dictionary.key-value",
-      // Assembly (asm)
-      "keyword.operator.word.mnemonic.general-purpose.data-transfer",
-      "keyword.operator.word.mnemonic.general-purpose.binary-arithmetic",
-      "keyword.operator.word.mnemonic.sse2.simd-integer.mov",
-      "keyword.operator.word.mnemonic.general-purpose.control-transfer",
-      // XML (xml, html)
-      "punctuation.definition.tag.xml",
-      "entity.name.tag.localname.xml",
-      // Batch (bat)
-      "meta.group.batchfile",
-      // Makefile
-      "meta.scope.target.makefile",
-      "punctuation.definition.variable.makefile",
+      // PHP (php)
+      "keyword.control.die.php",
+      // Shell (sh)
+      "keyword.control.shell",
+      // Dockerfile
+      "keyword.other.special-method.dockerfile",
       // YAML (yml)
       "entity.name.tag.yaml",
-      // PHP (php)
-      "keyword.control.exception.php",
-      "keyword.control.exception.catch.php",
-      "keyword.control.else.php",
-      "keyword.control.die.php",
-      "keyword.other.new.php",
-      "keyword.operator.null-coalescing.php"
+      // Makefile
+      "entity.name.function.target.makefile",
+      // Markdown (md)
+      "entity.name.section.markdown"
     ],
     "settings": {
       "foreground": "#baae8f",
       "fontStyle": "bold"
+    }
+  },
+
+  {
+    "scope": [
+      "string.quoted.double",
+      "string.quoted.single",
+      "string.regexp.double-quoted",
+      "string.regexp.single-quoted",
+      // Constants
+      "constant.language",
+      "constant.numeric.decimal",
+      "string.regexp.character-class",
+      // Makefile
+      "meta.scope.prerequisites.makefile",
+      // Markdown (md)
+      "markup.inline.raw.string",
+      "markup.fenced_code.block"
+    ],
+    "settings": {
+      "foreground": "#edcd98"
+    }
+  },
+
+  {
+    "scope": [
+      "punctuation.definition.arguments.begin.bracket",
+      "punctuation.definition.arguments.end.bracket",
+      "punctuation.definition.begin.bracket",
+      "punctuation.definition.class.begin.bracket",
+      "punctuation.definition.class.end.bracket",
+      "punctuation.definition.end.bracket",
+      "punctuation.definition.heading",
+      "punctuation.definition.raw",
+      "punctuation.definition.variable",
+      "punctuation.definition.parameters.begin.bracket",
+      "punctuation.definition.parameters.end.bracket",
+      "punctuation.section.array.begin",
+      "punctuation.section.array.end",
+      "punctuation.separator.delimiter",
+      "keyword.operator.class",
+      "keyword.operator.error-control",
+      // PHP (php)
+      "keyword.operator.return-value.php",
+      "punctuation.separator.inheritance.php",
+      "punctuation.terminator.expression.php",
+      // YAML (yml)
+      "punctuation.separator.key-value.mapping.yaml",
+      // Makefile
+      "punctuation.separator.key-value.makefile",
+      // Shell (sh)
+      "punctuation.definition.logical-expression.shell",
+      "punctuation.definition.string.begin.shell",
+      "punctuation.definition.string.end.shell"
+    ],
+    "settings": {
+      "foreground": "#aa8060"
     }
   },
 
@@ -171,116 +190,42 @@
 
   {
     "scope": [
-      "constant.language",
-      "constant.numeric.decimal",
-      "constant.character.escape",
-      "storage.modifier.pointer",
-      "constant.character.escape.json.comments",
-      // Makefile
-      "meta.scope.function-call.makefile"
+      "keyword.other.phpdoc"
     ],
     "settings": {
-      //"foreground": "#a9301e",
-      "foreground": "#d35d41",
-      "fontStyle": "normal"
+      "foreground": "#777777",
+      "fontStyle": "bold"
     }
   },
 
   {
     "scope": [
-      "variable",
-      "variable.name",
-      "variable.other",
-      "meta.attribute",
-      "entity.name.variable.field",
-      "entity.name.variable.local",
-      "entity.name.variable.property",
-      "entity.name.variable.parameter",
-      "entity.other.attribute-name.localname.xml",
-      "string.constant.other.placeholder",
-      "support.type.property-name.json.comments",
-      // Makefile
-      "variable.other.makefile"
-    ],
-    "settings": {
-      "foreground": "#edcd98",
-      "fontStyle": "normal"
-    }
-  },
-
-  {
-    "scope": [
-      // PHP (php)
-      "entity.name.function.php",
-      "support.function.array.php",
-      "support.function.constructor.php",
-      "support.function.errorfunc.php",
-      "support.function.file.php",
-      "support.function.filter.php",
-      "support.function.string.php",
-      "support.function.url.php"
-    ],
-    "settings": {
-      "foreground": "#e3b794",
-      "fontStyle": "normal"
-    }
-  },
-
-  {
-    "scope": [
-      "storage.type",
-      "keyword.operator.regexp",
-      "string.regexp.character-class",
-      // PHP (php)
-      "keyword.other.type.php",
-      "entity.name.type.class.php",
-      "support.class.exception.php",
-      "support.class.php",
-      "support.class.builtin.php"
-    ],
-    "settings": {
-      "foreground": "#caad79",
-      "fontStyle": "normal"
-    }
-  },
-
-  {
-    "scope": [
-      "keyword.operator.wordlike",
-      "keyword.operator.functionlike",
-      "constant.language.json.comments",
-      "storage.modifier.reference",
-      // C++ (cpp)
-      "keyword.operator.cpp",
+      "support.class",
+      "entity.name.type.class",
+      "entity.name.type.trait",
+      "entity.other.inherited-class",
+      "keyword.other.type",
       // YAML (yml)
-      "punctuation.definition.block.sequence.item.yaml"
+      "constant.numeric.integer.yaml",
+      "punctuation.definition.block.sequence.item.yaml",
+      // Shell (sh)
+      "string.other.math.shell",
+      "string.interpolated.dollar.shell"
     ],
     "settings": {
-      "foreground": "#b18ccf",
-      "fontStyle": "normal"
+      "foreground": "#ccc281"
     }
   },
 
   {
     "scope": [
-      // PHP (php)
-      "constant.other.php",
-      "support.constant.ext.php"
+      "constant.character.escape",
+      "keyword.operator.regexp",
+      "string.regexp.character-class"
     ],
     "settings": {
-      "foreground": "#dac573",
-      "fontStyle": "normal"
-    }
-  },
-
-  {
-    "scope": [
-      "string.quoted.double",
-      "string.quoted.single",
-      "string.regexp.single-quoted"
-    ],
-    "settings": {
-      "foreground": "#ebdbb2"
+      "foreground": "#ccc281",
+      "fontStyle": "bold"
     }
   }
 ],
@@ -367,7 +312,7 @@
   "tab.unfocusedInactiveForeground": "#928374",
   // EDITOR
   "editor.background": "#21201d",
-  "editor.foreground": "#baae8f",
+  "editor.foreground": "#Baae8f",
   "editorLineNumber.foreground": "#665c54",
   "editorLineNumber.activeForeground": "#baae8f",
   "editorCursor.foreground": "#baae8f",
@@ -506,5 +451,4 @@
   "textLink.activeForeground": "#458588",
   "debugToolBar.background": "#21201d"
 }
-
 }
