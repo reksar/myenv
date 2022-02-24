@@ -9,6 +9,7 @@
     "scope": [
       "source.makefile",
       "source.php",
+      "source.python",
       "source.shell",
       "source.yaml",
       "text.html.markdown"
@@ -21,6 +22,8 @@
   {
     "scope": [
       "constant.other",
+      "meta.attribute",
+      "meta.function-call",
       "meta.paragraph",
       "variable.other",
       "entity.name.function",
@@ -33,6 +36,7 @@
       "keyword.operator.redirect",
       "keyword.operator.string",
       "keyword.operator.ternary",
+      "meta.function-call.arguments",
       "support.constant.ext",
       "support.function.array",
       "support.function.classobj",
@@ -46,6 +50,7 @@
       "support.function.url",
       "support.function.var",
       "support.function.zlib",
+      "variable.parameter.function",
       // PHP (php)
       "support.function.php_pcre",
       "meta.other.type.phpdoc support.class.php",
@@ -55,9 +60,12 @@
       "meta.scope.function-call.makefile",
       "meta.scope.prerequisites.makefile",
       "meta.scope.recipe.makefile",
+      "punctuation.separator.key-value.makefile",
       // Shell (sh)
       "meta.scope.if-block.shell",
-      "meta.scope.while-loop.shell"
+      "meta.scope.while-loop.shell",
+      // Python (py)
+      "keyword.operator.python"
     ],
     "settings": {
       "foreground": "#baae8f"
@@ -66,8 +74,8 @@
 
   {
     "scope": [
-      "keyword.control.import.include",
       "keyword.control.foreach",
+      "keyword.control.import",
       "keyword.other.namespace",
       "keyword.other.use",
       "keyword.other.use-as",
@@ -98,9 +106,10 @@
     "scope": [
       "keyword.control.else",
       "keyword.control.exception",
+      "keyword.control.flow",
       "keyword.control.if",
-      "keyword.other.new",
       "keyword.control.return",
+      "keyword.other.new",
       // PHP (php)
       "keyword.control.die.php",
       // Shell (sh)
@@ -126,9 +135,11 @@
       "string.quoted.single",
       "string.regexp.double-quoted",
       "string.regexp.single-quoted",
+      "punctuation.definition.string",
       // Constants
-      "constant.language",
+      "constant.numeric.dec",
       "constant.numeric.decimal",
+      "constant.language",
       "string.regexp.character-class",
       // Makefile
       "meta.scope.prerequisites.makefile",
@@ -143,34 +154,55 @@
 
   {
     "scope": [
-      "punctuation.definition.arguments.begin.bracket",
-      "punctuation.definition.arguments.end.bracket",
-      "punctuation.definition.begin.bracket",
-      "punctuation.definition.class.begin.bracket",
-      "punctuation.definition.class.end.bracket",
-      "punctuation.definition.end.bracket",
-      "punctuation.definition.heading",
-      "punctuation.definition.raw",
-      "punctuation.definition.variable",
-      "punctuation.definition.parameters.begin.bracket",
-      "punctuation.definition.parameters.end.bracket",
-      "punctuation.section.array.begin",
-      "punctuation.section.array.end",
-      "punctuation.separator.delimiter",
       "keyword.operator.class",
       "keyword.operator.error-control",
+      "keyword.operator.unpacking",
+      "punctuation.accessor",
+      "punctuation.parenthesis",
+      "punctuation.definition.arguments",
+      "punctuation.definition.begin.bracket",
+      "punctuation.definition.block",
+      "punctuation.definition.class.begin.bracket",
+      "punctuation.definition.class.end.bracket",
+      "punctuation.definition.dict",
+      "punctuation.definition.list",
+      "punctuation.definition.end.bracket",
+      "punctuation.definition.inheritance",
+      "punctuation.definition.heading",
+      "punctuation.definition.mapping",
+      "punctuation.definition.raw",
+      "punctuation.definition.variable",
+      "punctuation.definition.parameters",
+      "punctuation.section.array",
+      "punctuation.section.class",
+      "punctuation.section.function",
+      "punctuation.separator.arguments",
+      "punctuation.separator.annotation.result",
+      "punctuation.separator.colon",
+      "punctuation.separator.comma",
+      "punctuation.separator.delimiter",
+      "punctuation.separator.dict",
+      "punctuation.separator.element",
+      "punctuation.separator.parameters",
+      "punctuation.separator.period",
+      "punctuation.terminator.statement",
+      "constant.character.format.placeholder.other",
+      // Markdown (md)
+      "punctuation.definition.link.title.begin.markdown",
+      "punctuation.definition.link.title.end.markdown",
+      "punctuation.definition.metadata.markdown",
       // PHP (php)
       "keyword.operator.return-value.php",
       "punctuation.separator.inheritance.php",
       "punctuation.terminator.expression.php",
       // YAML (yml)
       "punctuation.separator.key-value.mapping.yaml",
-      // Makefile
-      "punctuation.separator.key-value.makefile",
+      "punctuation.definition.block.sequence.item.yaml",
       // Shell (sh)
       "punctuation.definition.logical-expression.shell",
-      "punctuation.definition.string.begin.shell",
-      "punctuation.definition.string.end.shell"
+      // Javascript (js)
+      "meta.brace.round.js",
+      "meta.brace.square.js"
     ],
     "settings": {
       "foreground": "#aa8060"
@@ -180,7 +212,8 @@
   {
     "scope": [
       "comment",
-      "punctuation.definition.comment"
+      "punctuation.definition.comment",
+      "string.quoted.docstring.multi"
     ],
     "settings": {
       "foreground": "#777777",
@@ -188,15 +221,6 @@
     }
   },
 
-  {
-    "scope": [
-      "keyword.other.phpdoc"
-    ],
-    "settings": {
-      "foreground": "#777777",
-      "fontStyle": "bold"
-    }
-  },
 
   {
     "scope": [
@@ -207,7 +231,7 @@
       "keyword.other.type",
       // YAML (yml)
       "constant.numeric.integer.yaml",
-      "punctuation.definition.block.sequence.item.yaml",
+      "entity.other.document.begin.yaml",
       // Shell (sh)
       "string.other.math.shell",
       "string.interpolated.dollar.shell"
@@ -221,11 +245,43 @@
     "scope": [
       "constant.character.escape",
       "keyword.operator.regexp",
-      "string.regexp.character-class"
+      "string.regexp.character-class",
+      "storage.type.string"
     ],
     "settings": {
       "foreground": "#ccc281",
       "fontStyle": "bold"
+    }
+  },
+
+  {
+    "scope": [
+      // PHP (php)
+      "keyword.other.phpdoc"
+    ],
+    "settings": {
+      "foreground": "#777777",
+      "fontStyle": "bold"
+    }
+  },
+
+  {
+    "scope": [
+      // Markdown (md)
+      "string.other.link.title.markdown"
+    ],
+    "settings": {
+      "foreground": "#449aba"
+    }
+  },
+
+  {
+    "scope": [
+      "markup.underline.link"
+    ],
+    "settings": {
+      "foreground": "#449aba",
+      "fontStyle": "underline"
     }
   }
 ],
