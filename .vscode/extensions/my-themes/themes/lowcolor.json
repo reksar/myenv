@@ -65,7 +65,9 @@
       "meta.scope.if-block.shell",
       "meta.scope.while-loop.shell",
       // Python (py)
-      "keyword.operator.python"
+      "keyword.operator.python",
+      "meta.fstring.python",
+      "meta.indexed-name.python"
     ],
     "settings": {
       "foreground": "#baae8f"
@@ -121,7 +123,9 @@
       // Makefile
       "entity.name.function.target.makefile",
       // Markdown (md)
-      "entity.name.section.markdown"
+      "entity.name.section.markdown",
+      // Python (py)
+      "storage.type.function.lambda.python"
     ],
     "settings": {
       "foreground": "#baae8f",
@@ -164,6 +168,7 @@
       "punctuation.definition.block",
       "punctuation.definition.class.begin.bracket",
       "punctuation.definition.class.end.bracket",
+      "punctuation.definition.decorator",
       "punctuation.definition.dict",
       "punctuation.definition.list",
       "punctuation.definition.end.bracket",
