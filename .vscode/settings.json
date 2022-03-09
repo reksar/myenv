@@ -1,15 +1,16 @@
 {
   "editor.tabSize": 4,
-  "editor.insertSpaces": false,
+  "editor.insertSpaces": "auto",
+
   "editor.wordWrapColumn": 80,
   "editor.rulers": [80],
 
-  "terminal.integrated.fontSize": 18,
-  "workbench.iconTheme": "vs-seti",
-  "editor.fontSize": 18,
-  "window.zoomLevel": 0,
-  "git.ignoreMissingGitWarning": true,
   "terminal.integrated.shell.windows": "C:\\Windows\\System32\\cmd.exe",
+  "terminal.integrated.fontSize": 18,
+  "editor.fontSize": 18,
+
+  "workbench.iconTheme": "vs-seti",
+  "git.ignoreMissingGitWarning": true,
 
   "[json]": {
     "editor.tabSize": 2
@@ -51,7 +52,7 @@
   "debug.console.closeOnEnd": true,
   "terminal.integrated.tabs.enabled": false,
 
-  // Extensinos
+  // --- Extensinos ---
 
   // Vim
   "vim.useSystemClipboard": true,
