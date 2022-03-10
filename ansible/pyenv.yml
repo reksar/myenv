@@ -1,0 +1,44 @@
+- hosts: local
+
+  tasks:
+
+  - name: APT downgrade permissions
+    copy:
+      content: |
+        Acquire::AllowReleaseInfoChange "true";
+        Acquire::AllowInsecureRepositories "true";
+        Acquire::AllowDowngradeToInsecureRepositories "true";
+      dest: /etc/apt/apt.conf.d/99downgrade
+    when: ansible_pkg_mgr == 'apt'
+    register: result
+    become: true
+
+  - name: Install packages for building the Python
+    package:
+      state: present
+      name:
+        - make
+        - build-essential
+        - libssl-dev
+        - zlib1g-dev
+        - libbz2-dev
+        - libreadline-dev
+        - libsqlite3-dev
+        - wget
+        - curl
+        - llvm
+        - libncursesw5-dev
+        - xz-utils
+        - tk-dev
+        - libxml2-dev
+        - libxmlsec1-dev
+        - libffi-dev
+        - liblzma-dev
+    become: true
+
+  - name: APT restore permissions
+    file:
+      path: /etc/apt/apt.conf.d/99downgrade
+      state: absent
+    when: result is success
+    become: true

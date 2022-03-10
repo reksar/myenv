@@ -1,6 +1,6 @@
 ---
 
-- hosts: my_hosts
+- hosts: local
 
   vars:
     myconf: "{{ playbook_dir | dirname }}"
