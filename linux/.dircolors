@@ -57,7 +57,7 @@ TERM xterm*
 #FILE 00	# regular file: use no color at all
 RESET 0		# reset to "normal" color
 
-DIR 40;33;01 # directory
+DIR 33;01
 STICKY_OTHER_WRITABLE 40;33;01 # dir that is sticky and other-writable (+t,o+w)
 OTHER_WRITABLE 40;33;01 # dir that is other-writable (o+w) and not sticky
 
@@ -76,7 +76,7 @@ SETGID 30;42	# file that is setgid (g+s)
 CAPABILITY 30;41	# file with capability
 STICKY 37;44	# dir with the sticky bit set (+t) and not other-writable
 
-# This is for files with execute permission:
+# Executable permission
 EXEC 01;32
 
 # List any file extensions like '.gz' or '.tar' that you would like ls
@@ -94,52 +94,52 @@ EXEC 01;32
 #.sh  01;32
 #.csh 01;32
 
- # archives or compressed (bright yellow)
-.tar 40;33;01
-.tgz 40;33;01
-.arc 40;33;01
-.arj 40;33;01
-.taz 40;33;01
-.lha 40;33;01
-.lz4 40;33;01
-.lzh 40;33;01
-.lzma 40;33;01
-.tlz 40;33;01
-.txz 40;33;01
-.tzo 40;33;01
-.t7z 40;33;01
-.zip 40;33;01
-.z   40;33;01
-.Z   40;33;01
-.dz  40;33;01
-.gz  40;33;01
-.lrz 40;33;01
-.lz  40;33;01
-.lzo 40;33;01
-.xz  40;33;01
-.zst 40;33;01
-.tzst 40;33;01
-.bz2 40;33;01
-.bz  40;33;01
-.tbz 40;33;01
-.tbz2 40;33;01
-.tz  40;33;01
-.deb 40;33;01
-.rpm 40;33;01
-.jar 40;33;01
-.war 40;33;01
-.ear 40;33;01
-.sar 40;33;01
-.rar 40;33;01
-.alz 40;33;01
-.ace 40;33;01
-.zoo 40;33;01
-.cpio 40;33;01
-.7z  40;33;01
-.rz  40;33;01
-.cab 40;33;01
+ # Archives or Compressed
+.tar 33;01
+.tgz 33;01
+.arc 33;01
+.arj 33;01
+.taz 33;01
+.lha 33;01
+.lz4 33;01
+.lzh 33;01
+.lzma 33;01
+.tlz 33;01
+.txz 33;01
+.tzo 33;01
+.t7z 33;01
+.zip 33;01
+.z   33;01
+.Z   33;01
+.dz  33;01
+.gz  33;01
+.lrz 33;01
+.lz  33;01
+.lzo 33;01
+.xz  33;01
+.zst 33;01
+.tzst 33;01
+.bz2 33;01
+.bz  33;01
+.tbz 33;01
+.tbz2 33;01
+.tz  33;01
+.deb 33;01
+.rpm 33;01
+.jar 33;01
+.war 33;01
+.ear 33;01
+.sar 33;01
+.rar 33;01
+.alz 33;01
+.ace 33;01
+.zoo 33;01
+.cpio 33;01
+.7z  33;01
+.rz  33;01
+.cab 33;01
 
-# image formats
+# Images
 .jpg 01;35
 .jpeg 01;35
 .mjpg 01;35
@@ -192,7 +192,7 @@ EXEC 01;32
 .ogv 01;35
 .ogx 01;35
 
-# audio formats
+# Audio
 .aac 00;36
 .au 00;36
 .flac 00;36
@@ -212,9 +212,11 @@ EXEC 01;32
 .spx 00;36
 .xspf 00;36
 
-# Text files
+# Text
 .txt 37;01
 .md 37;01
 .log 37;01
 .conf 37;01
+.cfg 37;01
+.json 37;01
 
