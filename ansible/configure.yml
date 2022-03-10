@@ -64,8 +64,8 @@
     when: desktop is match(".*/lxqt")
     vars:
       mimeapps: ~/.config/mimeapps.list
-    block:
 
+    block:
       - name: Configure Vim desktop entry
         vars:
           vim_desktop: in-vim.desktop
@@ -86,28 +86,28 @@
             - application/x-yaml
             - application/x-shellscript
             - application/x-desktop
+
         block:
-        - name: Add Vim desktop entry
-          file:
-            src: "{{ myconf }}/linux/lxqt/{{ vim_desktop }}"
-            dest: "~/.local/share/applications/{{ vim_desktop }}"
-            state: link
-        - name: Associate MIME types with Vim desktop entry
-          loop: "{{ mimetypes }}"
-          ini_file:
-            path: "{{ mimeapps }}"
-            section: Default Applications
-            option: "{{ item }}"
-            value: "{{ vim_desktop }};"
-        - name: Clear associations that conflicts with Vim
-          loop: "{{ mimetypes }}"
-          ini_file:
-            path: "{{ mimeapps }}"
-            section: Added Associations
-            option: "{{ item }}"
-            state: absent
+          - name: Add Vim desktop entry
+            file:
+              src: "{{ myconf }}/linux/lxqt/{{ vim_desktop }}"
+              dest: "~/.local/share/applications/{{ vim_desktop }}"
+              state: link
+          - name: Associate MIME types with Vim desktop entry
+            loop: "{{ mimetypes }}"
+            ini_file:
+              path: "{{ mimeapps }}"
+              section: Default Applications
+              option: "{{ item }}"
+              value: "{{ vim_desktop }};"
+          - name: Clear associations that conflicts with Vim
+            loop: "{{ mimetypes }}"
+            ini_file:
+              path: "{{ mimeapps }}"
+              section: Added Associations
+              option: "{{ item }}"
+              state: absent
 
       - name: Update desktop database
         shell: update-desktop-database
         become: true
-
