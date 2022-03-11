@@ -1,7 +1,5 @@
-.DEFAULT_GOAL := configure
-
-.PHONY: configure
-configure:
+.PHONY: conf
+conf:
 	ansible-playbook \
 		--ask-become-pass \
 		-i ansible/hosts \
@@ -17,4 +15,4 @@ pyenv:
 .PHONY: clean
 clean:
 	# Ansible creates *.retry files when something goes wrong.
-	find . -type f -name '*.retry' -delete
+	find ./ansible/ -type f -name '*.retry' -delete
