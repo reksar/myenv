@@ -1,6 +1,10 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
+# for examples.
+
+# Usually the ~/.bash_profile (for tty login) and the ~/.profile (for desktop
+# login) are sourcing the ~/.bashrc, so all stuff is here instead of
+# separating it in 3 files.
 
 # If not running interactively, don't do anything
 case $- in
@@ -12,12 +16,12 @@ esac
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
 
-# append to the history file, don't overwrite it
-shopt -s histappend
-
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=1000
 HISTFILESIZE=2000
+
+# append to the history file, don't overwrite it
+shopt -s histappend
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -27,22 +31,14 @@ shopt -s checkwinsize
 # match all files and zero or more directories and subdirectories.
 #shopt -s globstar
 
-# make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-# set variable identifying the chroot you work in (used in the prompt below)
-if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
-    debian_chroot=$(cat /etc/debian_chroot)
-fi
+# --- Bash prompt ------------------------------------------------------------
 
-
-#--- Bash promt --------------------------------------------------------------
-
-get_current_git_branch() {
+current_git_branch() {
   git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1) /'
 }
 
-set_bash_prompt() {
+colored_bash_prompt() {
 
   # Must come first!
   local last_status_code=$?
@@ -56,7 +52,8 @@ set_bash_prompt() {
 
   local exit_status_icon="$exit_status_color$exit_status_char"
 
-  if [[ $EUID == 0 ]]; then
+  if [[ $EUID == 0 ]]
+  then
 		# super user
 		local host_color=$RED
     local host_name="\\h"
@@ -67,7 +64,8 @@ set_bash_prompt() {
 		local promt_marker='$'
   fi
 
-  if [[ $last_status_code == 0 ]]; then
+  if [[ $last_status_code == 0 ]]
+  then
     local status_color=$WHITE
 		local status_text=""
   else
@@ -75,58 +73,72 @@ set_bash_prompt() {
 		local status_text="ERR $last_status_code "
   fi
 
-  local last_status="$status_color$status_text"
-  local working_dir="$YELLOW\\w "
-  local git_branch="$GREEN$(get_current_git_branch)"
+  local status="$status_color$status_text"
+  local workdir="$YELLOW\\w "
+  local git_branch="$GREEN$(current_git_branch)"
 
-  if test -z "$VIRTUAL_ENV" ; then
+  if test -z "$VIRTUAL_ENV"
+  then
 	  local python_venv=""
   else
 		local python_venv="${YELLOW}[`basename \"$VIRTUAL_ENV\"`] "
   fi
 
-  PS1="\n$working_dir$git_branch$python_venv$last_status$promt_marker "
+  PS1="\n$workdir$git_branch$python_venv$status$promt_marker "
   PS1+="$RESET_COLOR"
 }
 
+simple_bash_prompt() {
 
-# If this is an xterm set the promt to user@host:dir
-case "$TERM" in
-  xterm*|rxvt*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-    ;;
-  *)
-    ;;
-esac
+  if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]
+  then
+    # set variable identifying the chroot you work in
+    local debian_chroot=$(cat /etc/debian_chroot)
+  fi
 
-case "$TERM" in
-  xterm-color|*-256color)
-    is_term_colored=yes
-    ;;
-esac
+  PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+}
 
-if [ "$is_term_colored" = yes ]; then
+# ----------------------------------------------------------------------------
 
-  # set a fancy prompt
-  PROMPT_COMMAND='set_bash_prompt'
 
-  # colored GCC warnings and errors
-  export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+# --- Colors -----------------------------------------------------------------
+export_gcc_colors() {
+  GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32'
+  GCC_COLORS+=':locus=01:quote=01'
+  export GCC_COLORS
+}
 
-else
-  PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+colorize() {
+
+  case "$TERM" in
+    xterm-color|*-256color)
+      local is_term_colored=yes
+      ;;
+  esac
+
+  if [ "$is_term_colored" = yes ]
+  then
+    PROMPT_COMMAND='colored_bash_prompt'
+    export_gcc_colors
+  else
+    simple_bash_prompt
+  fi
+}
+
+colorize
+# ----------------------------------------------------------------------------
+
+
+if [ -d ~/.pyenv ]
+then
+  export PATH="$HOME/.pyenv/bin:$PATH"
+  eval "$(pyenv init --path)"
+  eval "$(pyenv virtualenv-init -)"
 fi
 
-
-# Alias definitions.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-if [ -f ~/.bash_aliases ]; then
-  . ~/.bash_aliases
-fi
-
-
-unset is_term_colored
-
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -139,3 +151,9 @@ if ! shopt -oq posix; then
   fi
 fi
 
+# Alias definitions.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+if [ -f ~/.bash_aliases ]
+then
+  . ~/.bash_aliases
+fi
