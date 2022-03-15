@@ -1,5 +1,6 @@
 [core]
 	editor = vim
+	filemode = false
 [user]
 	email = reksarka@gmail.com
 	name = reksarka
