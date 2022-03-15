@@ -11,11 +11,11 @@
 
   - name: Link configs at ~
     loop:
-      - linux/.bashrc
-      - linux/.bash_aliases
-      - linux/.dircolors
-      - linux/.gitconfig
-      - linux/.tmux.conf
+      - linux/home/.bashrc
+      - linux/home/.bash_aliases
+      - linux/home/.dircolors
+      - linux/home/.gitconfig
+      - linux/home/.tmux.conf
       - vim/.vim
       - vim/.vimrc
     file:
@@ -23,6 +23,10 @@
       dest: "~/{{ item | basename }}"
       state: link
       force: true
+
+  - name: Set the python alias for python3
+    command: "{{ myconf }}/linux/python-alias.sh"
+    become: true
 
   - name: Ensure docker group exists
     group:
