@@ -24,22 +24,30 @@
       state: link
       force: true
 
-  - name: Set the python alias for python3
-    command: "{{ myconf }}/linux/python-alias.sh"
-    become: true
+  - block:
+    - name: Make the python-alias.sh executable
+      file:
+        path: "{{ myconf }}/linux/python-alias.sh"
+        mode: +x
 
-  - name: Ensure docker group exists
-    group:
-      name: docker
-      state: present
+    - name: Set the python alias for python3
+      command: "{{ myconf }}/linux/python-alias.sh"
+      become: true
+
+  - name: Configure Docker
     become: true
-  - name: Ensure current user in docker group
-    user:
-      name: "{{ user }}"
-      groups:
-        docker
-      append: true
-    become: true
+    block:
+    - name: Ensure docker group exists
+      group:
+        name: docker
+        state: present
+
+    - name: Ensure current user in docker group
+      user:
+        name: "{{ user }}"
+        groups:
+          docker
+        append: true
 
   - name: Configure QTerminal
     block:
@@ -47,12 +55,14 @@
         stat:
           path: /usr/share/qtermwidget5/color-schemes/
         register: qtermcolors
+
       - name: Copy QTerminal colorscheme
         when: qtermcolors.stat.exists
         copy:
           src: "{{ myconf }}/linux/lxqt/QTerminal.colorscheme"
           dest: "{{ qtermcolors.stat.path }}"
         become: true
+
       - name: Set QTerminal colors
         when: qtermcolors.stat.exists
         loop:
@@ -66,13 +76,11 @@
 
   - name: Configure LXQT desktop environment
     when: desktop is match(".*/lxqt")
-    vars:
-      mimeapps: ~/.config/mimeapps.list
-
     block:
       - name: Configure Vim desktop entry
         vars:
           vim_desktop: in-vim.desktop
+          mimeapps: ~/.config/mimeapps.list
           mimetypes:
             - text/plain
             - text/markdown
@@ -90,13 +98,13 @@
             - application/x-yaml
             - application/x-shellscript
             - application/x-desktop
-
         block:
           - name: Add Vim desktop entry
             file:
               src: "{{ myconf }}/linux/lxqt/{{ vim_desktop }}"
               dest: "~/.local/share/applications/{{ vim_desktop }}"
               state: link
+
           - name: Associate MIME types with Vim desktop entry
             loop: "{{ mimetypes }}"
             ini_file:
@@ -104,6 +112,7 @@
               section: Default Applications
               option: "{{ item }}"
               value: "{{ vim_desktop }};"
+
           - name: Clear associations that conflicts with Vim
             loop: "{{ mimetypes }}"
             ini_file:

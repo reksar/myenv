@@ -3,7 +3,7 @@ conf:
 	ansible-playbook \
 		--ask-become-pass \
 		-i ansible/hosts \
-		ansible/configure.yml
+		ansible/conf.yml
 
 .PHONY: pyenv
 pyenv:
