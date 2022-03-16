@@ -3,13 +3,41 @@
 # Sets the python alias to python3 if possible.
 
 major_version() {
-  $1 --version | grep -Eo '[0-9]{1,}' | head -1
+  echo $1 | grep -Eo '[0-9]{1,}' | head -1
 }
 
-if [[ `which python` ]] && [[ `major_version python` == 3 ]]
+max_priority() {
+  echo $1 | grep 'Priority:' | grep -Eo '[0-9]{1,}' | sort -n | tail -1
+}
+
+priority() {
+
+  local priority=1
+
+  alternatives=`update-alternatives --query $1`
+
+  if [[ $? == 0 ]]
+  then
+    ((priority+=`max_priority "$alternatives"`))
+  fi
+
+  echo $priority
+}
+
+
+# Exit if major of `python --version` is 3.
+if [[ `which python` ]]
 then
-  echo The python alias is already set to python3
-  exit 0
+  # Sometimes there is a `python` alias (e.g. in pyenv),
+  # but calling it gives an error.
+
+  python_version=`python --version`
+
+  if [[ $? == 0 ]] && [[ `major_version "$python_version"` == 3 ]]
+  then
+    echo The python alias is already set to python3
+    exit 0
+  fi
 fi
 
 python3=`which python3`
@@ -20,4 +48,5 @@ then
   exit 1
 fi
 
-update-alternatives --force --install /usr/bin/python python $python3 3
+update-alternatives --force --install /usr/bin/python python $python3 \
+  `priority python`
