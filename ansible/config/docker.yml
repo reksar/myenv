@@ -1,0 +1,13 @@
+- name: Ensure docker group exists
+  group:
+    name: docker
+    state: present
+  become: true
+
+- name: Ensure current user in docker group
+  user:
+    name: "{{ user }}"
+    groups:
+      docker
+    append: true
+  become: true

@@ -1,0 +1,32 @@
+---
+
+- hosts: local
+
+  vars:
+    myconf: "{{ playbook_dir | dirname | dirname }}"
+    user: "{{ lookup('env', 'USER') }}"
+    desktop: "{{ lookup('env', 'DESKTOP_SESSION') }}"
+
+  tasks:
+
+  - name: Link configs at ~
+    loop:
+      - linux/home/.bashrc
+      - linux/home/.bash_aliases
+      - linux/home/.dircolors
+      - linux/home/.tmux.conf
+      - vim/.vim
+      - vim/.vimrc
+    file:
+      src: "{{ myconf }}/{{ item }}"
+      dest: "~/{{ item | basename }}"
+      state: link
+      force: true
+
+  - include_tasks: git.yml
+  - include_tasks: python.yml
+  - include_tasks: docker.yml
+  - include_tasks: qterminal.yml
+
+  - include_tasks: lxqt.yml
+    when: desktop is match(".*/lxqt")

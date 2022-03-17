@@ -21,7 +21,7 @@ cd myconf
 
 ## Using
 
-- `make conf` - configure Linux
+- `make config` - configure Linux
 
 - `make pyenv` - install [pyenv](https://github.com/pyenv/pyenv)
 

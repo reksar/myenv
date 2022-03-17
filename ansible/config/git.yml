@@ -1,0 +1,11 @@
+- name: git config
+  loop:
+    - {key: "user.name", val: "reksarka"}
+    - {key: "user.email", val: "reksarka@gmail.com"}
+    - {key: "core.editor", val: "vim"}
+    - {key: "core.filemode", val: "false"}
+    - {key: "color.pager", val: "true"}
+  git_config:
+    name: "{{ item.key }}"
+    value: "{{ item.val }}"
+    scope: global

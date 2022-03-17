@@ -1,0 +1,24 @@
+- block:
+  - name: Ensure QTerminal colors dir exists
+    stat:
+      path: /usr/share/qtermwidget5/color-schemes/
+    register: qtermcolors
+
+  - name: Copy QTerminal colorscheme
+    when: qtermcolors.stat.exists
+    copy:
+      src: "{{ myconf }}/linux/lxqt/QTerminal.colorscheme"
+      dest: "{{ qtermcolors.stat.path }}"
+    become: true
+
+  # TODO: check when qterminal is active
+  - name: Set QTerminal colors
+    when: qtermcolors.stat.exists
+    loop:
+      - {key: "Term", val: "xterm-256color"}
+      - {key: "colorScheme", val: "QTerminal"}
+    ini_file:
+      path: ~/.config/qterminal.org/qterminal.ini
+      section: General
+      option: "{{ item.key }}"
+      value: "{{ item.val }}"

@@ -1,9 +1,9 @@
-.PHONY: conf
-conf:
+.PHONY: config
+config:
 	ansible-playbook \
 		--ask-become-pass \
 		-i ansible/hosts \
-		ansible/conf.yml
+		ansible/config/main.yml
 
 .PHONY: pyenv
 pyenv:
