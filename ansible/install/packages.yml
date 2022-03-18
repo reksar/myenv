@@ -1,0 +1,29 @@
+# Install packages provided in the {{ packages }} variable.
+
+- name: Install packages with APT
+  when: ansible_pkg_mgr == "apt"
+  become: true
+  vars:
+    # Used in pre- and postinstall tasks.
+    apt_config: /etc/apt/apt.conf.d/99pyenvtmp
+  block:
+    # Sometimes APT can't update due to repo security reasons.
+    # This preinstall task fixes the problem.
+    - name: APT downgrade permissions
+      copy:
+        content: |
+          Acquire::AllowReleaseInfoChange "true";
+          Acquire::AllowInsecureRepositories "true";
+          Acquire::AllowDowngradeToInsecureRepositories "true";
+        dest: "{{ apt_config }}"
+
+    - name: Install packages with APT
+      package:
+        name: "{{ packages }}"
+        state: present
+
+    # This postinstall task restores a preinstall changes.
+    - name: APT restore permissions
+      file:
+        path: "{{ apt_config }}"
+        state: absent

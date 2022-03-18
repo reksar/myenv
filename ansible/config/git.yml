@@ -1,11 +1,87 @@
+- name: For Debian/Ubuntu set the libsecret as credential_helper
+  when: ansible_distribution == "Debian" or ansible_distribution == "Ubuntu"
+  vars:
+    git_libsecret_dir: /usr/share/doc/git/contrib/credential/libsecret
+    git_libsecret_exe: "{{ git_libsecret_dir }}/git-credential-libsecret"
+  block:
+
+  - name: Stat {{ git_libsecret_exe }}
+    stat:
+      path: "{{ git_libsecret_exe }}"
+    register: git_libsecret_exe_stat
+
+  - name: Fact {{ git_libsecret_exe }} exists
+    set_fact:
+      git_libsecret_exe_exists: "{{ git_libsecret_exe_stat.stat.exists }}"
+
+  - name: Try to build the git-credential-libsecret
+    when: not git_libsecret_exe_exists
+    block:
+
+    # The libsecret-dev package requires the libsecret-* packages,
+    # so installing it installs all required dependencies.
+    - name: Install libsecret-dev package
+      block:
+
+      - name: aptitude search libsecret-dev
+        shell: "aptitude search '~S~n^libsecret-(dev)$' -F%p"
+        check_mode: yes
+        register: aptitude
+
+      - name: Install libsecret-dev package
+        include_tasks: "{{ myconf }}/ansible/install/packages.yml"
+        vars:
+          packages: "{{ aptitude.stdout }}"
+
+    - name: Build the libsecret for Git
+      block:
+
+      # The {{ git_libsecret_dir }}/Makefile may be installed with a libsecret
+      # packages, even without the libsecret-dev pakage, but it is useless
+      # without the dev package.
+      - name: Make {{ git_libsecret_exe }}
+        make:
+          chdir: "{{ git_libsecret_dir }}"
+        become: true
+
+      - name: Stat {{ git_libsecret_exe }}
+        stat:
+          path: "{{ git_libsecret_exe }}"
+        register: git_libsecret_exe_stat
+
+      - name: Fact {{ git_libsecret_exe }} exists
+        set_fact:
+          git_libsecret_exe_exists: "{{ git_libsecret_exe_stat.stat.exists }}"
+
+  - name: Setting up the {{ git_libsecret_exe }}
+    when: git_libsecret_exe_exists
+    block:
+
+    - name: Ensure {{ git_libsecret_exe }} executable
+      file:
+        path: "{{ git_libsecret_exe }}"
+        mode: +x
+      become: true
+
+    - name: Set credential_helper to {{ git_libsecret_exe }}
+      set_fact:
+        credential_helper: "{{ git_libsecret_exe }}"
+
 - name: git config
-  loop:
+  block:
+
+  - set_fact:
+      credential_helper: store
+    when: credential_helper is undefined
+
+  - loop:
     - {key: "user.name", val: "reksarka"}
     - {key: "user.email", val: "reksarka@gmail.com"}
     - {key: "core.editor", val: "vim"}
     - {key: "core.filemode", val: "false"}
     - {key: "color.pager", val: "true"}
-  git_config:
-    name: "{{ item.key }}"
-    value: "{{ item.val }}"
-    scope: global
+    - {key: "credential.helper", val: "{{ credential_helper }}"}
+    git_config:
+      name: "{{ item.key }}"
+      value: "{{ item.val }}"
+      scope: global

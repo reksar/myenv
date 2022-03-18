@@ -23,6 +23,14 @@
       state: link
       force: true
 
+  # Some of these packages are used in tasks below.
+  - name: Install basic packages with APT
+    include_tasks: "{{ myconf }}/ansible/install/packages.yml"
+    vars:
+      packages:
+        - aptitude
+        - deborphan
+
   - include_tasks: git.yml
   - include_tasks: python.yml
   - include_tasks: docker.yml

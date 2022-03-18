@@ -10,7 +10,7 @@ pyenv:
 	ansible-playbook \
 		--ask-become-pass \
 		-i ansible/hosts \
-		ansible/pyenv.yml
+		ansible/install/pyenv.yml
 
 .PHONY: clean
 clean:
