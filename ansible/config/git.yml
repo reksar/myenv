@@ -23,9 +23,9 @@
     - name: Install libsecret-dev package
       block:
 
-      - name: aptitude search libsecret-dev
+      - name: aptitude search libsecret-*dev
         shell: "aptitude search '~S~n^libsecret-(dev)$' -F%p"
-        check_mode: yes
+        changed_when: false
         register: aptitude
 
       - name: Install libsecret-dev package

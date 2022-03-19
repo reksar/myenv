@@ -17,7 +17,7 @@
           Acquire::AllowDowngradeToInsecureRepositories "true";
         dest: "{{ apt_config }}"
 
-    - name: Install packages with APT
+    - name: Install with APT {{ packages }}
       package:
         name: "{{ packages }}"
         state: present
