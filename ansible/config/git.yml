@@ -75,8 +75,8 @@
     when: credential_helper is undefined
 
   - loop:
-    - {key: "user.name", val: "reksarka"}
-    - {key: "user.email", val: "reksarka@gmail.com"}
+    - {key: "user.name", val: "{{ settings.user.name }}"}
+    - {key: "user.email", val: "{{ settings.user.email }}"}
     - {key: "core.editor", val: "vim"}
     - {key: "core.filemode", val: "false"}
     - {key: "color.pager", val: "true"}

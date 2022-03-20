@@ -1,25 +1,27 @@
 # My conf
 
-Configures Linux workspace with 
+Configures the Linux workspace with 
 [Ansible](https://docs.ansible.com/ansible/latest/index.html):
 
-- Adds `~/.vimrc` and `~/.vim/` from [Vim](https://github.com/reksar/vim) 
-submodule.
+* Makes links at `~` to the:
+    - `linux/home/*` dotfiles
+    - `.vimrc` and `.vim/` from the [Vim](https://github.com/reksar/vim) 
+    submodule
 
-- Ships configuration files from `linux` dir as a *links*.
-
-- Makes some extra configuration, described in `ansible/configure.yml`.
+* Makes extra config, described in `ansible/config/*.yml`
 
 
 ## Getting
 
 ```
 git clone --recurse-submodules https://github.com/reksar/myconf.git
-
-cd myconf
 ```
 
 ## Using
+
+**Note:** edit the `ansible/settings.yml` if nedded.
+
+**Note:** Ansible asks for `sudo` password for a tasks with `become: true`.
 
 - `make config` - configure Linux
 

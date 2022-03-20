@@ -2,12 +2,18 @@
 
 - hosts: local
 
+  # High-level vars are available in a nested tasks.
   vars:
     myconf: "{{ playbook_dir | dirname | dirname }}"
     user: "{{ lookup('env', 'USER') }}"
     desktop: "{{ lookup('env', 'DESKTOP_SESSION') }}"
 
   tasks:
+
+  - name: Settings
+    include_vars:
+      file: "{{ myconf }}/ansible/settings.yml"
+      name: settings
 
   - name: Link configs at ~
     loop:
