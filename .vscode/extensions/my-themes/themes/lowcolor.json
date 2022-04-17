@@ -53,6 +53,7 @@
       "variable.parameter.function",
       // PHP (php)
       "support.function.php_pcre",
+      "support.function.magic.php",
       "meta.other.type.phpdoc support.class.php",
       // YAML (yml)
       "string.unquoted.plain.out.yaml",
@@ -76,7 +77,6 @@
 
   {
     "scope": [
-      "keyword.control.foreach",
       "keyword.control.import",
       "keyword.other.namespace",
       "keyword.other.use",
@@ -93,6 +93,7 @@
       "storage.type.php",
       "variable.language.this",
       // Makefile
+      "support.function.eval.makefile",
       "support.function.shell.makefile",
       "support.function.target.PHONY.makefile",
       // Shell (sh)
@@ -109,11 +110,15 @@
       "keyword.control.else",
       "keyword.control.exception",
       "keyword.control.flow",
+      "keyword.control.foreach",
       "keyword.control.if",
       "keyword.control.return",
+      "keyword.control.while",
       "keyword.other.new",
+      "keyword.control.yield-from",
       // PHP (php)
       "keyword.control.die.php",
+      "keyword.operator.logical.php",
       // Shell (sh)
       "keyword.control.shell",
       // Dockerfile
@@ -198,6 +203,7 @@
       "punctuation.definition.metadata.markdown",
       // PHP (php)
       "keyword.operator.return-value.php",
+      "meta.function.parameters.php",
       "punctuation.separator.inheritance.php",
       "punctuation.terminator.expression.php",
       // YAML (yml)
