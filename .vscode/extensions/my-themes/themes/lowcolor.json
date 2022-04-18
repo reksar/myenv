@@ -58,6 +58,7 @@
       // YAML (yml)
       "string.unquoted.plain.out.yaml",
       // Makefile
+      "meta.scope.conditional.makefile",
       "meta.scope.function-call.makefile",
       "meta.scope.prerequisites.makefile",
       "meta.scope.recipe.makefile",
@@ -93,8 +94,11 @@
       "storage.type.php",
       "variable.language.this",
       // Makefile
+      "keyword.control.define.makefile",
+      "keyword.control.override.makefile",
       "support.function.eval.makefile",
       "support.function.shell.makefile",
+      "support.function.target.ONESHELL.makefile",
       "support.function.target.PHONY.makefile",
       // Shell (sh)
       "support.function.builtin.shell"
