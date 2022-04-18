@@ -59,6 +59,9 @@
     "**/tmp/**": true,
     "**/venv/**": true
   },
+  "files.exclude": {
+    "**/__pycache__/**": true
+  },
   "problems.exclude": {
     "**/__pycache__/**": true,
     "**/build/**": true,
