@@ -51,6 +51,22 @@
   "debug.showInStatusBar": "always",
   "debug.console.closeOnEnd": true,
   "terminal.integrated.tabs.enabled": false,
+  "files.watcherExclude": {
+    "**/__pycache__/**": true,
+    "**/build/**": true,
+    "**/dist/**": true,
+    "**/node_modules/**": true,
+    "**/tmp/**": true,
+    "**/venv/**": true
+  },
+  "problems.exclude": {
+    "**/__pycache__/**": true,
+    "**/build/**": true,
+    "**/dist/**": true,
+    "**/node_modules/**": true,
+    "**/tmp/**": true,
+    "**/venv/**": true
+  },
 
   // --- Extensinos ---
 
@@ -58,6 +74,7 @@
   "vim.useSystemClipboard": true,
 
   // TODO Highlight
+  "todohighlight.isCaseSensitive": true,
   "todohighlight.keywords": [
     {
       "text": "TODO:",
@@ -70,5 +87,29 @@
       "backgroundColor": "#e46b27",
       "overviewRulerColor": "#e46b27"
     }
+  ],
+  "todohighlight.include": [
+    "**/*.html",
+    "**/*.css",
+    "**/*.c",
+    "**/*.cpp",
+    "**/*.cxx",
+    "**/*.h",
+    "**/*.hpp",
+    "**/*.js",
+    "**/*.jsx",
+    "**/*.php",
+    "**/*.py",
+    "**/*.scss",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "todohighlight.exclude": [
+    "**/__pycache__/**",
+    "**/build/**",
+    "**/dist/**",
+    "**/node_modules/**",
+    "**/tmp/**",
+    "**/venv/**"
   ]
 }
