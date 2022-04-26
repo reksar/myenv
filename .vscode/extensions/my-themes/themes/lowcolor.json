@@ -134,6 +134,7 @@
       // Markdown (md)
       "entity.name.section.markdown",
       // Python (py)
+      "keyword.operator.logical.python",
       "storage.type.function.lambda.python"
     ],
     "settings": {
@@ -201,6 +202,8 @@
       "punctuation.separator.period",
       "punctuation.terminator.statement",
       "constant.character.format.placeholder.other",
+      // Makefile
+      "variable.language.makefile",
       // Markdown (md)
       "punctuation.definition.link.title.begin.markdown",
       "punctuation.definition.link.title.end.markdown",
@@ -235,7 +238,6 @@
       "fontStyle": "italic"
     }
   },
-
 
   {
     "scope": [
