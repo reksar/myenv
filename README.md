@@ -30,9 +30,15 @@ git clone --recurse-submodules https://github.com/reksar/myconf.git
 
 ### Install software
 
-#### `install.sh pyenv`
+#### Linux
+
+##### `install.sh pyenv`
 
 [pyenv](https://github.com/pyenv/pyenv)
+
+#### Windows
+
+##### `install.bat python`
 
 ### Cleanup
 
