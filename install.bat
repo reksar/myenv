@@ -8,8 +8,7 @@ rem  Inits env vars, then runs:
 rem
 rem    %MYCONF%\windows\scripts\install\[script] 
 
-call "%~dp0init.bat"
-if not %MYERR% EQU 0 goto :EOF
+call "%~dp0init.bat" || goto :EOF
 
 setlocal
 
