@@ -5,6 +5,18 @@
   "editor.wordWrapColumn": 80,
   "editor.rulers": [80],
 
+  // The Colorization of 'ALL' Bracket-pairs
+  "editor.bracketPairColorization.enabled": false,
+  // The Colorization of 'ACTIVE' Bracket-pairs
+  "editor.guides.highlightActiveBracketPair": true,
+  // The Colorization of 'ACTIVE' indent-guides
+  "editor.guides.highlightActiveIndentation": true,
+  // The Colorization of 'INACTIVE' indent-guides
+  // Note: this is usually set as a very dark or dim-transparent color
+  "editor.guides.indentation": false,
+  // A border that that wraps the bracket-pairs in a box.
+  "editor.guides.bracketPairs": false,
+
   "terminal.integrated.shell.windows": "C:\\Windows\\System32\\cmd.exe",
   "terminal.integrated.fontSize": 18,
   "editor.fontSize": 18,
