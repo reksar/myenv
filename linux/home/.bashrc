@@ -137,12 +137,13 @@ if [ -d ~/.pyenv ]
 then
   export PATH="$HOME/.pyenv/bin:$PATH"
   eval "$(pyenv init --path)"
-  eval "$(pyenv virtualenv-init -)"
+  #eval "$(pyenv virtualenv-init -)"
+  #exec "$SHELL"
 fi
 
 export PATH=".:$PATH"
 
-# make less more friendly for non-text input files, see lesspipe(1)
+# Make `less` more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # enable programmable completion features (you don't need to enable
