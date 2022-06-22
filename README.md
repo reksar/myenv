@@ -1,7 +1,10 @@
 # My conf
 
-Configures the Linux workspace with 
-[Ansible](https://docs.ansible.com/ansible/latest/index.html):
+Configures a working environment with 
+[Ansible](https://docs.ansible.com/ansible/latest/index.html)
+
+
+## Linux
 
 * Makes links at `~` to the:
   - `linux/home/*` dotfiles

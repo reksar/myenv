@@ -1,8 +1,0 @@
-- name: Make the python-alias.sh executable
-  file:
-    path: "{{ myconf }}/linux/python-alias.sh"
-    mode: +x
-
-- name: Set the python alias for python3
-  command: "{{ myconf }}/linux/python-alias.sh"
-  become: true
