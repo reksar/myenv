@@ -1,3 +1,5 @@
 user:
   name: reksarka
   email: reksarka@gmail.com
+  src: ~/app/src
+  run: ~/app/run
