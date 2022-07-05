@@ -5,42 +5,50 @@
 
   tasks:
 
-  - name: Settings common
-    include_vars:
-      file: "{{ myconf }}/ansible/settings.yml"
-      name: settings
-
-  - name: Settings nvim
-    set_fact:
-      nvim:
-        path: "{{ settings.user.run }}/nvim"
-        src: "{{ settings.user.src }}/neovim"
-        repo: "https://github.com/neovim/neovim.git"
-
-  # TODO: check which nvim instead
-  - name: Check nvim path exists
-    stat:
-      path: "{{ nvim.path }}"
-    register: nvim_path
-
-  - name: nvim path exists
-    when: nvim_path.stat.exists
-    debug:
-      msg: |
-        "Stopped. To proceed, delete the '{{ nvim.path }}'."
-        "Optionally you can delete or update the '{{ nvim.src }}' repo."
-
-  - name: Build and install the nvim
-    when: not nvim_path.stat.exists
+  - name: Settings
     block:
 
-    - name: Get neovim sources
-      git:
-        repo: "{{ nvim.repo }}"
-        dest: "{{ nvim.src }}"
-        version: stable
-        # Clone if not exists, but do not update automatically
-        update: no
+    - name: Settings common
+      include_vars:
+        file: "{{ myconf }}/ansible/settings.yml"
+        name: settings
+
+    - name: Settings nvim
+      set_fact:
+        nvim:
+          repo: "https://github.com/neovim/neovim.git"
+          src: "{{ settings.user.src }}/neovim"
+          dest: "{{ settings.user.run }}/nvim"
+
+  - name: Initial check
+    block:
+
+    - name: Check nvim already exists
+      shell:
+        cmd: which nvim
+      register: which_nvim
+      failed_when: false
+      changed_when: false
+
+    - set_fact:
+        nvim_exists: "{{ which_nvim.stderr == 0 and which_nvim.stdout != '' }}"
+
+    - debug:
+        msg: |
+          "Uninstall nvim before!"
+          "Delete/update '{{ nvim.src }}' optionally."
+      when: nvim_exists
+
+    - name: Check nvim already built
+      stat:
+        path: "{{ nvim.src }}/build/bin/nvim"
+      register: nvim_exe
+
+  - name: Build nvim
+    when:
+      - not nvim_exists
+      - not nvim_exe.stat.exists
+    block:
 
     # See https://github.com/neovim/neovim/wiki/Building-Neovim#build-prerequisites
     - name: Install packages for building nvim
@@ -60,10 +68,25 @@
           - curl
           - doxygen
 
+    - name: Get neovim sources
+      git:
+        repo: "{{ nvim.repo }}"
+        dest: "{{ nvim.src }}"
+        version: stable
+        # Clone if not exists, but do not update automatically
+        update: no
+
     - name: Build nvim
       make:
         chdir: "{{ nvim.src }}"
         params:
           CMAKE_BUILD_TYPE: "Release"
-          CMAKE_INSTALL_PREFIX: "{{ nvim.path }}"
+          CMAKE_INSTALL_PREFIX: "{{ nvim.dest }}"
           USE_BUNDLED: "ON"
+
+  - name: Install nvim
+    when: not nvim_exists
+    make:
+      chdir: "{{ nvim.src }}"
+      target: install
+    become: true

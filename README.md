@@ -39,6 +39,8 @@ git clone --recurse-submodules https://github.com/reksar/myconf.git
 
 [pyenv](https://github.com/pyenv/pyenv)
 
+##### `install.sh nvim`
+
 #### Windows
 
 ##### `install.bat python`
