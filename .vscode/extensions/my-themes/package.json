@@ -13,6 +13,16 @@
   "contributes": {
     "themes": [
       {
+        "label": "Alexstraza dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/alexstraza-dark.json"
+      },
+      {
+        "label": "Alexstraza light",
+        "uiTheme": "vs-light",
+        "path": "./themes/alexstraza-light.json"
+      },
+      {
         "label": "Motley",
         "uiTheme": "vs-dark",
         "path": "./themes/motley.json"

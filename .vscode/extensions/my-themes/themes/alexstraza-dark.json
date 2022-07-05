@@ -1,75 +1,35 @@
 {
-"name": "Low Color",
+"name": "Alexstraza dark",
 "type": "dark",
 
-"semanticHighlighting": true,
+"semanticHighlighting": false,
 
 "tokenColors": [
   {
     "scope": [
-      "source.makefile",
-      "source.php",
-      "source.python",
-      "source.shell",
-      "source.yaml",
-      "text.html.markdown"
+      "keyword.control",
+      "markup.bold",
+      "keyword.operator.new",
+      "entity.name.section.markdown"
     ],
     "settings": {
-      "foreground": "#96925f"
+      "fontStyle": "bold"
     }
   },
 
   {
     "scope": [
-      "constant.other",
-      "meta.attribute",
-      "meta.function-call",
-      "meta.paragraph",
-      "variable.other",
-      "entity.name.function",
-      "keyword.operator.arithmetic",
-      "keyword.operator.assignment",
-      "keyword.operator.comparison",
-      "keyword.operator.key",
-      "keyword.operator.logical",
-      "keyword.operator.null-coalescing",
-      "keyword.operator.redirect",
-      "keyword.operator.string",
-      "keyword.operator.ternary",
-      "meta.function-call.arguments",
-      "support.constant.ext",
-      "support.function.array",
-      "support.function.classobj",
-      "support.function.constructor",
-      "support.function.errorfunc",
-      "support.function.file",
-      "support.function.filter",
-      "support.function.info",
-      "support.function.streamsfuncs",
-      "support.function.string",
-      "support.function.url",
-      "support.function.var",
-      "support.function.zlib",
-      "variable.parameter.function",
-      // PHP (php)
-      "support.function.php_pcre",
-      "support.function.magic.php",
-      "meta.other.type.phpdoc support.class.php",
-      // YAML (yml)
-      "string.unquoted.plain.out.yaml",
-      // Makefile
-      "meta.scope.conditional.makefile",
-      "meta.scope.function-call.makefile",
-      "meta.scope.prerequisites.makefile",
-      "meta.scope.recipe.makefile",
-      "punctuation.separator.key-value.makefile",
-      // Shell (sh)
-      "meta.scope.if-block.shell",
-      "meta.scope.while-loop.shell",
-      // Python (py)
-      "keyword.operator.python",
-      "meta.fstring.python",
-      "meta.indexed-name.python"
+      "markup.italic"
+    ],
+    "settings": {
+      "fontStyle": "italic"
+    }
+  },
+
+  {
+    "scope": [
+      "constant.other.placeholder",
+      "support.type.python"
     ],
     "settings": {
       "foreground": "#baae8f"
@@ -78,88 +38,18 @@
 
   {
     "scope": [
-      "keyword.control.import",
-      "keyword.other.namespace",
-      "keyword.other.use",
-      "keyword.other.use-as",
-      "storage.modifier",
-      "storage.type.class",
-      "storage.type.const",
-      "storage.type.function",
-      "storage.type.trait",
-      "support.function.basic_functions",
-      "support.function.construct",
-      // PHP (php)
-      "punctuation.section.embedded.begin.php",
-      "storage.type.php",
-      "variable.language.this",
-      // Makefile
-      "keyword.control.define.makefile",
-      "keyword.control.override.makefile",
-      "support.function.eval.makefile",
-      "support.function.shell.makefile",
-      "support.function.target.ONESHELL.makefile",
-      "support.function.target.PHONY.makefile",
-      // Shell (sh)
-      "support.function.builtin.shell"
+      "comment"
     ],
     "settings": {
-      "foreground": "#baae8f",
-      "fontStyle": "italic"
+      "foreground": "#8a8a8a"
     }
   },
 
   {
     "scope": [
-      "keyword.control.else",
-      "keyword.control.exception",
-      "keyword.control.flow",
-      "keyword.control.foreach",
-      "keyword.control.if",
-      "keyword.control.return",
-      "keyword.control.while",
-      "keyword.other.new",
-      "keyword.control.yield-from",
-      // PHP (php)
-      "keyword.control.die.php",
-      "keyword.operator.logical.php",
-      // Shell (sh)
-      "keyword.control.shell",
-      // Dockerfile
-      "keyword.other.special-method.dockerfile",
-      // YAML (yml)
-      "entity.name.tag.yaml",
-      // Makefile
-      "entity.name.function.target.makefile",
-      // Markdown (md)
-      "entity.name.section.markdown",
-      // Python (py)
-      "keyword.operator.logical.python",
-      "storage.type.function.lambda.python"
-    ],
-    "settings": {
-      "foreground": "#baae8f",
-      "fontStyle": "bold"
-    }
-  },
-
-  {
-    "scope": [
-      "string.quoted.double",
-      "string.quoted.single",
-      "string.regexp.double-quoted",
-      "string.regexp.single-quoted",
-      "punctuation.definition.string",
-      // Constants
-      "constant.numeric.dec",
-      "constant.numeric.decimal",
-      "constant.language",
-      "string.regexp.character-class",
-      // Makefile
-      "meta.scope.prerequisites.makefile",
-      // Markdown (md)
-      "markup.inline.raw.string",
-      "markup.fenced_code.block"
+      "string",
+      "constant",
+      "markup.inline.raw.string.markdown"
     ],
     "settings": {
       "foreground": "#edcd98"
@@ -168,137 +58,37 @@
 
   {
     "scope": [
-      "keyword.operator.class",
-      "keyword.operator.error-control",
-      "keyword.operator.unpacking",
-      "punctuation.accessor",
+      "type",
+      "storage.modifier",
+      "storage.type",
+      "constant.character.escape",
+      "entity.name.type",
+      "punctuation.definition.decorator.python"
+    ],
+    "settings": {
+      "foreground": "#687b6d"
+    }
+  },
+
+  {
+    "scope": [
       "punctuation.parenthesis",
       "punctuation.definition.arguments",
-      "punctuation.definition.begin.bracket",
-      "punctuation.definition.block",
-      "punctuation.definition.class.begin.bracket",
-      "punctuation.definition.class.end.bracket",
-      "punctuation.definition.decorator",
-      "punctuation.definition.dict",
+      "punctuation.definition.capture",
       "punctuation.definition.list",
-      "punctuation.definition.end.bracket",
-      "punctuation.definition.inheritance",
-      "punctuation.definition.heading",
-      "punctuation.definition.mapping",
-      "punctuation.definition.raw",
-      "punctuation.definition.variable",
       "punctuation.definition.parameters",
-      "punctuation.section.array",
-      "punctuation.section.class",
-      "punctuation.section.function",
-      "punctuation.separator.arguments",
-      "punctuation.separator.annotation.result",
-      "punctuation.separator.colon",
-      "punctuation.separator.comma",
-      "punctuation.separator.delimiter",
-      "punctuation.separator.dict",
-      "punctuation.separator.element",
-      "punctuation.separator.parameters",
-      "punctuation.separator.period",
-      "punctuation.terminator.statement",
-      "constant.character.format.placeholder.other",
-      // Makefile
-      "variable.language.makefile",
-      // Markdown (md)
-      "punctuation.definition.link.title.begin.markdown",
-      "punctuation.definition.link.title.end.markdown",
-      "punctuation.definition.metadata.markdown",
-      // PHP (php)
-      "keyword.operator.return-value.php",
-      "meta.function.parameters.php",
-      "punctuation.separator.inheritance.php",
-      "punctuation.terminator.expression.php",
-      // YAML (yml)
-      "punctuation.separator.key-value.mapping.yaml",
-      "punctuation.definition.block.sequence.item.yaml",
-      // Shell (sh)
-      "punctuation.definition.logical-expression.shell",
-      // Javascript (js)
-      "meta.brace.round.js",
-      "meta.brace.square.js"
+      "punctuation.section.arguments",
+      "punctuation.section.block",
+      "punctuation.section.parameters",
+      "punctuation.section.parens",
+      "punctuation.definition.link",
+      "punctuation.definition.metadata",
+      "punctuation.definition.heading.markdown",
+      "punctuation.definition.begin.bracket.square",
+      "punctuation.definition.end.bracket.square"
     ],
     "settings": {
-      "foreground": "#aa8060"
-    }
-  },
-
-  {
-    "scope": [
-      "comment",
-      "punctuation.definition.comment",
-      "string.quoted.docstring.multi"
-    ],
-    "settings": {
-      "foreground": "#777777",
-      "fontStyle": "italic"
-    }
-  },
-
-  {
-    "scope": [
-      "support.class",
-      "entity.name.type.class",
-      "entity.name.type.trait",
-      "entity.other.inherited-class",
-      "keyword.other.type",
-      // YAML (yml)
-      "constant.numeric.integer.yaml",
-      "entity.other.document.begin.yaml",
-      // Shell (sh)
-      "string.other.math.shell",
-      "string.interpolated.dollar.shell"
-    ],
-    "settings": {
-      "foreground": "#ccc281"
-    }
-  },
-
-  {
-    "scope": [
-      "constant.character.escape",
-      "keyword.operator.regexp",
-      "string.regexp.character-class",
-      "storage.type.string"
-    ],
-    "settings": {
-      "foreground": "#ccc281",
-      "fontStyle": "bold"
-    }
-  },
-
-  {
-    "scope": [
-      // PHP (php)
-      "keyword.other.phpdoc"
-    ],
-    "settings": {
-      "foreground": "#777777",
-      "fontStyle": "bold"
-    }
-  },
-
-  {
-    "scope": [
-      // Markdown (md)
-      "string.other.link.title.markdown"
-    ],
-    "settings": {
-      "foreground": "#449aba"
-    }
-  },
-
-  {
-    "scope": [
-      "markup.underline.link"
-    ],
-    "settings": {
-      "foreground": "#449aba",
-      "fontStyle": "underline"
+      "foreground": "#a75b51"
     }
   }
 ],
