@@ -2,26 +2,9 @@
 
 # Sets the python alias to python3 if possible.
 
+
 major_version() {
   echo $1 | grep -Eo '[0-9]{1,}' | head -1
-}
-
-max_priority() {
-  echo $1 | grep 'Priority:' | grep -Eo '[0-9]{1,}' | sort -n | tail -1
-}
-
-priority() {
-
-  local priority=1
-
-  alternatives=`update-alternatives --query $1`
-
-  if [[ $? == 0 ]]
-  then
-    ((priority+=`max_priority "$alternatives"`))
-  fi
-
-  echo $priority
 }
 
 
@@ -48,5 +31,5 @@ then
   exit 1
 fi
 
-update-alternatives --force --install /usr/bin/python python $python3 \
-  `priority python`
+. alternatives.sh
+alt_install python $python3
