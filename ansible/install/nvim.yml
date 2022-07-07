@@ -82,17 +82,20 @@
             CMAKE_INSTALL_PREFIX: "{{ nvim.dest }}"
             USE_BUNDLED: "ON"
 
-    - name: Check nvim installation
-      stat:
-        path: "{{ nvim.dest }}/bin/nvim"
-      register: dest
+    - name: Install
+      block:
 
-    - name: Install nvim
-      when: not dest.stat.exists
-      make:
-        chdir: "{{ nvim.src }}"
-        target: install
-      become: true
+      - name: Check nvim installation
+        stat:
+          path: "{{ nvim.dest }}/bin/nvim"
+        register: dest
+
+      - name: Install nvim
+        when: not dest.stat.exists
+        make:
+          chdir: "{{ nvim.src }}"
+          target: install
+        become: true
 
     - name: update-alternatives
       block:
@@ -114,3 +117,40 @@
           link: /usr/bin/nvim
           priority: "{{ nvim_alt_priority.stdout | int }}"
         become: true
+
+  - name: Setup
+    vars:
+      runtime_dir: "{{ nvim.dest }}/share/nvim/runtime"
+      # From :call stdpath('config')
+      config_dir: "~/.config/nvim"
+    block:
+
+    - name: Check nvim runtime
+      stat:
+        path: "{{ runtime_dir }}"
+      register: runtime
+
+    - name: Ensure {{ config_dir }}/init.vim
+      when: runtime.stat.exists
+      lineinfile:
+        path: "{{ config_dir }}/init.vim"
+        line: source ~/.vimrc
+        create: yes
+
+    # Restore permissions after installing as root
+    - name: Reset nvim dir permissions
+      when: runtime.stat.exists
+      file:
+        path: "{{ nvim.dest }}"
+        owner: "{{ settings.user.name }}"
+        group: "{{ settings.user.name }}"
+        recurse: yes
+      become: true
+
+    - name: Add my Vim pack
+      when: runtime.stat.exists
+      file:
+        src: "{{ myconf }}/vim/.vim/pack/reksar"
+        dest: "{{ runtime_dir }}/pack/reksar"
+        state: link
+        force: true
