@@ -1,11 +1,11 @@
 [Desktop Entry]
 Type=Application
-Name=in Vim
-GenericName=Open in Vim
-Comment=Open in Vim
-Icon=gvim
-TryExec=vim
-Exec=bash -c "qterminal -w $(dirname $1) -e vim $1" -a %f
+Name=in nVim
+GenericName=Open in nVim
+Comment=Open in nVim
+Icon=nvim
+TryExec=nvim
+Exec=bash -c "qterminal -w $(dirname $1) -e nvim $1" -a %f
 Terminal=false
 Categories=Utility;TextEditor;
 Keywords=Text;Editor;

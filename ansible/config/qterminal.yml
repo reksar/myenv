@@ -1,4 +1,6 @@
-- block:
+- name: Set colors
+  block:
+
   - name: Ensure QTerminal colors dir exists
     stat:
       path: /usr/share/qtermwidget5/color-schemes/
@@ -11,7 +13,7 @@
       dest: "{{ qtermcolors.stat.path }}"
     become: true
 
-  # TODO: check when qterminal is active
+  # FIXME: when qterminal is active
   - name: Set QTerminal colors
     when: qtermcolors.stat.exists
     loop:

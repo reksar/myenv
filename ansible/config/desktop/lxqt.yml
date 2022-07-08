@@ -1,0 +1,70 @@
+- name: Configure (n)Vim desktop entry
+  vars:
+    mimeapps: ~/.config/mimeapps.list
+    mimetypes:
+      - text/plain
+      - text/markdown
+      - text/css
+      - text/x-scss
+      - text/x-python
+      - text/x-python3
+      - text/x-makefile
+      - text/x-chdr
+      - text/x-csrc
+      - text/x-c++hdr
+      - text/x-c++src
+      - application/javascript
+      - application/json
+      - application/x-yaml
+      - application/x-shellscript
+      - application/x-desktop
+
+  block:
+
+  - name: Check nvim exists
+    shell:
+      cmd: which nvim
+    register: nvim
+    failed_when: false
+    changed_when: false
+
+  - set_fact:
+      nvim_exists: "{{ nvim.rc == 0 and nvim.stdout != '' }}"
+
+  - name: Set nvim desktop entry
+    when: nvim_exists
+    set_fact:
+      desktop_entry: in-nvim.desktop
+
+  - name: Set vim desktop entry
+    when: not nvim_exists
+    set_fact:
+      desktop_entry: in-vim.desktop
+
+  - name: Add {{ desktop_entry }}
+    file:
+      src: "{{ myconf }}/linux/lxqt/{{ desktop_entry }}"
+      dest: "~/.local/share/applications/{{ desktop_entry }}"
+      state: link
+
+  - name: Associate MIME types with {{ desktop_entry }}
+    loop: "{{ mimetypes }}"
+    ini_file:
+      path: "{{ mimeapps }}"
+      section: Default Applications
+      option: "{{ item }}"
+      value: "{{ desktop_entry }};"
+
+  - name: Clear associations that conflicts with {{ desktop_entry }} 
+    loop: "{{ mimetypes }}"
+    ini_file:
+      path: "{{ mimeapps }}"
+      section: Added Associations
+      option: "{{ item }}"
+      state: absent
+
+- name: Update desktop database
+  shell: update-desktop-database
+  become: true
+  register: upd
+  changed_when: upd.stdout != ''

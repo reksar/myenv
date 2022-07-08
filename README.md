@@ -41,6 +41,8 @@ git clone --recurse-submodules https://github.com/reksar/myconf.git
 
 ##### `install.sh nvim`
 
+**Note:** run `config.sh` to update desktop (n)Vim settings.
+
 #### Windows
 
 ##### `install.bat python`
