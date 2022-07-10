@@ -1,0 +1,56 @@
+- name: nvim config
+  vars:
+    nvim_dir: "{{ settings.user.run }}/nvim"
+    runtime_dir: "{{ nvim_dir }}/share/nvim/runtime"
+    # From :call stdpath('config')
+    config_dir: "~/.config/nvim"
+  block:
+
+  - name: Check nvim runtime
+    stat:
+      path: "{{ runtime_dir }}"
+    register: runtime
+
+  # Restore permissions after installing as root
+  - name: Reset nvim dir permissions
+    when: runtime.stat.exists
+    file:
+      path: "{{ nvim_dir }}"
+      owner: "{{ settings.user.name }}"
+      group: "{{ settings.user.name }}"
+      recurse: yes
+    become: true
+
+  - name: Ensure {{ config_dir }}/init.lua
+    when: runtime.stat.exists
+    block:
+
+    - name: Ensure {{ config_dir }}
+      file:
+        path: "{{ config_dir }}"
+        state: directory
+        recurse: true
+
+    - name: Ensure {{ config_dir }}/init.lua
+      file:
+        src: "{{ myenv }}/nvim/init.lua"
+        dest: "{{ config_dir }}/init.lua"
+        state: link
+        force: true
+
+  - name: Add reksar's Vim pack
+    when: runtime.stat.exists
+    file:
+      src: "{{ myenv }}/vim/.vim/pack/reksar"
+      dest: "{{ runtime_dir }}/pack/reksar"
+      state: link
+      force: true
+
+- name: (n)vim config for desktop environment
+  vars:
+    desktop: "{{ lookup('env', 'DESKTOP_SESSION') }}"
+  block:
+
+  - name: (n)vim config for LXQt
+    when: desktop is match(".*/lxqt")
+    include_tasks: nvim-lxqt.yml

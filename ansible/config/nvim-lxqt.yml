@@ -43,7 +43,7 @@
 
   - name: Add {{ desktop_entry }}
     file:
-      src: "{{ myconf }}/linux/lxqt/{{ desktop_entry }}"
+      src: "{{ myenv }}/linux/lxqt/{{ desktop_entry }}"
       dest: "~/.local/share/applications/{{ desktop_entry }}"
       state: link
 

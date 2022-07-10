@@ -9,7 +9,7 @@
   - name: Copy QTerminal colorscheme
     when: qtermcolors.stat.exists
     copy:
-      src: "{{ myconf }}/linux/lxqt/QTerminal.colorscheme"
+      src: "{{ myenv }}/linux/lxqt/QTerminal.colorscheme"
       dest: "{{ qtermcolors.stat.path }}"
     become: true
 

@@ -4,14 +4,14 @@
 
   # High-level vars are available in a nested tasks.
   vars:
-    myconf: "{{ playbook_dir | dirname | dirname }}"
+    myenv: "{{ playbook_dir | dirname | dirname }}"
     user: "{{ lookup('env', 'USER') }}"
 
   tasks:
 
   - name: Settings
     include_vars:
-      file: "{{ myconf }}/ansible/settings.yml"
+      file: "{{ myenv }}/ansible/settings.yml"
       name: settings
 
   - name: Link configs at ~
@@ -23,14 +23,14 @@
       - vim/.vim
       - vim/.vimrc
     file:
-      src: "{{ myconf }}/{{ item }}"
+      src: "{{ myenv }}/{{ item }}"
       dest: "~/{{ item | basename }}"
       state: link
       force: true
 
   # Some of these packages are used in tasks below.
   - name: Install basic packages with APT
-    include_tasks: "{{ myconf }}/ansible/install/packages.yml"
+    include_tasks: "{{ myenv }}/ansible/install/packages.yml"
     vars:
       packages:
         - aptitude
@@ -39,4 +39,4 @@
   - include_tasks: git.yml
   - include_tasks: docker.yml
   - include_tasks: qterminal.yml
-  - include_tasks: desktop/main.yml
+  - include_tasks: nvim.yml

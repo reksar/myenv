@@ -1,6 +1,6 @@
-# My conf
+# My ENV
 
-Configures a working environment with 
+Configures working environment with 
 [Ansible](https://docs.ansible.com/ansible/latest/index.html)
 
 
@@ -18,7 +18,7 @@ Configures a working environment with
 ## Getting
 
 ```
-git clone --recurse-submodules https://github.com/reksar/myconf.git
+git clone --recurse-submodules https://github.com/reksar/myenv.git
 ```
 
 ## Using
@@ -29,17 +29,17 @@ git clone --recurse-submodules https://github.com/reksar/myconf.git
 
 ### Configure Linux workspace
 
-`config.sh`
+`config`
 
 ### Install software
 
 #### Linux
 
-##### `install.sh pyenv`
+##### `ensure pyenv`
 
 [pyenv](https://github.com/pyenv/pyenv)
 
-##### `install.sh nvim`
+##### `ensure nvim`
 
 **Note:** run `config.sh` to update desktop (n)Vim settings.
 
@@ -49,4 +49,4 @@ git clone --recurse-submodules https://github.com/reksar/myconf.git
 
 ### Cleanup
 
-`clean.sh`
+`clean`

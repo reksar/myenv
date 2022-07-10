@@ -1,7 +1,7 @@
 - hosts: local
 
   vars:
-    myconf: "{{ playbook_dir | dirname | dirname }}"
+    myenv: "{{ playbook_dir | dirname | dirname }}"
 
   tasks:
 
@@ -10,7 +10,7 @@
 
     - name: Settings common
       include_vars:
-        file: "{{ myconf }}/ansible/settings.yml"
+        file: "{{ myenv }}/ansible/settings.yml"
         name: settings
 
     - name: Settings nvim
@@ -102,7 +102,7 @@
 
       - name: Calc alternative priority for nvim
         vars:
-          alt_functions: "{{ myconf }}/linux/scripts/alternatives.sh"
+          alt_functions: "{{ myenv }}/linux/scripts/alternatives.sh"
         shell:
           cmd: ". {{ alt_functions }} && alt_increment_priority nvim"
           executable: /bin/bash
@@ -118,41 +118,4 @@
           priority: "{{ nvim_alt_priority.stdout | int }}"
         become: true
 
-  - name: Setup
-    vars:
-      runtime_dir: "{{ nvim.dest }}/share/nvim/runtime"
-      # From :call stdpath('config')
-      config_dir: "~/.config/nvim"
-    block:
-
-    - name: Check nvim runtime
-      stat:
-        path: "{{ runtime_dir }}"
-      register: runtime
-
-    - name: Ensure {{ config_dir }}/init.vim
-      when: runtime.stat.exists
-      lineinfile:
-        path: "{{ config_dir }}/init.vim"
-        line: source ~/.vimrc
-        create: yes
-
-    # Restore permissions after installing as root
-    - name: Reset nvim dir permissions
-      when: runtime.stat.exists
-      file:
-        path: "{{ nvim.dest }}"
-        owner: "{{ settings.user.name }}"
-        group: "{{ settings.user.name }}"
-        recurse: yes
-      become: true
-
-    - name: Add my Vim pack
-      when: runtime.stat.exists
-      file:
-        src: "{{ myconf }}/vim/.vim/pack/reksar"
-        dest: "{{ runtime_dir }}/pack/reksar"
-        state: link
-        force: true
-
-  - include_tasks: "{{ myconf }}/ansible/config/desktop/nvim.yml"
+  - include_tasks: "{{ myenv }}/ansible/config/nvim.yml"

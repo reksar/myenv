@@ -29,7 +29,7 @@
         register: aptitude
 
       - name: Install libsecret-dev package
-        include_tasks: "{{ myconf }}/ansible/install/packages.yml"
+        include_tasks: "{{ myenv }}/ansible/install/packages.yml"
         vars:
           packages: "{{ aptitude.stdout }}"
 
