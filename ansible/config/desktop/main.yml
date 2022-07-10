@@ -1,2 +1,1 @@
-- include_tasks: lxqt.yml
-  when: desktop is match(".*/lxqt")
+- include_tasks: nvim.yml

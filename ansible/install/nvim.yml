@@ -154,3 +154,5 @@
         dest: "{{ runtime_dir }}/pack/reksar"
         state: link
         force: true
+
+  - include_tasks: "{{ myconf }}/ansible/config/desktop/nvim.yml"

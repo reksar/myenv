@@ -6,7 +6,6 @@
   vars:
     myconf: "{{ playbook_dir | dirname | dirname }}"
     user: "{{ lookup('env', 'USER') }}"
-    desktop: "{{ lookup('env', 'DESKTOP_SESSION') }}"
 
   tasks:
 

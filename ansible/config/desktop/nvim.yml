@@ -1,0 +1,7 @@
+- name: Configure nvim for desktop environment
+  vars:
+    desktop: "{{ lookup('env', 'DESKTOP_SESSION') }}"
+  block:
+
+  - include_tasks: nvim-lxqt.yml
+    when: desktop is match(".*/lxqt")
