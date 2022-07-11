@@ -21,7 +21,7 @@
       recurse: yes
     become: true
 
-  - name: Ensure {{ config_dir }}/init.lua
+  - name: Ensure config files
     when: runtime.stat.exists
     block:
 
@@ -35,6 +35,13 @@
       file:
         src: "{{ myenv }}/nvim/init.lua"
         dest: "{{ config_dir }}/init.lua"
+        state: link
+        force: true
+
+    - name: Ensure {{ config_dir }}/plugs.vim
+      file:
+        src: "{{ myenv }}/nvim/plugs.vim"
+        dest: "{{ config_dir }}/plugs.vim"
         state: link
         force: true
 
