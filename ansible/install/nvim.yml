@@ -97,6 +97,7 @@
           target: install
         become: true
 
+    # TODO: set vi alias
     - name: update-alternatives
       block:
 
@@ -118,4 +119,22 @@
           priority: "{{ nvim_alt_priority.stdout | int }}"
         become: true
 
-  - include_tasks: "{{ myenv }}/ansible/config/nvim.yml"
+    # See nvim `:h clipboard`
+    - name: Install clipboard tool
+      block:
+
+      - name: Check X server is runnning
+        shell:
+          cmd: pidof X || pidof Xorg
+        register: X
+        changed_when: false
+        failed_when: false
+
+      - name: Install xsel
+        when: not X.rc
+        include_tasks: packages.yml
+        vars:
+          packages:
+            xsel
+
+    - include_tasks: "{{ myenv }}/ansible/config/nvim.yml"
