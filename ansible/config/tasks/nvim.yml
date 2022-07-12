@@ -31,17 +31,14 @@
         state: directory
         recurse: true
 
-    - name: Ensure {{ config_dir }}/init.lua
+    - name: Link configs at {{ config_dir }}
+      loop:
+        - lua
+        - init.lua
+        - plugs.vim
       file:
-        src: "{{ myenv }}/nvim/init.lua"
-        dest: "{{ config_dir }}/init.lua"
-        state: link
-        force: true
-
-    - name: Ensure {{ config_dir }}/plugs.vim
-      file:
-        src: "{{ myenv }}/nvim/plugs.vim"
-        dest: "{{ config_dir }}/plugs.vim"
+        src: "{{ myenv }}/nvim/{{ item }}"
+        dest: "{{ config_dir }}/{{ item }}"
         state: link
         force: true
 

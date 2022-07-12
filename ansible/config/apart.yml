@@ -1,0 +1,18 @@
+---
+
+- hosts: local
+
+  # High-level vars are available in a nested tasks.
+  # WARN: requires external `task` var!
+  vars:
+    myenv: "{{ playbook_dir | dirname | dirname }}"
+
+  tasks:
+
+  - name: Settings
+    include_vars:
+      file: "{{ myenv }}/ansible/settings.yml"
+      name: settings
+
+  - name: Run task - {{ task }}
+    include_tasks: "tasks/{{ task }}.yml"

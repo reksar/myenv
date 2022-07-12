@@ -6,7 +6,7 @@
 
 - name: Ensure current user in docker group
   user:
-    name: "{{ user }}"
+    name: "{{ lookup('env', 'USER') }}"
     groups:
       docker
     append: true

@@ -29,7 +29,9 @@ git clone --recurse-submodules https://github.com/reksar/myenv.git
 
 ### Configure Linux workspace
 
-`config`
+`config` to run main tasks.
+
+`config <task>` to run tasks from `ansible/config/tasks/<task>.yml`.
 
 ### Install software
 
