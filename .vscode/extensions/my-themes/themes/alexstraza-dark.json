@@ -9,8 +9,12 @@
     "scope": [
       "keyword.control",
       "markup.bold",
+      "keyword.command.batchfile",
       "keyword.operator.new",
-      "entity.name.section.markdown"
+      "entity.name.section.markdown",
+      "keyword.operator.comparison.batchfile",
+      "keyword.operator.logical.batchfile",
+      "keyword.other.special-method.batchfile"
     ],
     "settings": {
       "fontStyle": "bold"
@@ -63,6 +67,7 @@
       "storage.type",
       "constant.character.escape",
       "entity.name.type",
+      "keyword.command.rem.batchfile",
       "punctuation.definition.decorator.python"
     ],
     "settings": {
@@ -85,7 +90,10 @@
       "punctuation.definition.metadata",
       "punctuation.definition.heading.markdown",
       "punctuation.definition.begin.bracket.square",
-      "punctuation.definition.end.bracket.square"
+      "punctuation.definition.end.bracket.square",
+      "punctuation.definition.variable.batchfile",
+      "punctuation.definition.variable.begin.batchfile",
+      "punctuation.definition.variable.end.batchfile"
     ],
     "settings": {
       "foreground": "#a75b51"
