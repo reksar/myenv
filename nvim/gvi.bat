@@ -6,4 +6,4 @@ if not "%~1"=="" (
   set d=/d "%~1"
 )
 
-start %d% %~dp0nvim-qt.exe
+start %d% %~dp0nvim-qt.exe %*
