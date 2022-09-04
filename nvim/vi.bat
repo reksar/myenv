@@ -1,4 +1,10 @@
 @echo off
-set XDG_CONFIG_HOME=%~dp0..\share
-if not "%~1"=="" (cd /d "%~1")
+
+call :NVIM_ABSPATH %~dp0..
+set XDG_CONFIG_HOME=%NVIM_ABSPATH%\share
+set XDG_DATA_HOME=%XDG_CONFIG_HOME%
+set NVIM_ABSPATH=
 %~dp0nvim.exe %*
+
+:NVIM_ABSPATH
+set NVIM_ABSPATH=%~f1
