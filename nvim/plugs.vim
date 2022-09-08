@@ -14,6 +14,7 @@ endif
 
 call plug#begin(s:plug_dir)
 Plug 'neovim/nvim-lspconfig'
+Plug 'reksar/nvim-lsp-python'
 call plug#end()
 
 
