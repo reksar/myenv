@@ -1,0 +1,10 @@
+@echo off
+
+call :NVIM_ABSPATH %~dp0..
+set XDG_CONFIG_HOME=%NVIM_ABSPATH%\share
+set XDG_DATA_HOME=%XDG_CONFIG_HOME%
+set NVIM_ABSPATH=
+goto :EOF
+
+:NVIM_ABSPATH
+set NVIM_ABSPATH=%~f1
