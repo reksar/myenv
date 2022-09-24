@@ -97,28 +97,6 @@
           target: install
         become: true
 
-    # TODO: set vi alias
-    - name: update-alternatives
-      block:
-
-      - name: Calc alternative priority for nvim
-        vars:
-          alt_functions: "{{ myenv }}/linux/scripts/alternatives.sh"
-        shell:
-          cmd: ". {{ alt_functions }} && alt_increment_priority nvim"
-          executable: /bin/bash
-        register: nvim_alt_priority
-        failed_when: nvim_alt_priority.rc
-        changed_when: false
-
-      - name: Update nvim alternatives
-        alternatives:
-          name: nvim
-          path: "{{ nvim.dest }}/bin/nvim"
-          link: /usr/bin/nvim
-          priority: "{{ nvim_alt_priority.stdout | int }}"
-        become: true
-
     # See nvim `:h clipboard`
     - name: Install clipboard tool
       block:

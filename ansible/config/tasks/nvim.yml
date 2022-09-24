@@ -1,28 +1,37 @@
+- name: Check nvim dir
+  stat:
+    path: "{{ settings.user.run }}/nvim"
+  register: nvim_dir
+
+- name: Check nvim runtime
+  when: nvim_dir.stat.exists
+  stat:
+    path: "{{ nvim_dir.stat.path }}/share/nvim/runtime"
+  register: nvim_runtime
+
+- name: Check nvim bin
+  when: nvim_dir.stat.exists
+  stat:
+    path: "{{ nvim_dir.stat.path }}/bin/nvim"
+  register: nvim
+
 - name: nvim config
+  when: nvim.stat.exists and nvim_runtime.stat.exists
   vars:
-    nvim_dir: "{{ settings.user.run }}/nvim"
-    runtime_dir: "{{ nvim_dir }}/share/nvim/runtime"
     # See :call stdpath('config')
     config_dir: "~/.config/nvim"
   block:
 
-  - name: Check nvim runtime
-    stat:
-      path: "{{ runtime_dir }}"
-    register: runtime
-
   # Restore permissions after installing as root
   - name: Reset nvim dir permissions
-    when: runtime.stat.exists
     file:
-      path: "{{ nvim_dir }}"
+      path: "{{ nvim_dir.stat.path }}"
       owner: "{{ settings.user.name }}"
       group: "{{ settings.user.name }}"
       recurse: yes
     become: true
 
   - name: Ensure config files
-    when: runtime.stat.exists
     block:
 
     - name: Ensure {{ config_dir }}
@@ -42,9 +51,46 @@
         force: true
 
   - name: Add reksar's Vim pack
-    when: runtime.stat.exists
     file:
       src: "{{ myenv }}/vim/.vim/pack/reksar"
-      dest: "{{ runtime_dir }}/pack/reksar"
+      dest: "{{ nvim_runtime.stat.path }}/pack/reksar"
       state: link
       force: true
+
+  - name: update-alternatives
+    vars:
+      alt: "{{ myenv }}/linux/scripts/alternatives.sh"
+      priority: ". {{ alt }} && alt_increment_priority"
+    block:
+
+    - name: Calc alternative priority for nvim
+      shell:
+        cmd: "{{ priority }} nvim"
+        executable: /bin/bash
+      register: nvim_alt_priority
+      failed_when: nvim_alt_priority.rc
+      changed_when: false
+
+    - name: Update nvim alternatives
+      alternatives:
+        name: nvim
+        path: "{{ nvim.stat.path }}"
+        link: /usr/bin/nvim
+        priority: "{{ nvim_alt_priority.stdout | int }}"
+      become: true
+
+    - name: Calc alternative priority for vi
+      shell:
+        cmd: "{{ priority }} vi"
+        executable: /bin/bash
+      register: vi_alt_priority
+      failed_when: vi_alt_priority.rc
+      changed_when: false
+
+    - name: Update vi alternatives
+      alternatives:
+        name: vi
+        path: "{{ nvim.stat.path }}"
+        link: /usr/bin/vi
+        priority: "{{ vi_alt_priority.stdout | int }}"
+      become: true
