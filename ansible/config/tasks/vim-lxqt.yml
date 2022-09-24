@@ -1,5 +1,6 @@
-- name: Configure (n)Vim desktop entry
+- name: Configure Vim desktop entry
   vars:
+    desktop_entry: in-vim.desktop
     mimeapps: ~/.config/mimeapps.list
     mimetypes:
       - text/plain
@@ -18,28 +19,7 @@
       - application/x-yaml
       - application/x-shellscript
       - application/x-desktop
-
   block:
-
-  - name: Check nvim exists
-    shell:
-      cmd: which nvim
-    register: nvim
-    failed_when: false
-    changed_when: false
-
-  - set_fact:
-      nvim_exists: "{{ nvim.rc == 0 and nvim.stdout != '' }}"
-
-  - name: Set nvim desktop entry
-    when: nvim_exists
-    set_fact:
-      desktop_entry: in-nvim.desktop
-
-  - name: Set vim desktop entry
-    when: not nvim_exists
-    set_fact:
-      desktop_entry: in-vim.desktop
 
   - name: Add {{ desktop_entry }}
     file:

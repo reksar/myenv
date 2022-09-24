@@ -2,7 +2,7 @@
   vars:
     nvim_dir: "{{ settings.user.run }}/nvim"
     runtime_dir: "{{ nvim_dir }}/share/nvim/runtime"
-    # From :call stdpath('config')
+    # See :call stdpath('config')
     config_dir: "~/.config/nvim"
   block:
 
@@ -33,7 +33,6 @@
 
     - name: Link configs at {{ config_dir }}
       loop:
-        - lua
         - init.lua
         - plugs.vim
       file:
@@ -49,12 +48,3 @@
       dest: "{{ runtime_dir }}/pack/reksar"
       state: link
       force: true
-
-- name: (n)vim config for desktop environment
-  vars:
-    desktop: "{{ lookup('env', 'DESKTOP_SESSION') }}"
-  block:
-
-  - name: (n)vim config for LXQt
-    when: desktop is match(".*/lxqt")
-    include_tasks: nvim-lxqt.yml
