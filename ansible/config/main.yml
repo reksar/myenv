@@ -2,7 +2,7 @@
 
 - hosts: local
 
-  # High-level vars are available in a nested tasks.
+  # These high-level vars are available in a nested tasks.
   vars:
     myenv: "{{ playbook_dir | dirname | dirname }}"
 

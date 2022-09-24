@@ -2,8 +2,8 @@
 
 - hosts: local
 
-  # High-level vars are available in a nested tasks.
-  # WARN: requires external `task` var!
+  # These high-level vars are available in a nested tasks.
+  # WARN: the external `task` var is required!
   vars:
     myenv: "{{ playbook_dir | dirname | dirname }}"
 

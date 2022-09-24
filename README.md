@@ -27,11 +27,11 @@ git clone --recurse-submodules https://github.com/reksar/myenv.git
 
 **Note:** Ansible asks for `sudo` password for a tasks with `become: true`.
 
-### Configure Linux workspace
+### Configure Linux workspace with Ansible
 
 `config` to run main tasks.
 
-`config <task>` to run tasks from `ansible/config/tasks/<task>.yml`.
+`config <task>` to run specific `ansible/config/tasks/<task>.yml`.
 
 ### Install software
 

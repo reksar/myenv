@@ -1,26 +1,47 @@
-- name: Set colors
+- name: Check QTerminal ini exists
+  stat:
+    path: ~/.config/qterminal.org/qterminal.ini
+  register: ini
+
+- name: QTerminal settings
+  when: ini.stat.exists
   block:
+  # FIXME: save settings when qterminal is active
 
   - name: Ensure QTerminal colors dir exists
     stat:
       path: /usr/share/qtermwidget5/color-schemes/
-    register: qtermcolors
+    register: colors
 
-  - name: Copy QTerminal colorscheme
-    when: qtermcolors.stat.exists
-    copy:
-      src: "{{ myenv }}/linux/lxqt/QTerminal.colorscheme"
-      dest: "{{ qtermcolors.stat.path }}"
-    become: true
+  - name: Colors setup
+    when: colors.stat.exists
+    block:
 
-  # FIXME: when qterminal is active
-  - name: Set QTerminal colors
-    when: qtermcolors.stat.exists
+    - name: Copy colorscheme
+      copy:
+        src: "{{ myenv }}/linux/lxqt/QTerminal.colorscheme"
+        dest: "{{ colors.stat.path }}"
+      become: true
+
+    - name: Set colorscheme
+      loop:
+        - {key: "Term", val: "xterm-256color"}
+        - {key: "colorScheme", val: "QTerminal"}
+      ini_file:
+        path: "{{ ini.stat.path }}"
+        section: General
+        option: "{{ item.key }}"
+        value: "{{ item.val }}"
+
+  - name: Key shortcuts
     loop:
-      - {key: "Term", val: "xterm-256color"}
-      - {key: "colorScheme", val: "QTerminal"}
+        # Resolve conflicts with the console Vim.
+        # Default: `Ctrl+W`
+      - {key: "Close%20Tab", val: "Ctrl+Shift+W"}
+        # Default: `Ctrl+D`
+      - {key: "Clear%20Active%20Terminal", val: "Ctrl+Shift+D"}
     ini_file:
-      path: ~/.config/qterminal.org/qterminal.ini
-      section: General
+      path: "{{ ini.stat.path }}"
+      section: Shortcuts
       option: "{{ item.key }}"
       value: "{{ item.val }}"
