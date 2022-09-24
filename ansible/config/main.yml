@@ -39,6 +39,7 @@
       - git
       - docker
       - qterminal
+      - vim-lxqt
       - nvim
     loop_control:
       loop_var: task
