@@ -1,21 +1,35 @@
-- name: Check nvim dir
+- name: Check {{ settings.user.run }}/nvim
   stat:
     path: "{{ settings.user.run }}/nvim"
   register: nvim_dir
 
-- name: Check nvim runtime
+- name: Check {{ nvim_dir.stat.path }}/share/nvim/runtime
   when: nvim_dir.stat.exists
   stat:
     path: "{{ nvim_dir.stat.path }}/share/nvim/runtime"
   register: nvim_runtime
 
-- name: Check nvim bin
+- name: No nvim runtime
+  when: not nvim_dir.stat.exists
+  set_fact:
+    nvim_runtime:
+      stat:
+        exists: false
+
+- name: Check nvim executable
   when: nvim_dir.stat.exists
   stat:
     path: "{{ nvim_dir.stat.path }}/bin/nvim"
   register: nvim
 
-- name: nvim config
+- name: No nvim executable
+  when: not nvim_dir.stat.exists
+  set_fact:
+    nvim:
+      stat:
+        exists: false
+
+- name: Configure nvim
   when: nvim.stat.exists and nvim_runtime.stat.exists
   vars:
     # See :call stdpath('config')
