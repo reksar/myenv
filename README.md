@@ -3,57 +3,55 @@
 Configures working environment with 
 [Ansible](https://docs.ansible.com/ansible/latest/index.html)
 
-
-## Linux
-
-* Makes links at `~` to the:
-  - `linux/home/*` dotfiles
-  - `.vimrc` and `.vim/` from [Vim](https://github.com/reksar/vim) submodule
-
-* Makes extra config, described in `ansible/config/*.yml`
-
-* Allows to install some software with `ansible/install/*.yml`
-
-
-## Getting
-
-```
+```sh
 git clone --recurse-submodules https://github.com/reksar/myenv.git
 ```
 
-## Using
+# Linux
 
-**Note:** edit the `ansible/settings.yml` if nedded.
+## Notes
 
-**Note:** Ansible asks for `sudo` password for a tasks with `become: true`.
+### Settings
 
-### Configure Linux workspace with Ansible
+Edit the `ansible/settings.yml` if nedded.
 
-`config` to run main tasks.
+### sudo
 
-`config <task>` to run specific `ansible/config/tasks/<task>.yml`.
+Ansible asks for **sudo** password for a tasks that `become: true`.
 
-### Install software
+Additionally, a shell script may ask for **sudo** password during ensuring the
+Ansible / Python / pyenv. Usually just at the first run on min system.
 
-#### Linux
+### Ensuring the Ansible
 
-If the Ansible is not installed in the system globally, invoking the `ensure`
-or `config` will automatically invoke this chain:
+The `ensure` or `config` will automatically invoke this script chain:
 * `linux/scripts/ensure-ansible.sh`
 * `linux/scripts/ensure-python.sh`
 * `linux/scripts/install/pyenv.sh`
 
-Python will be installed with the pyenv and the Ansible will be installed into
-the `venv` dir.
+This allows to ensure the Ansible awailability. If the Ansible is not installed
+in the system, it will be installed into the `venv` dir after ensuring the
+Python.
 
-`MIN_PY_VERSION` can be set in `linux/scripts/ensure-python.sh`.
+If the system Python's version < `MIN_PY_VERSION` that is set in the
+`ensure-python.sh`, then Python will be installed with the `pyenv`.
 
-##### `ensure nvim`
+## Config
 
-#### Windows
+`config` to run default tasks.
 
-##### `install.bat python`
+`config <task>` to run specific `ansible/config/tasks/<task>.yml`.
 
-### Cleanup
+## Ensure
 
-`clean`
+`ensure <program>` to install specific <program> using the
+`ansible/install/<program>.yml` task and then automatically configure it with
+`ansible/config/tasks/<task>.yml` if needed.
+
+## Cleanup
+
+`clean` to remove `venv` dir and Ansible's `*.retry` files.
+
+# Windows
+
+`install.bat python`
