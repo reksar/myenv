@@ -37,13 +37,18 @@ git clone --recurse-submodules https://github.com/reksar/myenv.git
 
 #### Linux
 
-##### `ensure pyenv`
+If the Ansible is not installed in the system globally, invoking the `ensure`
+or `config` will automatically invoke this chain:
+* `linux/scripts/ensure-ansible.sh`
+* `linux/scripts/ensure-python.sh`
+* `linux/scripts/install/pyenv.sh`
 
-[pyenv](https://github.com/pyenv/pyenv)
+Python will be installed with the pyenv and the Ansible will be installed into
+the `venv` dir.
+
+`MIN_PY_VERSION` can be set in `linux/scripts/ensure-python.sh`.
 
 ##### `ensure nvim`
-
-**Note:** run `config.sh` to update desktop (n)Vim settings.
 
 #### Windows
 

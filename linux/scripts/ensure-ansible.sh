@@ -1,72 +1,71 @@
 #!/bin/bash
 
-# Source this script when you need to operate with Ansible.
+# Source this script before invoking the Ansible.
+# NOTE: sourcing allows to keep the Python venv active.
 
 
-ensure_python3() {
-  # TODO
-  echo Expecting that Python3 is OK
+scripts=`cd $(dirname $BASH_SOURCE[0]) && pwd`
+. $scripts/lib/log.sh
+
+
+has_ansible() {
+  which ansible > /dev/null && which ansible-playbook > /dev/null && return
+  return 1
 }
 
 
 ensure_venv() {
-  ensure_python3
 
-  if [ -z $VIRTUAL_ENV ]
+  $scripts/ensure-python.sh || return 1
+
+  [[ ! -z ${VIRTUAL_ENV:-} ]] && OK "Python venv is active." && return
+
+  if [[ ! -x venv/bin/python ]] || [[ ! -f venv/bin/activate ]]
   then
-    echo Python venv is not active.
-
-    if [[ ! -d venv ]]
-    then
-      echo Creating Python venv.
-      python -m venv venv
-    fi
-
-    echo Activating Python venv.
-    . venv/bin/activate
+    INFO "Creating Python venv."
+    python -m venv venv
   fi
 
-  if [ -z $VIRTUAL_ENV ]
-  then
-    echo [ERR] Activating venv failed.
-    exit 1
-  fi
+  INFO "Activating Python venv."
+  . venv/bin/activate
+
+  [[ ! -z ${VIRTUAL_ENV:-} ]] && OK "Python venv is active." && return
+
+  ERR "Activating Python venv failed!"
+  return 2
 }
 
 
 install_ansible() {
-  pip install --upgrade pip
+
+  INFO "Installing Ansible."
+
+  python -m pip install --upgrade pip
 
   # Latest Cryptography version that can be installed without Rust.
   # TODO: ensure `pyconfig.h` (python3-dev package).
+  # TODO: Check that Rust exists.
   export CRYPTOGRAPHY_DONT_BUILD_RUST=1
-  pip install cryptography==3.4.8
+  python -m pip install cryptography==3.4.8
 
   # This Ansible version depends on any Cryptography version.
-  pip install ansible==4.10.0
+  python -m pip install ansible==4.10.0
 }
 
+if ! has_ansible
+then
+  ensure_venv || exit 1
 
-ensure_ansible() {
-
-  if [[ ! `which ansible` ]]
+  if ! has_ansible
   then
-    echo Ensuring Ansible with Python venv.
-    ensure_venv
+    install_ansible || exit 2
 
-    if [[ ! `which ansible` ]]
+    if ! has_ansible
     then
-      echo Installing Ansible into Python venv.
-      install_ansible
-
-      if [[ ! `which ansible` ]]
-      then
-        echo [ERR] Ansible installation failed.
-        exit 2
-      fi
+      ERR "Cannot ensure the Ansible!"
+      exit 3
     fi
   fi
-}
+fi
 
-
-ensure_ansible
+OK "Ansible ready."

@@ -1,10 +1,11 @@
-#!/bin/bash
+# Functions to work with the `update-alternatives`.
 
 
 alt_max_priority() {
+
   local name=$1
 
-  # Suppress stderr to get empty $info on err.
+  # Suppress `stderr` to get empty `info` on err.
   local info=`update-alternatives --query $name 2> /dev/null`
 
   if [[ $info ]]
@@ -18,7 +19,6 @@ alt_max_priority() {
 
 alt_increment_priority() {
   local name=$1
-
   local priority=`alt_max_priority $name`
   ((priority+=1))
   echo $priority
@@ -28,9 +28,10 @@ alt_increment_priority() {
 alt_install() {
   local name=$1
   local path=$2
-
   local link=/usr/bin/$name
   local priority=`alt_increment_priority $name`
-
-  update-alternatives --force --install $link $name $path $priority
+  [ `id -u` -eq 0 ] || sudo=sudo
+  ${sudo:-} update-alternatives --force --install $link $name $path $priority \
+    && return
+  return 1
 }

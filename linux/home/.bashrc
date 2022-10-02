@@ -132,34 +132,37 @@ colorize() {
 colorize
 # ----------------------------------------------------------------------------
 
-
-if [ -d ~/.pyenv ]
-then
-  export PATH="$HOME/.pyenv/bin:$PATH"
-  eval "$(pyenv init --path)"
-  #eval "$(pyenv virtualenv-init -)"
-  #exec "$SHELL"
-fi
-
-export PATH=".:$PATH"
-
 # Make `less` more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
-if ! shopt -oq posix; then
-  if [ -f /usr/share/bash-completion/bash_completion ]; then
+# Enable programmable completion features (you don't need to enable this, if
+# it's already enabled in `/etc/bash.bashrc` and `/etc/profile` sources the
+# `/etc/bash.bashrc`).
+if ! shopt -oq posix
+then
+  if [ -f /usr/share/bash-completion/bash_completion ]
+  then
     . /usr/share/bash-completion/bash_completion
-  elif [ -f /etc/bash_completion ]; then
+
+  elif [ -f /etc/bash_completion ]
+  then
     . /etc/bash_completion
   fi
 fi
 
 # Alias definitions.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
-if [ -f ~/.bash_aliases ]
+[ -f ~/.bash_aliases ] && . ~/.bash_aliases
+
+if [ -d $HOME/.pyenv ]
 then
-  . ~/.bash_aliases
+  export PYENV_ROOT="$HOME/.pyenv"
+  command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+  eval "$(pyenv init --path)"
+
+  # Load pyenv-virtualenv automatically
+  #eval "$(pyenv virtualenv-init -)"
+  #exec "$SHELL"
 fi
+
+export PATH=".:$PATH"

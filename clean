@@ -1,6 +1,11 @@
 #!/bin/bash
 
-# Ansible creates *.retry files when something goes wrong.
-find ./ansible/ -type f -name '*.retry' -delete
+myconf=`cd $(dirname $BASH_SOURCE[0]) && pwd`
+. $myconf/linux/scripts/lib/log.sh
 
-rm -rf venv
+# Ansible creates *.retry files when something goes wrong.
+INFO "Removing Ansible *.retry"
+find $myconf/ansible/ -type f -name '*.retry' -delete
+
+INFO "Removing Python venv."
+rm -rf $myconf/venv

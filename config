@@ -1,14 +1,18 @@
 #!/bin/bash
 
-. linux/scripts/ensure-ansible.sh
+myconf=`cd $(dirname $BASH_SOURCE[0]) && pwd`
+. $myconf/linux/scripts/ensure-ansible.sh
 
 if [ $1 ]
 then
+  # Called as `config <task>`
   vars="--extra-vars task=$1"
   tasks="apart.yml"
 else
+  # Called as `config`
   vars=""
   tasks="main.yml"
 fi
 
-ansible-playbook --ask-become-pass -i ansible/hosts $vars ansible/config/$tasks
+ansible-playbook --ask-become-pass -i $myconf/ansible/hosts $vars \
+  $myconf/ansible/config/$tasks

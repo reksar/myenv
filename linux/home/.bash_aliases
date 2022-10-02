@@ -30,4 +30,3 @@ fi
 git-dir-as_repo () {
 	git filter-branch --subdirectory-filter $1 -- --all
 }
-
