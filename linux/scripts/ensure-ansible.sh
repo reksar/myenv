@@ -4,7 +4,11 @@
 # NOTE: sourcing allows to keep the Python venv active.
 
 
-scripts=`cd $(dirname $BASH_SOURCE[0]) && pwd`
+scripts=$(cd $(dirname $BASH_SOURCE[0]) && pwd)
+myenv=$(cd $(dirname $(dirname $scripts)) && pwd)
+venv=$myenv/venv
+
+
 . $scripts/lib/log.sh
 
 
@@ -20,19 +24,19 @@ ensure_venv() {
 
   [[ ! -z ${VIRTUAL_ENV:-} ]] && OK "Python venv is active." && return
 
-  if [[ ! -x venv/bin/python ]] || [[ ! -f venv/bin/activate ]]
+  if [[ ! -x $venv/bin/python ]] || [[ ! -f $venv/bin/activate ]]
   then
     INFO "Creating Python venv."
-    python -m venv venv
+    python -m venv $venv || return 2
   fi
 
   INFO "Activating Python venv."
-  . venv/bin/activate
+  . $venv/bin/activate
 
   [[ ! -z ${VIRTUAL_ENV:-} ]] && OK "Python venv is active." && return
 
   ERR "Activating Python venv failed!"
-  return 2
+  return 3
 }
 
 
