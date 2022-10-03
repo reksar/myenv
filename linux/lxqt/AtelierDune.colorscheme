@@ -1,0 +1,68 @@
+; QTerminal color scheme
+; Based on "atelierdune.dark" color theme from https://terminal.sexy
+; in format of Konsole.
+
+[General]
+Description=AtelierDune
+
+# --- special colors ---
+
+[Background]
+Color=33,32,29
+[BackgroundIntense]
+Color=33,32,29
+
+[Foreground]
+Color=235,219,178
+[ForegroundIntense]
+Color=235,219,178
+
+# --- standard colors ---
+
+; black
+[Color0]
+Color=32,32,29
+[Color0Intense]
+Color=125,122,104
+
+; red
+[Color1]
+Color=215,55,55
+[Color1Intense]
+Color=215,55,55
+
+; green
+[Color2]
+Color=96,172,57
+[Color2Intense]
+Color=96,172,57
+
+; yellow
+[Color3]
+Color=207,176,23
+[Color3Intense]
+Color=207,176,23
+
+; blue
+[Color4]
+Color=102,132,225
+[Color4Intense]
+Color=102,132,225
+
+; magenta
+[Color5]
+Color=184,84,212
+[Color5Intense]
+Color=184,84,212
+
+; cyan
+[Color6]
+Color=31,173,131
+[Color6Intense]
+Color=31,173,131
+
+; grey
+[Color7]
+Color=166,162,140
+[Color7Intense]
+Color=235,219,178

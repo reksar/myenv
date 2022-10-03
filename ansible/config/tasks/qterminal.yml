@@ -19,7 +19,7 @@
 
     - name: Copy colorscheme
       copy:
-        src: "{{ myenv }}/linux/lxqt/QTerminal.colorscheme"
+        src: "{{ myenv }}/linux/lxqt/AtelierDune.colorscheme"
         dest: "{{ colors.stat.path }}"
       become: true
 
