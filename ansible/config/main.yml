@@ -2,7 +2,7 @@
 
 - hosts: local
 
-  # These high-level vars are available in a nested tasks.
+  # These high-level vars are available in nested tasks.
   vars:
     myenv: "{{ playbook_dir | dirname | dirname }}"
 
@@ -41,6 +41,7 @@
       - qterminal
       - vim-lxqt
       - nvim
+      - xterm
     loop_control:
       loop_var: task
     include_tasks: "tasks/{{ task }}.yml"

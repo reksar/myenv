@@ -1,0 +1,80 @@
+- name: Check xterm exists
+  block:
+
+  - name: Check xterm
+    shell:
+      cmd: uxterm -v
+    register: xterm
+    failed_when: false
+    changed_when: false
+
+  - name: Set whether xterm exists or not
+    set_fact:
+      xterm_exists: "{{ xterm.rc == 0 and xterm.stdout != '' }}"
+
+- name: Configure xterm
+  when: xterm_exists
+  block:
+
+  - name: Link .X files to include into .Xresources
+    loop:
+      - "{{ myenv }}/linux/home/.Xterm"
+      - "{{ myenv }}/linux/home/.Xcolors"
+    file:
+      src: "{{ item }}"
+      dest: "~/{{ item | basename }}"
+      state: link
+      force: true
+
+  - name: Set termName
+    block:
+
+    - name: Check for 256 colors support
+      shell:
+        cmd: tput colors
+      register: colors
+      changed_when: false
+
+    - name: Set whether has 256 colors support
+      set_fact:
+        has_256_colors: "{{ colors.rc == 0 and colors.stdout == '256' }}"
+
+    - name: Set termName to xterm-256color
+      when: has_256_colors
+      set_fact:
+        term_name: xterm-256color
+
+    - name: Set termName to xterm (8 colors)
+      when: not has_256_colors
+      set_fact:
+        term_name: xterm
+
+  - name: Ensure .Xresources exists
+    block:
+
+    - name: Check .Xresources exists
+      stat:
+        path: ~/.Xresources
+      register: xresources
+
+    - name: Create .Xresources
+      when: not xresources.stat.exists
+      file:
+        path: ~/.Xresources
+        state: touch
+        mode: "644"
+
+  - name: Add xterm config into .Xresources
+    loop:
+      - "#include \".Xcolors\""
+      - "#include \".Xterm\""
+      - "xterm*termName: {{ term_name }}"
+    lineinfile:
+      path: ~/.Xresources
+      line: "{{ item }}"
+
+  - name: Reload X config
+    shell:
+      cmd: xrdb -load ~/.Xresources
+    register: xrdb
+    failed_when: xrdb.rc != 0 or xrdb.stderr != ''

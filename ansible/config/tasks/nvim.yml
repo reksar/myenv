@@ -73,7 +73,7 @@
 
   - name: update-alternatives
     vars:
-      alt: "{{ myenv }}/linux/scripts/alternatives.sh"
+      alt: "{{ myenv }}/linux/scripts/lib/alt.sh"
       priority: ". {{ alt }} && alt_increment_priority"
     block:
 

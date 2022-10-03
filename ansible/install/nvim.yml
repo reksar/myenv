@@ -115,4 +115,4 @@
           packages:
             xsel
 
-    - include_tasks: "{{ myenv }}/ansible/config/nvim.yml"
+    - include_tasks: "{{ myenv }}/ansible/config/tasks/nvim.yml"
