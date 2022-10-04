@@ -16,38 +16,12 @@
   when: xterm_exists
   block:
 
-  - name: Link .X files to include into .Xresources
-    loop:
-      - "{{ myenv }}/linux/home/.Xterm"
-      - "{{ myenv }}/linux/home/.Xcolors"
+  - name: Link ~/.XTerm
     file:
-      src: "{{ item }}"
-      dest: "~/{{ item | basename }}"
+      src: "{{ myenv }}/linux/home/.XTerm"
+      dest: "~/.XTerm"
       state: link
       force: true
-
-  - name: Set termName
-    block:
-
-    - name: Check for 256 colors support
-      shell:
-        cmd: tput colors
-      register: colors
-      changed_when: false
-
-    - name: Set whether has 256 colors support
-      set_fact:
-        has_256_colors: "{{ colors.rc == 0 and colors.stdout == '256' }}"
-
-    - name: Set termName to xterm-256color
-      when: has_256_colors
-      set_fact:
-        term_name: xterm-256color
-
-    - name: Set termName to xterm (8 colors)
-      when: not has_256_colors
-      set_fact:
-        term_name: xterm
 
   - name: Ensure .Xresources exists
     block:
@@ -64,14 +38,10 @@
         state: touch
         mode: "644"
 
-  - name: Add xterm config into .Xresources
-    loop:
-      - "#include \".Xcolors\""
-      - "#include \".Xterm\""
-      - "xterm*termName: {{ term_name }}"
+  - name: Include .XTerm into .Xresources
     lineinfile:
       path: ~/.Xresources
-      line: "{{ item }}"
+      line: "#include \".XTerm\""
 
   - name: Reload X config
     shell:
