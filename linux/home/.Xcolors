@@ -1,38 +1,38 @@
 ! Based on "atelierdune.dark" color theme from https://terminal.sexy
 
 ! special
-*.foreground:   #ebdbb2
-*.background:   #21201d
-*.cursorColor:  #ebdbb2
+xterm*foreground:   #ebdbb2
+xterm*background:   #21201d
+xterm*cursorColor:  #ebdbb2
 
 ! black
-*.color0:       #20201d
-*.color8:       #7d7a68
+xterm*color0:       #20201d
+xterm*color8:       #7d7a68
 
 ! red
-*.color1:       #d73737
-*.color9:       #d73737
+xterm*color1:       #d73737
+xterm*color9:       #d73737
 
 ! green
-*.color2:       #60ac39
-*.color10:      #60ac39
+xterm*color2:       #60ac39
+xterm*color10:      #60ac39
 
 ! yellow
-*.color3:       #cfb017
-*.color11:      #cfb017
+xterm*color3:       #cfb017
+xterm*color11:      #cfb017
 
 ! blue
-*.color4:       #6684e1
-*.color12:      #6684e1
+xterm*color4:       #6684e1
+xterm*color12:      #6684e1
 
 ! magenta
-*.color5:       #b854d4
-*.color13:      #b854d4
+xterm*color5:       #b854d4
+xterm*color13:      #b854d4
 
 ! cyan
-*.color6:       #1fad83
-*.color14:      #1fad83
+xterm*color6:       #1fad83
+xterm*color14:      #1fad83
 
 ! white
-*.color7:       #a6a28c
-*.color15:      #ebdbb2
+xterm*color7:       #a6a28c
+xterm*color15:      #ebdbb2
