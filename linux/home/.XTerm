@@ -3,7 +3,6 @@
 xterm*faceName: Input Mono Condensed Light
 xterm*faceSize: 12
 xterm*renderFont: true
-xterm*reverseVideo: false
 
 xterm*termName: xterm-256color
 
@@ -37,13 +36,21 @@ xterm*color14:      #1fad83
 xterm*color7:       #a6a28c
 xterm*color15:      #ebdbb2
 
+! Cursor
+xterm*cursorBlink: true
+xterm*cursorOnTime: 800
+xterm*corsorOffTime: 400
+
 ! Scroll
 xterm*saveLines: 4096
 xterm*scrollBar: false
-xterm*rightScrollBar: false
+xterm*scrollBar.width: 8
+xterm*rightScrollBar: true
 xterm*scrollTtyOutput: true
 
+xterm*reverseVideo: false
 xterm*highlightSelection: true
+xterm*utf8: true
 
 xterm*VT100.Translations: #override \n\
   Ctrl <Key> minus: smaller-vt-font() \n\

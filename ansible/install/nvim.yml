@@ -30,7 +30,7 @@
       failed_when: false
       changed_when: false
 
-    - name: Set nvim is ready or not
+    - name: Set whether nvim ready or not
       set_fact:
         nvim_ready: "{{ which.rc == 0 and which.stdout != '' }}"
 
@@ -101,7 +101,7 @@
     - name: Install clipboard tool
       block:
 
-      - name: Check X server is runnning
+      - name: Check X server is running
         shell:
           cmd: pidof X || pidof Xorg
         register: X
