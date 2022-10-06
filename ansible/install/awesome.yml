@@ -1,0 +1,27 @@
+- hosts: local
+
+  vars:
+    myenv: "{{ playbook_dir | dirname | dirname }}"
+
+  tasks:
+
+  - name: Check awesome exists
+    shell:
+      cmd: which awesome
+    register: which
+    failed_when: false
+    changed_when: false
+
+  - name: Set either awesome exists or not
+    set_fact:
+      awesome_exists: "{{ which.rc == 0 and which.stdout != '' }}"
+
+  - name: Install awesome
+    when: not awesome_exists
+    include_tasks: packages.yml
+    vars:
+      packages:
+        - xorg
+        - awesome
+
+  - include_tasks: "{{ myenv }}/ansible/config/tasks/awesome.yml"

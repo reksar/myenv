@@ -1,3 +1,6 @@
 [submodule "vim"]
 	path = vim
 	url = https://github.com/reksar/vim
+[submodule "linux/awesome/lain"]
+	path = linux/awesome/lain
+	url = https://github.com/lcpz/lain.git
