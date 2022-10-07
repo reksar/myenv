@@ -1,0 +1,88 @@
+- name: Find touchpad
+  shell:
+    cmd: "xinput list | grep -i touchpad"
+  register: touchpad_info
+  changed_when: false
+  failed_when: false
+
+- name: Set touchpad id
+  when: touchpad_info.rc == 0
+  set_fact:
+    touchpad_id: "{{
+      touchpad_info.stdout
+      | regex_search('id=([0-9]+)', '\\1')
+      | first
+      | int }}"
+
+- name: Configure touchpad
+  when: touchpad_info.rc == 0 and touchpad_id != 0
+  vars:
+    props: "xinput list-props {{ touchpad_id }}"
+    set: "xinput set-prop"
+    set_touchpad: "{{ set }} {{ touchpad_id }}"
+  block:
+
+  - name: Tapping
+    vars:
+      tapping_prop: "libinput Tapping Enabled"
+    block:
+
+    - name: Check the touchpad allows tapping
+      shell:
+        cmd: "{{ props }} | grep '{{ tapping_prop }}'"
+      register: tapping
+      changed_when: false
+
+    - name: Enable touchpad tapping
+      when: tapping.rc == 0
+      lineinfile:
+        path: ~/.xinitrc
+        regex: "{{ set }} [0-9]+ \"{{ tapping_prop }}\" [0-9]+"
+        line: "{{ set_touchpad }} \"{{ tapping_prop }}\" 1"
+
+  - name: Pointer acceleration
+    vars:
+      accel_profile: libinput Accel Profile Enabled
+      accel_speed: libinput Accel Speed
+      # -1 .. 1
+      accel_value: 0.65
+    block:
+
+    - name: Check the touchpad allows the pointer acceleration
+      shell:
+        cmd: "{{ props }} | grep '{{ accel_profile }}'"
+      register: accel
+      changed_when: false
+      failed_when: false
+
+    - name: Set (bool) acceleration is allowed
+      set_fact:
+        accel: "{{ accel.rc }} == 0 and {{ accel.stdout }} != ''"
+      changed_when: false
+
+    # The "libinput Accel Profile Enabled" has 2 boolean values (8 bit, 0 or 1)
+    # in order "adaptive", "flat".
+    # See https://manpages.debian.org/buster/xserver-xorg-input-libinput/libinput.4.en.html
+    # 
+    # Here we check that both adaptive and flat accelerations is 0.
+    - name: Check that the touchpad acceleration is disabled
+      when: accel
+      shell:
+        cmd: "{{ props }} | grep '{{ accel_profile }}.*0,\\s*0'"
+      register: accel_disabled
+      changed_when: false
+      failed_when: false
+
+    - name: Enable touchpad pointer adaptive acceleration
+      when: accel and accel_disabled.rc == 0 and accel_disabled != ''
+      lineinfile:
+        path: ~/.xinitrc
+        regex: "{{ set }} [0-9]+ \"{{ accel_profile }}\".*[01],\\s*[01]"
+        line: "{{ set_touchpad }} \"{{ accel_profile }}\" 1, 0"
+
+    - name: Set touchpad pointer acceleration
+      when: accel
+      lineinfile:
+        path: ~/.xinitrc
+        regex: "{{ set }} [0-9]+ \"{{ accel_speed }}\"\\s*[0-9.]+"
+        line: "{{ set_touchpad }} \"{{ accel_speed }}\" {{ accel_value }}"

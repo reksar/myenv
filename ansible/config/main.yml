@@ -38,10 +38,8 @@
     loop:
       - git
       - docker
-      - qterminal
       - vim-lxqt
       - nvim
+      - xorg
       - xterm
-    loop_control:
-      loop_var: task
-    include_tasks: "tasks/{{ task }}.yml"
+    include_tasks: "tasks/{{ item }}.yml"
