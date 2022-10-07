@@ -14,6 +14,7 @@ local dpi   = require("beautiful.xresources").apply_dpi
 local math, string, os = math, string, os
 local my_table = awful.util.table or gears.table -- 4.{0,1} compatibility
 
+-- Theme {{{
 local theme                                     = {}
 theme.dir                                       = os.getenv("HOME") .. "/.config/awesome/themes/powerarrow"
 theme.wallpaper                                 = theme.dir .. "/wall.png"
@@ -76,7 +77,7 @@ theme.widget_mail                               = theme.dir .. "/icons/mail.png"
 theme.widget_mail_on                            = theme.dir .. "/icons/mail_on.png"
 theme.widget_task                               = theme.dir .. "/icons/task.png"
 theme.tasklist_plain_task_name                  = true
-theme.tasklist_disable_icon                     = true
+theme.tasklist_disable_icon                     = false
 theme.useless_gap                               = 0
 theme.titlebar_close_button_focus               = theme.dir .. "/icons/titlebar/close_focus.png"
 theme.titlebar_close_button_normal              = theme.dir .. "/icons/titlebar/close_normal.png"
@@ -96,6 +97,7 @@ theme.titlebar_maximized_button_focus_active    = theme.dir .. "/icons/titlebar/
 theme.titlebar_maximized_button_normal_active   = theme.dir .. "/icons/titlebar/maximized_normal_active.png"
 theme.titlebar_maximized_button_focus_inactive  = theme.dir .. "/icons/titlebar/maximized_focus_inactive.png"
 theme.titlebar_maximized_button_normal_inactive = theme.dir .. "/icons/titlebar/maximized_normal_inactive.png"
+-- }}}
 
 local markup = lain.util.markup
 
