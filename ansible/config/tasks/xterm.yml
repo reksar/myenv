@@ -23,24 +23,11 @@
       state: link
       force: true
 
-  - name: Ensure .Xresources exists
-    block:
-
-    - name: Check .Xresources exists
-      stat:
-        path: ~/.Xresources
-      register: xresources
-
-    - name: Create .Xresources
-      when: not xresources.stat.exists
-      file:
-        path: ~/.Xresources
-        state: touch
-        mode: "644"
-
   - name: Include .XTerm into .Xresources
     lineinfile:
       path: ~/.Xresources
+      create: yes
+      mode: "644"
       line: "#include \".XTerm\""
 
   - name: Reload X config
