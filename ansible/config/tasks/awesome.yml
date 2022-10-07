@@ -1,0 +1,15 @@
+- name: Check awesome exists
+  stat:
+    path: /usr/bin/awesome
+  register: awesome
+
+- name: Configure awesome
+  when: awesome.stat.exists
+  block:
+
+  - name: Link awesome config
+    file:
+      src: "{{ myenv }}/linux/awesome"
+      dest: "~/.config/awesome"
+      state: link
+      force: true
