@@ -101,22 +101,6 @@ theme.titlebar_maximized_button_normal_inactive = theme.dir .. "/icons/titlebar/
 
 local markup = lain.util.markup
 
--- ALSA volume
-theme.volume = lain.widget.alsabar({
-    --togglechannel = "IEC958,3",
-    notification_preset = { font = "Terminus 10", fg = theme.fg_normal },
-})
-
--- Brigtness
-local brighticon = wibox.widget.imagebox(theme.widget_brightness)
--- If you use xbacklight, comment the line with "light -G" and uncomment the line bellow
--- local brightwidget = awful.widget.watch('xbacklight -get', 0.1,
-local brightwidget = awful.widget.watch('light -G', 0.1,
-    function(widget, stdout, stderr, exitreason, exitcode)
-        local brightness_level = tonumber(string.format("%.0f", stdout))
-        widget:set_markup(markup.font(theme.font, " " .. brightness_level .. "%"))
-end)
-
 
 function theme.powerline_rl(cr, width, height)
     local arrow_depth, offset = height/2, 0
@@ -163,8 +147,6 @@ end
 
 local function net_widget()
 
-  local icon = wibox.widget.imagebox(theme.net_widget_icon)
-
   local net = lain.widget.net({
     settings = function()
       widget:set_markup(markup.fontfg(
@@ -176,8 +158,6 @@ local function net_widget()
 
   return wibox.widget{
     layout = wibox.layout.align.horizontal,
-    nil,
-    icon,
     net.widget,
   }
 end
@@ -365,7 +345,51 @@ local function mail_widget()
   return wibox.widget{
     layout = wibox.layout.align.horizontal,
     icon,
-    theme.mail and theme.mail.widget,
+    theme.mail.widget,
+  }
+end
+
+
+local function volume_widget()
+  -- TODO
+
+  local icon = wibox.widget.imagebox(theme.widget_vol)
+
+  theme.volume = lain.widget.alsabar({
+    --togglechannel = "IEC958,3",
+    notification_preset = {
+      font = "Terminus 10",
+      fg = theme.fg_normal,
+    },
+  })
+
+  return wibox.widget{
+    layout = wibox.layout.align.horizontal,
+    icon,
+    theme.volume.widget
+  }
+end
+
+
+local function brightness_widget()
+  -- TODO
+
+  local icon = wibox.widget.imagebox(theme.widget_brightness)
+
+  -- You can set "xbacklight -get" if needed.
+  local cmd = "light -G"
+
+  local function show_level(widget, stdout, stderr, exitreason, exitcode)
+    local level = tonumber(string.format("%.0f", stdout))
+    widget:set_markup(markup.font(theme.font, " " .. level .. "%"))
+  end
+
+  local brightness = awful.widget.watch(cmd, 0.1, show_level)
+
+  return wibox.widget{
+    layout = wibox.layout.align.horizontal,
+    icon,
+    brightness.widget,
   }
 end
 
@@ -397,13 +421,15 @@ local function statusbar(screen)
     wibox.widget.systray(),
     --bg(margin(player_widget(), dpi(3), dpi(6)), theme.bg_focus),
     --bg(margin(mail_widget(), dpi(4), dpi(7)), "#343434"),
-    bg(margin(task_widget(), dpi(3), dpi(7)), "#343434"),
+    margin(task_widget(), dpi(3), dpi(7)),
+    margin(net_widget(), dpi(3), dpi(3)),
     bg(margin(mem_widget(), dpi(2), dpi(3)), "#777E76"),
     bg(margin(cpu_widget(), dpi(3), dpi(4)), "#4B696D"),
     bg(margin(temp_widget(), dpi(4), dpi(4)), "#4B3B51"),
     bg(margin(battery_widget(), dpi(3), dpi(3)), "#8DAA9A"),
-    bg(margin(net_widget(), dpi(3), dpi(3)), "#C0C0A2"),
-    bg(margin(clock_widget(), dpi(4), dpi(8)), "#777E76"),
+    margin(brightness_widget(), dpi(4), dpi(8)),
+    margin(volume_widget(), dpi(4), dpi(8)),
+    margin(clock_widget(), dpi(4), dpi(8)),
     screen.mylayoutbox,
   }
 
