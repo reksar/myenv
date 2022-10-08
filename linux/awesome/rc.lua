@@ -1,6 +1,6 @@
 --[[
 
-  Awesome WM configuration template
+  Awesome WM configuration
   From https://github.com/lcpz/awesome-copycats
 
 --]]
@@ -59,17 +59,15 @@ end
 
 -- }}}
 
--- {{{ Autostart windowless processes
+-- Autostart windowless processes {{{
 
--- This function will run once every time Awesome is started
-local function run_once(cmd_arr)
-    for _, cmd in ipairs(cmd_arr) do
-        awful.spawn.with_shell(string.format("pgrep -u $USER -fx '%s' > /dev/null || (%s)", cmd, cmd))
-    end
+-- Run once every time Awesome is started.
+local function run_once(cmd)
+  awful.spawn.with_shell(
+    string.format("pgrep -u $USER -fx '%s' > /dev/null || (%s)", cmd, cmd))
 end
 
--- comma-separated entries
---run_once({ "urxvtd", "unclutter -root" }) 
+run_once("$HOME/.xinitrc")
 
 -- This function implements the XDG autostart specification
 --[[
