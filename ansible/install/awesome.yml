@@ -7,21 +7,24 @@
 
   - name: Check awesome exists
     shell:
-      cmd: which awesome
-    register: which
+      cmd: awesome --version
+    register: awesome
     failed_when: false
     changed_when: false
 
-  - name: Set either awesome exists or not
-    set_fact:
-      awesome_exists: "{{ which.rc == 0 and which.stdout != '' }}"
-
   - name: Install awesome
-    when: not awesome_exists
+    when: awesome.rc != 0 or awesome.stdout == ''
     include_tasks: packages.yml
     vars:
       packages:
         - xorg
         - awesome
 
-  - include_tasks: "{{ myenv }}/ansible/config/tasks/awesome.yml"
+  - name: Link awesome config
+    file:
+      src: "{{ myenv }}/linux/awesome"
+      dest: "~/.config/awesome"
+      state: link
+      force: true
+
+  - include_tasks: "{{ myenv }}/ansible/config/tasks/xorg.yml"
