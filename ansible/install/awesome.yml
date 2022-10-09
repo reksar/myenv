@@ -18,6 +18,7 @@
     vars:
       packages:
         - xorg
+        - alsa-utils
         - awesome
 
   - name: Link awesome config

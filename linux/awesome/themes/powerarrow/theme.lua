@@ -353,27 +353,6 @@ local function mail_widget()
   }
 end
 
-
-local function volume_widget()
-  -- TODO
-
-  local icon = wibox.widget.imagebox(theme.widget_vol)
-
-  theme.volume = lain.widget.alsabar({
-    --togglechannel = "IEC958,3",
-    notification_preset = {
-      font = "Terminus 10",
-      fg = theme.fg_normal,
-    },
-  })
-
-  return wibox.widget{
-    layout = wibox.layout.align.horizontal,
-    icon,
-    theme.volume.widget
-  }
-end
-
 -- }}}
 
 -- Statusbar {{{
@@ -408,7 +387,6 @@ local function statusbar(screen)
     bg(margin(cpu_widget(), dpi(3), dpi(4)), "#4B696D"),
     bg(margin(temp_widget(), dpi(4), dpi(4)), "#4B3B51"),
     bg(margin(battery_widget(), dpi(3), dpi(3)), "#8DAA9A"),
-    margin(volume_widget(), dpi(4), dpi(8)),
     margin(clock_widget(), dpi(4), dpi(8)),
     screen.mylayoutbox,
   }

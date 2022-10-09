@@ -157,7 +157,8 @@ awful.util.tasklist_buttons = mytable.join(
      awful.button({ }, 5, function() awful.client.focus.byidx(-1) end)
 )
 
-beautiful.init(string.format("%s/.config/awesome/themes/%s/theme.lua", os.getenv("HOME"), chosen_theme))
+beautiful.init(string.format("%s/.config/awesome/themes/%s/theme.lua",
+  os.getenv("HOME"), chosen_theme))
 
 -- }}}
 
@@ -254,6 +255,7 @@ end
 -- Global keys bindings {{{
 globalkeys = mytable.join(
 
+  -- Brightness {{{
   awful.key({}, "XF86MonBrightnessUp", brightness("+5"), {
     description = "Brightness +5%",
     group = "Fn",
@@ -263,6 +265,9 @@ globalkeys = mytable.join(
     description = "Brightness -5%",
     group = "Fn",
   }),
+
+  -- TODO: XF86MonBrightnessCycle
+  -- }}}
 
     -- Destroy all notifications
     awful.key({ "Control",           }, "space", function() naughty.destroy_all_notifications() end,
@@ -435,38 +440,6 @@ globalkeys = mytable.join(
               {description = "show filesystem", group = "widgets"}),
     awful.key({ altkey, }, "w", function () if beautiful.weather then beautiful.weather.show(7) end end,
               {description = "show weather", group = "widgets"}),
-
-    -- ALSA volume control
-    awful.key({ altkey }, "Up",
-        function ()
-            os.execute(string.format("amixer -q set %s 1%%+", beautiful.volume.channel))
-            beautiful.volume.update()
-        end,
-        {description = "volume up", group = "hotkeys"}),
-    awful.key({ altkey }, "Down",
-        function ()
-            os.execute(string.format("amixer -q set %s 1%%-", beautiful.volume.channel))
-            beautiful.volume.update()
-        end,
-        {description = "volume down", group = "hotkeys"}),
-    awful.key({ altkey }, "m",
-        function ()
-            os.execute(string.format("amixer -q set %s toggle", beautiful.volume.togglechannel or beautiful.volume.channel))
-            beautiful.volume.update()
-        end,
-        {description = "toggle mute", group = "hotkeys"}),
-    awful.key({ altkey, "Control" }, "m",
-        function ()
-            os.execute(string.format("amixer -q set %s 100%%", beautiful.volume.channel))
-            beautiful.volume.update()
-        end,
-        {description = "volume 100%", group = "hotkeys"}),
-    awful.key({ altkey, "Control" }, "0",
-        function ()
-            os.execute(string.format("amixer -q set %s 0%%", beautiful.volume.channel))
-            beautiful.volume.update()
-        end,
-        {description = "volume 0%", group = "hotkeys"}),
 
     -- MPD control
     awful.key({ altkey, "Control" }, "Up",
@@ -818,3 +791,5 @@ client.connect_signal("focus", function(c) c.border_color = beautiful.border_foc
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 
 -- }}}
+
+require("widgets.volume")(root, beautiful)
