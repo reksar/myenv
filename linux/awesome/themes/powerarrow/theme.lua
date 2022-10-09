@@ -221,10 +221,12 @@ local function cpu_widget()
 
   local icon = wibox.widget.imagebox(theme.widget_cpu)
 
+  local function display()
+    widget:set_markup(string.format("%03d%%", cpu_now.usage))
+  end
+
   local cpu = lain.widget.cpu({
-    settings = function()
-      widget:set_markup(markup.font(theme.font, " " .. cpu_now.usage .. "% "))
-    end,
+    settings = display,
   })
 
   return wibox.widget{
