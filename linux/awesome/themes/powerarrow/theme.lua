@@ -200,10 +200,13 @@ local function temp_widget()
 
   local icon = wibox.widget.imagebox(theme.widget_temp)
 
+  local function display()
+    widget:set_markup(coretemp_now .. "°C")
+  end
+
   local temp = lain.widget.temp({
-    settings = function()
-      widget:set_markup(markup.font(theme.font, " " .. coretemp_now .. "°C "))
-    end,
+    format = "%d",
+    settings = display,
   })
 
   return wibox.widget{
