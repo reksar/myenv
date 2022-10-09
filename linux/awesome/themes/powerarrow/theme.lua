@@ -126,8 +126,7 @@ end
 
 local function clock_widget()
 
-  local clock = awful.widget.watch(
-    "date +'%a %d %b %R'", 60,
+  local clock = awful.widget.watch("date +'%R'", 60,
     function(widget, stdout)
       widget:set_markup(" " .. markup.font(theme.font, stdout))
     end)
