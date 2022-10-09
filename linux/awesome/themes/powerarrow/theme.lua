@@ -370,29 +370,6 @@ local function volume_widget()
   }
 end
 
-
-local function brightness_widget()
-  -- TODO
-
-  local icon = wibox.widget.imagebox(theme.widget_brightness)
-
-  -- You can set "xbacklight -get" if needed.
-  local cmd = "light -G"
-
-  local function show_level(widget, stdout, stderr, exitreason, exitcode)
-    local level = tonumber(string.format("%.0f", stdout))
-    widget:set_markup(markup.font(theme.font, " " .. level .. "%"))
-  end
-
-  local brightness = awful.widget.watch(cmd, 0.1, show_level)
-
-  return wibox.widget{
-    layout = wibox.layout.align.horizontal,
-    icon,
-    brightness.widget,
-  }
-end
-
 -- }}}
 
 -- Statusbar {{{
@@ -427,7 +404,6 @@ local function statusbar(screen)
     bg(margin(cpu_widget(), dpi(3), dpi(4)), "#4B696D"),
     bg(margin(temp_widget(), dpi(4), dpi(4)), "#4B3B51"),
     bg(margin(battery_widget(), dpi(3), dpi(3)), "#8DAA9A"),
-    margin(brightness_widget(), dpi(4), dpi(8)),
     margin(volume_widget(), dpi(4), dpi(8)),
     margin(clock_widget(), dpi(4), dpi(8)),
     screen.mylayoutbox,
