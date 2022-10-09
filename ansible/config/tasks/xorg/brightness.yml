@@ -1,0 +1,13 @@
+- name: Check brightness hotkeys are awailable
+  shell:
+    cmd: "xmodmap -pke | grep XF86MonBrightness"
+  register: keymap
+  changed_when: false
+  failed_when: false
+
+- name: Ensure xbacklight
+  when: keymap.rc == 0
+  include_tasks: "{{ myenv }}/ansible/install/packages.yml"
+  vars:
+    packages:
+      - xbacklight

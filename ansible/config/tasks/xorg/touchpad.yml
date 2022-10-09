@@ -1,3 +1,9 @@
+- name: Ensure xinput
+  include_tasks: "{{ myenv }}/ansible/install/packages.yml"
+  vars:
+    packages:
+      - xinput
+
 - name: Find touchpad
   shell:
     cmd: "xinput list | grep -i touchpad"

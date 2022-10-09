@@ -6,12 +6,6 @@
 - name: Proceed
   block:
 
-  - name: Install packages
-    include_tasks: "{{ myenv }}/ansible/install/packages.yml"
-    vars:
-      packages:
-        - xinput
-
   - name: Ensure the ~/.xinitrc
     lineinfile:
       path: ~/.xinitrc
@@ -20,11 +14,12 @@
       line: "#!/bin/bash"
       insertbefore: BOF
 
-  - name: Configure
+  - name: Add config to ~/.xinitrc
     loop:
       - touchpad
+      - brightness
     include_tasks: "{{ myenv }}/ansible/config/tasks/xorg/{{ item }}.yml"
 
-  - name: Run ~/.xinitrc to apply config
+  - name: Apply ~/.xinitrc config
     shell:
       cmd: ~/.xinitrc
