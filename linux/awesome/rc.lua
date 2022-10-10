@@ -246,6 +246,58 @@ awful.screen.connect_for_each_screen(function(s) beautiful.at_screen_connect(s) 
 
 globalkeys = mytable.join(
 
+  -- Default client focus {{{
+  awful.key({ altkey }, "j",
+    function()
+      awful.client.focus.byidx( 1)
+    end,
+    {description = "Focus Next by index", group = "client"}),
+  awful.key({ altkey }, "k",
+    function()
+      awful.client.focus.byidx(-1)
+    end,
+    {description = "Focus Previous by index", group = "client"}),
+  awful.key({ altkey }, "Tab",
+    function()
+      if cycle_prev then
+        awful.client.focus.history.previous()
+      else
+        awful.client.focus.byidx(-1)
+      end
+      if client.focus then
+        client.focus:raise()
+      end
+    end,
+  {description = "cycle with previous/go back", group = "client"}),
+  -- }}}
+
+  -- By-direction client focus {{{
+  awful.key({ modkey }, "j",
+    function()
+      awful.client.focus.global_bydirection("down")
+      if client.focus then client.focus:raise() end
+    end,
+    {description = "Focus Down", group = "client"}),
+  awful.key({ modkey }, "k",
+    function()
+      awful.client.focus.global_bydirection("up")
+      if client.focus then client.focus:raise() end
+    end,
+    {description = "Focus Up", group = "client"}),
+  awful.key({ modkey }, "h",
+    function()
+      awful.client.focus.global_bydirection("left")
+      if client.focus then client.focus:raise() end
+    end,
+    {description = "Focus Left", group = "client"}),
+  awful.key({ modkey }, "l",
+    function()
+      awful.client.focus.global_bydirection("right")
+      if client.focus then client.focus:raise() end
+    end,
+    {description = "Focus Right", group = "client"}),
+  -- }}}
+
     -- Destroy all notifications
     awful.key({ "Control",           }, "space", function() naughty.destroy_all_notifications() end,
               {description = "destroy all notifications", group = "hotkeys"}),
@@ -276,46 +328,6 @@ globalkeys = mytable.join(
     awful.key({ altkey }, "Right", function () lain.util.tag_view_nonempty(1) end,
               {description = "view  previous nonempty", group = "tag"}),
 
-    -- Default client focus
-    awful.key({ altkey,           }, "j",
-        function ()
-            awful.client.focus.byidx( 1)
-        end,
-        {description = "focus next by index", group = "client"}
-    ),
-    awful.key({ altkey,           }, "k",
-        function ()
-            awful.client.focus.byidx(-1)
-        end,
-        {description = "focus previous by index", group = "client"}
-    ),
-
-    -- By-direction client focus
-    awful.key({ modkey }, "j",
-        function()
-            awful.client.focus.global_bydirection("down")
-            if client.focus then client.focus:raise() end
-        end,
-        {description = "focus down", group = "client"}),
-    awful.key({ modkey }, "k",
-        function()
-            awful.client.focus.global_bydirection("up")
-            if client.focus then client.focus:raise() end
-        end,
-        {description = "focus up", group = "client"}),
-    awful.key({ modkey }, "h",
-        function()
-            awful.client.focus.global_bydirection("left")
-            if client.focus then client.focus:raise() end
-        end,
-        {description = "focus left", group = "client"}),
-    awful.key({ modkey }, "l",
-        function()
-            awful.client.focus.global_bydirection("right")
-            if client.focus then client.focus:raise() end
-        end,
-        {description = "focus right", group = "client"}),
-
     -- Menu
     awful.key({ modkey,           }, "w", function () awful.util.mymainmenu:show() end,
               {description = "show main menu", group = "awesome"}),
@@ -331,18 +343,6 @@ globalkeys = mytable.join(
               {description = "focus the previous screen", group = "screen"}),
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto,
               {description = "jump to urgent client", group = "client"}),
-    awful.key({ modkey,           }, "Tab",
-        function ()
-            if cycle_prev then
-                awful.client.focus.history.previous()
-            else
-                awful.client.focus.byidx(-1)
-            end
-            if client.focus then
-                client.focus:raise()
-            end
-        end,
-        {description = "cycle with previous/go back", group = "client"}),
 
     -- Show/hide wibox
     awful.key({ modkey }, "b", function ()
