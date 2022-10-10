@@ -20,6 +20,12 @@
       - brightness
     include_tasks: "{{ myenv }}/ansible/config/tasks/xorg/{{ item }}.yml"
 
+  - name: Set keyboard layout
+    lineinfile:
+      path: ~/.xinitrc
+      regex: "setxkbmap .*"
+      line: "setxkbmap -layout us,ru -option grp:alt_shift_toggle"
+
   - name: Apply ~/.xinitrc config
     shell:
       cmd: ~/.xinitrc
