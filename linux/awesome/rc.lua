@@ -244,30 +244,7 @@ awful.screen.connect_for_each_screen(function(s) beautiful.at_screen_connect(s) 
 
 -- Global keys {{{
 
--- Utils {{{
-local function brightness(percent)
-  return function()
-    os.execute("xbacklight " .. percent)
-  end
-end
--- }}}
-
--- Global keys bindings {{{
 globalkeys = mytable.join(
-
-  -- Brightness {{{
-  awful.key({}, "XF86MonBrightnessUp", brightness("+5"), {
-    description = "Brightness +5%",
-    group = "Fn",
-  }),
-
-  awful.key({}, "XF86MonBrightnessDown", brightness("-5"), {
-    description = "Brightness -5%",
-    group = "Fn",
-  }),
-
-  -- TODO: XF86MonBrightnessCycle
-  -- }}}
 
     -- Destroy all notifications
     awful.key({ "Control",           }, "space", function() naughty.destroy_all_notifications() end,
@@ -582,7 +559,6 @@ end
 
 root.keys(globalkeys)
 -- }}}
--- }}}
 
 -- Client keys {{{
 clientkeys = mytable.join(
@@ -792,4 +768,5 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 
 -- }}}
 
+require("widgets.brightness")(root)
 require("widgets.volume")(root, beautiful)
