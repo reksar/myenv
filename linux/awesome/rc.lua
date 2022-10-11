@@ -246,6 +246,45 @@ awful.screen.connect_for_each_screen(function(s) beautiful.at_screen_connect(s) 
 
 globalkeys = mytable.join(
 
+  -- Awesome WM {{{
+  awful.key({ modkey, "Control" }, "r", awesome.restart, {
+    description = "Reload Awesome",
+    group = "awesome",
+  }),
+  awful.key({ modkey, "Control" }, "q", awesome.quit, {
+    description = "Quit Awesome",
+    group = "awesome",
+  }),
+  awful.key({ modkey }, "s", hotkeys_popup.show_help, {
+    description="Show Help",
+    group="awesome",
+  }),
+  awful.key({ modkey }, "w", function() awful.util.mymainmenu:show() end, {
+    description = "Show Main Menu",
+    group = "awesome",
+  }),
+  awful.key({ modkey }, "b",
+    function()
+      for s in screen do
+        s.mywibox.visible = not s.mywibox.visible
+        if s.mybottomwibox then
+          s.mybottomwibox.visible = not s.mybottomwibox.visible
+        end
+      end
+    end,
+    {description = "Toggle wibox (statusbar)", group = "awesome"}),
+  awful.key({ modkey }, "x",
+    function()
+      awful.prompt.run {
+        prompt       = "Run Lua code: ",
+        textbox      = awful.screen.focused().mypromptbox.widget,
+        exe_callback = awful.util.eval,
+        history_path = awful.util.get_cache_dir() .. "/history_eval",
+      }
+    end,
+    {description = "Lua execute prompt", group = "awesome"}),
+  -- }}}
+
   -- Default client focus {{{
   awful.key({ altkey }, "j",
     function()
@@ -310,10 +349,6 @@ globalkeys = mytable.join(
     awful.key({ altkey, "Control" }, "l", function () os.execute(scrlocker) end,
               {description = "lock screen", group = "hotkeys"}),
 
-    -- Show help
-    awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
-              {description="show help", group="awesome"}),
-
     -- Tag browsing
     awful.key({ modkey,           }, "Left",   awful.tag.viewprev,
               {description = "view previous", group = "tag"}),
@@ -328,10 +363,6 @@ globalkeys = mytable.join(
     awful.key({ altkey }, "Right", function () lain.util.tag_view_nonempty(1) end,
               {description = "view  previous nonempty", group = "tag"}),
 
-    -- Menu
-    awful.key({ modkey,           }, "w", function () awful.util.mymainmenu:show() end,
-              {description = "show main menu", group = "awesome"}),
-
     -- Layout manipulation
     awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end,
               {description = "swap with next client by index", group = "client"}),
@@ -343,17 +374,6 @@ globalkeys = mytable.join(
               {description = "focus the previous screen", group = "screen"}),
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto,
               {description = "jump to urgent client", group = "client"}),
-
-    -- Show/hide wibox
-    awful.key({ modkey }, "b", function ()
-            for s in screen do
-                s.mywibox.visible = not s.mywibox.visible
-                if s.mybottomwibox then
-                    s.mybottomwibox.visible = not s.mybottomwibox.visible
-                end
-            end
-        end,
-        {description = "toggle wibox", group = "awesome"}),
 
     -- On-the-fly useless gaps change
     awful.key({ altkey, "Control" }, "+", function () lain.util.useless_gaps_resize(1) end,
@@ -376,10 +396,6 @@ globalkeys = mytable.join(
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
               {description = "open a terminal", group = "launcher"}),
-    awful.key({ modkey, "Control" }, "r", awesome.restart,
-              {description = "reload awesome", group = "awesome"}),
-    awful.key({ modkey, "Shift"   }, "q", awesome.quit,
-              {description = "quit awesome", group = "awesome"}),
 
     awful.key({ modkey, altkey    }, "l",     function () awful.tag.incmwfact( 0.05)          end,
               {description = "increase master width factor", group = "layout"}),
@@ -491,20 +507,7 @@ globalkeys = mytable.join(
     --]]
     -- Prompt
     awful.key({ modkey }, "r", function () awful.screen.focused().mypromptbox:run() end,
-              {description = "run prompt", group = "launcher"}),
-
-    awful.key({ modkey }, "x",
-              function ()
-                  awful.prompt.run {
-                    prompt       = "Run Lua code: ",
-                    textbox      = awful.screen.focused().mypromptbox.widget,
-                    exe_callback = awful.util.eval,
-                    history_path = awful.util.get_cache_dir() .. "/history_eval"
-                  }
-              end,
-              {description = "lua execute prompt", group = "awesome"})
-    --]]
-)
+              {description = "run prompt", group = "launcher"}))
 
 
 -- Bind all key numbers to tags.
