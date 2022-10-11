@@ -357,30 +357,15 @@ end
 
 -- Statusbar {{{
 
-local function statusbar(screen)
-
-  local statusbar = awful.wibar({
-    screen = screen,
-    position = "bottom",
-    height = dpi(16),
-    bg = theme.bg_normal,
-    fg = theme.fg_normal,
-  })
-
-  local left_widgets = {
-    layout = wibox.layout.fixed.horizontal,
+local function statusbar_layout(screen)
+  local left = wibox.layout.fixed.horizontal(
     screen.mytaglist,
-    screen.mypromptbox,
-    spr,
-  }
-
+    screen.mypromptbox)
+  local middle = screen.mytasklist
   local bg = wibox.container.background
   local margin = wibox.container.margin
-  local right_widgets = {
-    layout = wibox.layout.fixed.horizontal,
+  local right = wibox.layout.fixed.horizontal(
     wibox.widget.systray(),
-    --bg(margin(player_widget(), dpi(3), dpi(6)), theme.bg_focus),
-    --bg(margin(mail_widget(), dpi(4), dpi(7)), "#343434"),
     margin(task_widget(), dpi(3), dpi(7)),
     margin(net_widget(), dpi(3), dpi(3)),
     bg(margin(mem_widget(), dpi(2), dpi(3)), "#777E76"),
@@ -388,17 +373,20 @@ local function statusbar(screen)
     bg(margin(temp_widget(), dpi(4), dpi(4)), "#4B3B51"),
     bg(margin(battery_widget(), dpi(3), dpi(3)), "#8DAA9A"),
     margin(clock_widget(), dpi(4), dpi(8)),
-    screen.mylayoutbox,
+    screen.mylayoutbox)
+  return wibox.layout.align.horizontal(left, middle, right)
+end
+
+
+local function statusbar(screen)
+  return awful.wibar{
+    screen = screen,
+    position = "bottom",
+    height = dpi(16),
+    bg = theme.bg_normal,
+    fg = theme.fg_normal,
+    widget = statusbar_layout(screen),
   }
-
-  statusbar:setup({
-    layout = wibox.layout.align.horizontal,
-    left_widgets,
-    screen.mytasklist,
-    right_widgets,
-  })
-
-  return statusbar
 end
 
 -- }}}
