@@ -9,9 +9,8 @@ Adds `globalkeys` bindings to control the audio volume with `beautiful.volume`.
 
 
 local awful = require("awful")
+local beautiful = require("beautiful")
 local lain = require("lain")
-
-local mytable = awful.util.table
 
 
 local function add_widget(beautiful)
@@ -22,25 +21,31 @@ end
 
 local function set(volume, value)
   return function()
-    os.execute(string.format("amixer -q set %s %s", volume.channel, value))
+    awful.spawn.with_shell(
+      string.format(
+        "amixer -q set %s %s",
+        volume.channel,
+        value))
     volume.update()
   end
 end
 
 
-local function bind_keys(root, beautiful)
+local function bind_keys(beautiful)
+  -- NOTE: Requires `beautiful.volume` from `lain.widget.alsabar`, so init the
+  -- alsabar to make these bindings work.
 
   local volume = beautiful.volume
 
-  root.keys(mytable.join(root.keys(),
+  root.keys(awful.util.table.join(root.keys(),
 
-    awful.key({}, "XF86AudioRaiseVolume", set(volume, "1%+"), {
-      description = "Volume +1%",
+    awful.key({}, "XF86AudioRaiseVolume", set(volume, "2%+"), {
+      description = "Volume +2%",
       group = "Fn",
     }),
 
-    awful.key({}, "XF86AudioLowerVolume", set(volume, "1%-"), {
-      description = "Volume -1%",
+    awful.key({}, "XF86AudioLowerVolume", set(volume, "2%-"), {
+      description = "Volume -2%",
       group = "Fn",
     }),
 
@@ -52,7 +57,5 @@ local function bind_keys(root, beautiful)
 end
 
 
-return function(root, beautiful)
-  add_widget(beautiful)
-  bind_keys(root, beautiful)
-end
+add_widget(beautiful)
+bind_keys(beautiful)

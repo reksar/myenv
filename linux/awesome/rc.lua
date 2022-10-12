@@ -763,4 +763,4 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 -- }}}
 
 require("widgets.brightness")
-require("widgets.volume")(root, beautiful)
+require("widgets.volume")
