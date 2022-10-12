@@ -499,7 +499,6 @@ globalkeys = mytable.join(
     awful.key({ modkey }, "r", function () awful.screen.focused().mypromptbox:run() end,
               {description = "run prompt", group = "launcher"}))
 
-
 -- Bind all key numbers to tags.
 -- Be careful: we use keycodes to make it work on any keyboard layout.
 -- This should map on the top row of your keyboard, usually 1 to 9.
@@ -549,6 +548,16 @@ for i = 1, 9 do
                   {description = "toggle focused client on tag #" .. i, group = "tag"})
     )
 end
+
+-- Widgets {{{
+for _, widget in pairs(beautiful.get().widgets) do
+  if type(widget.keys) == "table" then
+    for _, key in ipairs(widget.keys) do
+      globalkeys = mytable.join(globalkeys, key)
+    end
+  end
+end
+-- }}}
 
 root.keys(globalkeys)
 -- }}}

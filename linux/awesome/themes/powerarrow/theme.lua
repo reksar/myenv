@@ -97,6 +97,10 @@ theme.titlebar_maximized_button_focus_active    = theme.dir .. "/icons/titlebar/
 theme.titlebar_maximized_button_normal_active   = theme.dir .. "/icons/titlebar/maximized_normal_active.png"
 theme.titlebar_maximized_button_focus_inactive  = theme.dir .. "/icons/titlebar/maximized_focus_inactive.png"
 theme.titlebar_maximized_button_normal_inactive = theme.dir .. "/icons/titlebar/maximized_normal_inactive.png"
+
+theme.widgets = {
+  language = require("widgets.language"),
+}
 -- }}}
 
 local markup = lain.util.markup
@@ -372,6 +376,7 @@ local function statusbar_layout(screen)
     bg(margin(cpu_widget(), dpi(3), dpi(4)), "#4B696D"),
     bg(margin(temp_widget(), dpi(4), dpi(4)), "#4B3B51"),
     bg(margin(battery_widget(), dpi(3), dpi(3)), "#8DAA9A"),
+    margin(theme.widgets.language.widget, dpi(3), dpi(3)),
     margin(clock_widget(), dpi(4), dpi(8)),
     screen.mylayoutbox)
   return wibox.layout.align.horizontal(left, middle, right)
