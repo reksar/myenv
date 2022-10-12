@@ -69,16 +69,6 @@ end
 
 run_once("$HOME/.xinitrc")
 
--- This function implements the XDG autostart specification
---[[
-awful.spawn.with_shell(
-    'if (xrdb -query | grep -q "^awesome\\.started:\\s*true$"); then exit; fi;' ..
-    'xrdb -merge <<< "awesome.started:true";' ..
-    -- list each of your autostart commands, followed by ; inside single quotes, followed by ..
-    'dex --environment Awesome --autostart --search-paths "$XDG_CONFIG_DIRS/autostart:$XDG_CONFIG_HOME/autostart"' -- https://github.com/jceb/dex
-)
---]]
-
 -- }}}
 
 -- {{{ Variable definitions
@@ -234,7 +224,7 @@ screen.connect_signal("arrange", function (s)
     end
 end)
 
--- Create a wibox for each screen and add it
+-- Create a wibox for each screen and add it.
 awful.screen.connect_for_each_screen(function(s) beautiful.at_screen_connect(s) end)
 
 -- }}}
@@ -266,7 +256,7 @@ globalkeys = mytable.join(
   awful.key({ modkey }, "b",
     function()
       for s in screen do
-        s.mywibox.visible = not s.mywibox.visible
+        s.mywibar.visible = not s.mywibar.visible
         if s.mybottomwibox then
           s.mybottomwibox.visible = not s.mybottomwibox.visible
         end
@@ -634,6 +624,7 @@ root.buttons(mytable.join(
   awful.button({}, 5, awful.tag.viewprev)
 ))
 -- }}}
+
 -- }}}
 
 -- Rules {{{
@@ -771,5 +762,5 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 
 -- }}}
 
-require("widgets.brightness")(root)
+require("widgets.brightness")
 require("widgets.volume")(root, beautiful)
