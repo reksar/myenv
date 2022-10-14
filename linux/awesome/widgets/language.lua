@@ -52,5 +52,8 @@ awful.spawn.easy_async_with_shell(
     language:update()
   end)
 
-language:bind_keys()
-return language
+
+return function()
+  language:bind_keys()
+  return language
+end
