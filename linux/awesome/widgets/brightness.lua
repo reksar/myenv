@@ -47,26 +47,22 @@ return function()
   brightness.calibre = 5
   brightness.keys = keys(brightness)
 
-  brightness.popup = {}
-  brightness.popup.preset = {
-    position = "top_middle",
-  }
-
 
   brightness.set = function(percent)
-    async_shell("xbacklight " .. percent, brightness.notify)
+    async_shell("xbacklight " .. percent, brightness.show_popup)
   end
 
 
-  brightness.notify = function()
-    async_shell("xbacklight", brightness.popup.show)
+  brightness.show_popup = function()
+    async_shell("xbacklight", brightness.notify)
   end
 
 
-  brightness.popup.show = function(current_percent)
-    brightness.popup.widget = naughty.notify{
-      preset = brightness.popup.preset,
-      text = string.format("Brigntness %u%%", math.ceil(current_percent)),
+  brightness.notify = function(current_percent)
+    if brightness.popup then brightness.popup.die() end
+    brightness.popup = naughty.notify{
+      text = string.format("Brightness %u%%", math.ceil(current_percent)),
+      position = "top_middle",
     }
   end
 
