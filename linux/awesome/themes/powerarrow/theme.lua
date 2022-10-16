@@ -100,6 +100,7 @@ theme.titlebar_maximized_button_normal_inactive = theme.dir .. "/icons/titlebar/
 theme.widgets = {}
 theme.widgets.brightness = require("widgets.brightness")()
 theme.widgets.language = require("widgets.language")()
+theme.widgets.volume = require("widgets.volume")(theme)
 -- }}}
 
 local markup = lain.util.markup

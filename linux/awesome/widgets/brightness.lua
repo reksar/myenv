@@ -13,8 +13,9 @@ local async_shell = awful.spawn.easy_async_with_shell
 
 local function keys(brightness)
 
-  local percent_up = string.format("+%u", brightness.calibre)
-  local percent_down = string.format("-%u", brightness.calibre)
+  local calibre = 2
+  local percent_up = string.format("+%u", calibre)
+  local percent_down = string.format("-%u", calibre)
 
 
   local function up()
@@ -44,7 +45,6 @@ end
 return function()
 
   local brightness = {}
-  brightness.calibre = 5
   brightness.keys = keys(brightness)
 
 
@@ -58,10 +58,14 @@ return function()
   end
 
 
-  brightness.notify = function(current_percent)
-    if brightness.popup then brightness.popup.die() end
+  brightness.notify = function(actual_percent)
+
+    if brightness.popup then
+      brightness.popup.die()
+    end
+
     brightness.popup = naughty.notify{
-      text = string.format("Brightness %u%%", math.ceil(current_percent)),
+      text = string.format("Brightness %u%%", math.ceil(actual_percent)),
       position = "top_middle",
     }
   end

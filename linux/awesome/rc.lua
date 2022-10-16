@@ -513,8 +513,8 @@ end
 -- Widgets {{{
 for _, widget in pairs(beautiful.get().widgets) do
   if type(widget.keys) == "table" then
-    for _, key in ipairs(widget.keys) do
-      globalkeys = mytable.join(globalkeys, key)
+    for _, bindings in ipairs(widget.keys) do
+      globalkeys = mytable.join(globalkeys, bindings)
     end
   end
 end
@@ -731,5 +731,3 @@ client.connect_signal("focus", function(c) c.border_color = beautiful.border_foc
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 
 -- }}}
-
-require("widgets.volume")
