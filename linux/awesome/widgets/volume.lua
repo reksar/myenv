@@ -53,12 +53,12 @@ return function(theme)
   local volume = {}
   volume.widget = theme.volume
   volume.keys = keys(volume)
+  volume.get = fmt("amixer get %s", volume.widget.channel)
+    .. " | grep -i playback | grep -o '[0-9]\\+%' | sort | tail -1"
 
 
   volume.show_popup = function()
-    local get_actual_volume = fmt("amixer get %s", volume.widget.channel)
-      .. "| grep -i playback | grep -o '[0-9]\\+%' | sort | tail -1"
-    async_shell(get_actual_volume, volume.notify)
+    async_shell(volume.get, volume.notify)
   end
 
 
@@ -67,6 +67,9 @@ return function(theme)
     if volume.popup then
       volume.popup.die()
     end
+
+    -- Sanitize \n
+    actual_percent = actual_percent:match('%d+%%')
 
     volume.popup = naughty.notify{
       text = "Volume " .. actual_percent,
