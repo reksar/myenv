@@ -1,45 +1,50 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
+# See /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples.
 
 # Usually the ~/.bash_profile (for tty login) and the ~/.profile (for desktop
-# login) are sourcing the ~/.bashrc, so all stuff is here instead of
-# separating it in 3 files.
+# login) are sourcing the ~/.bashrc, so all stuff is here instead of separating
+# it in 3 files.
 
-# If not running interactively, don't do anything
+# If not running interactively, don't do anything.
 case $- in
 	*i*) ;;
 	*) return;;
 esac
 
-# Disable terminal freezing with Ctrl+S / Ctrl+Q
+# Alias definitions.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+[ -f ~/.bash_aliases ] && . ~/.bash_aliases
+
+
+# Settings {{{
+
+# Disable terminal freezing with Ctrl+S / Ctrl+Q.
 stty -ixon
 
-# don't put duplicate lines or lines starting with space in the history.
-# See bash(1) for more options
+# Don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options.
 HISTCONTROL=ignoreboth
 
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+# For setting history length see HISTSIZE and HISTFILESIZE in bash(1).
 HISTSIZE=1000
 HISTFILESIZE=2000
 
-# append to the history file, don't overwrite it
+# Append to the history file, don't overwrite it.
 shopt -s histappend
 
-# check the window size after each command and, if necessary,
-# update the values of LINES and COLUMNS.
+# Check the window size after each command and, if necessary, update the values
+# of LINES and COLUMNS.
 shopt -s checkwinsize
 
-# If set, the pattern "**" used in a pathname expansion context will
-# match all files and zero or more directories and subdirectories.
+# If set, the pattern "**" used in a pathname expansion context will match all
+# files and zero or more directories and subdirectories.
 #shopt -s globstar
 
+# Settings }}}
 
-# --- Bash prompt ------------------------------------------------------------
 
-current_git_branch() {
-  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1) /'
-}
+# Bash prompt {{{
 
 colored_bash_prompt() {
 
@@ -78,7 +83,7 @@ colored_bash_prompt() {
 
   local status="$status_color$status_text"
   local workdir="$YELLOW\\w "
-  local git_branch="$GREEN$(current_git_branch)"
+  local git_branch="$GREEN$(git-current-branch)"
 
   if test -z "$VIRTUAL_ENV"
   then
@@ -91,7 +96,8 @@ colored_bash_prompt() {
   PS1+="$RESET_COLOR"
 }
 
-simple_bash_prompt() {
+
+static_bash_prompt() {
 
   if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]
   then
@@ -102,35 +108,24 @@ simple_bash_prompt() {
   PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
 }
 
-# ----------------------------------------------------------------------------
+# Bash prompt }}}
 
 
-# --- Colors -----------------------------------------------------------------
-export_gcc_colors() {
-  GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32'
-  GCC_COLORS+=':locus=01:quote=01'
+# Colors {{{
+
+if [[ "$is_term_colored" == "yes" ]]
+then
+  PROMPT_COMMAND=colored_bash_prompt
+
+  GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01'
+  GCC_COLORS+=':quote=01'
   export GCC_COLORS
-}
+else
+  static_bash_prompt
+fi
 
-colorize() {
+# Colors }}}
 
-  case "$TERM" in
-    xterm-color|*-256color)
-      local is_term_colored=yes
-      ;;
-  esac
-
-  if [ "$is_term_colored" = yes ]
-  then
-    PROMPT_COMMAND='colored_bash_prompt'
-    export_gcc_colors
-  else
-    simple_bash_prompt
-  fi
-}
-
-colorize
-# ----------------------------------------------------------------------------
 
 # Make `less` more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
@@ -150,10 +145,6 @@ then
   fi
 fi
 
-# Alias definitions.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-[ -f ~/.bash_aliases ] && . ~/.bash_aliases
-
 if [ -d $HOME/.pyenv ]
 then
   export PYENV_ROOT="$HOME/.pyenv"
@@ -165,4 +156,5 @@ then
   #exec "$SHELL"
 fi
 
+# To run executable in the current dir without ./
 export PATH=".:$PATH"

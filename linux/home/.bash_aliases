@@ -1,13 +1,14 @@
-# The `is_term_colored` is predefined in .bashrc
-if [ "$is_term_colored" = yes ]; then
-  color='always'
-else
-  color='auto'
-fi
+case "$TERM" in
+  xterm-color|*-256color)
+    is_term_colored=yes
+    ;;
+esac
 
-# enable color support, add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-	test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+[[ "$is_term_colored" == "yes" ]] && color=always || color=auto
+
+if [[ -x /usr/bin/dircolors ]]
+then
+  eval "$(dircolors -b $([[ -r ~/.dircolors ]] && echo ~/.dircolors))"
 	alias ls="ls --color=$color --group-directories-first"
 	alias dir="dir --color=$color"
 	alias vdir="vdir --color=$color"
@@ -16,17 +17,21 @@ if [ -x /usr/bin/dircolors ]; then
 	alias egrep="egrep --color=$color"
 fi
 
-# some more ls aliases
 alias la='ls -A'
 alias ll='ls -alF --time-style=long-iso'
 
-if [ "$is_term_colored" = yes ]; then
+if [[ "$is_term_colored" == "yes" ]]
+then
   lll () {
     ll $@ | less -r
   }
 fi
 
-# REWRITES (!) current Git repo by a new, created from given subdir `$1`.
-git-dir-as_repo () {
+# REWRITE (!) current Git repo by a new, created from given subdir `$1`.
+git-repo-here () {
 	git filter-branch --subdirectory-filter $1 -- --all
+}
+
+git-current-branch() {
+  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1) /'
 }
