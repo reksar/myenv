@@ -71,6 +71,7 @@
           repo: "{{ nvim.repo }}"
           dest: "{{ nvim.src }}"
           version: stable
+          depth: 1
           # Clone if not exists, but do not update automatically
           update: no
 
@@ -85,7 +86,7 @@
     - name: Install
       block:
 
-      - name: Check nvim installation
+      - name: Check nvim installed
         stat:
           path: "{{ nvim.dest }}/bin/nvim"
         register: dest
@@ -94,6 +95,7 @@
         when: not dest.stat.exists
         make:
           chdir: "{{ nvim.src }}"
+          # FIXME: Too long. Maybe the build task is repeated here.
           target: install
         become: true
 
