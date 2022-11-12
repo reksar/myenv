@@ -54,4 +54,6 @@ If the system Python's version < `MIN_PY_VERSION` that is set in the
 
 # Windows
 
-`install.bat python`
+Entry point: `windows\myenv.lnk`.
+
+You can use `myenv-test` cmd.
