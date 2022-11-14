@@ -1,10 +1,9 @@
 {
+  "editor.fontSize": 18,
   "editor.tabSize": 4,
-  "editor.insertSpaces": "auto",
-
+  "editor.insertSpaces": true,
   "editor.wordWrapColumn": 80,
   "editor.rulers": [80],
-
   // The Colorization of 'ALL' Bracket-pairs
   "editor.bracketPairColorization.enabled": false,
   // The Colorization of 'ACTIVE' Bracket-pairs
@@ -17,9 +16,25 @@
   // A border that that wraps the bracket-pairs in a box.
   "editor.guides.bracketPairs": false,
 
-  "terminal.integrated.shell.windows": "C:\\Windows\\System32\\cmd.exe",
+  "terminal.integrated.profiles.windows": {
+    "PowerShell": {
+      "source": "PowerShell",
+      "icon": "terminal-powershell"
+    },
+    "myenv": {
+      "path": [
+        "${env:COMSPEC}"
+      ],
+      "args": [
+        "/k",
+        "${env:MYENV}"
+      ],
+      "icon": "terminal-cmd"
+    }
+  },
+  "terminal.integrated.defaultProfile.windows": "myenv",
+  "terminal.integrated.inheritEnv": false,
   "terminal.integrated.fontSize": 18,
-  "editor.fontSize": 18,
 
   "workbench.iconTheme": "vs-seti",
   "git.ignoreMissingGitWarning": true,
