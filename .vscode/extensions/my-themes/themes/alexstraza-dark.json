@@ -33,7 +33,9 @@
   {
     "scope": [
       "constant.other.placeholder",
-      "support.type.python"
+      "support.type.python",
+      "support.type.property-name.json.comments",
+      "entity.name.type.namespace.cs"
     ],
     "settings": {
       "foreground": "#baae8f"
@@ -67,7 +69,10 @@
       "storage.type",
       "constant.character.escape",
       "entity.name.type",
+      "keyword.type.cs",
       "keyword.command.rem.batchfile",
+      "keyword.other.namespace.cs",
+      "keyword.other.using.cs",
       "punctuation.definition.decorator.python"
     ],
     "settings": {
@@ -77,6 +82,7 @@
 
   {
     "scope": [
+      "punctuation.curlybrace",
       "punctuation.parenthesis",
       "punctuation.definition.arguments",
       "punctuation.definition.capture",
@@ -88,12 +94,15 @@
       "punctuation.section.parens",
       "punctuation.definition.link",
       "punctuation.definition.metadata",
+      "keyword.operator.arrow.cs",
       "punctuation.definition.heading.markdown",
       "punctuation.definition.begin.bracket.square",
       "punctuation.definition.end.bracket.square",
       "punctuation.definition.variable.batchfile",
       "punctuation.definition.variable.begin.batchfile",
-      "punctuation.definition.variable.end.batchfile"
+      "punctuation.definition.variable.end.batchfile",
+      "punctuation.definition.typeparameters.begin.cs",
+      "punctuation.definition.typeparameters.end.cs"
     ],
     "settings": {
       "foreground": "#a75b51"
