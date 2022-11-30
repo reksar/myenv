@@ -3,7 +3,7 @@
 myconf=`cd $(dirname $BASH_SOURCE[0]) && pwd`
 . $myconf/linux/scripts/ensure-ansible.sh
 
-if [ $1 ]
+if [ -n "${1:-}" ]
 then
   # Called as `config <task>`
   vars="--extra-vars task=$1"
