@@ -1,20 +1,25 @@
 - name: Check X server exists
   shell:
     cmd: xset
+  register: xset
   changed_when: false
+  failed_when: false
 
 - name: Proceed
+  when: xset.rc == 0
+  vars:
+    config: ~/.xinitrc
   block:
 
-  - name: Ensure the ~/.xinitrc
+  - name: Ensure the {{ config }}
     lineinfile:
-      path: ~/.xinitrc
+      path: "{{ config }}"
       create: yes
       mode: "755"
       line: "#!/bin/bash"
       insertbefore: BOF
 
-  - name: Add config to ~/.xinitrc
+  - name: Add config to {{ config }}
     loop:
       - touchpad
       - brightness
@@ -22,10 +27,10 @@
 
   - name: Set keyboard layout
     lineinfile:
-      path: ~/.xinitrc
+      path: "{{ config }}"
       regex: "setxkbmap .*"
       line: "setxkbmap -layout us,ru -option grp:alt_shift_toggle"
 
-  - name: Apply ~/.xinitrc config
+  - name: Apply config
     shell:
-      cmd: ~/.xinitrc
+      cmd: "{{ config }}"
