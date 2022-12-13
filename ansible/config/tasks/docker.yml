@@ -1,13 +1,17 @@
-- name: Ensure docker group exists
-  group:
-    name: docker
-    state: present
-  become: true
+- name: Docker
+  when: not ansible_facts.system is match("^CYGWIN*", ignorecase=True)
+  block:
 
-- name: Ensure current user in docker group
-  user:
-    name: "{{ lookup('env', 'USER') }}"
-    groups:
-      docker
-    append: true
-  become: true
+  - name: Ensure docker group exists
+    group:
+      name: docker
+      state: present
+    become: true
+
+  - name: Ensure current user in docker group
+    user:
+      name: "{{ lookup('env', 'USER') }}"
+      groups:
+        docker
+      append: true
+    become: true

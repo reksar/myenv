@@ -38,7 +38,7 @@
     loop:
       - git
       - docker
-      - vim-lxqt
+      - vim-desktop
       - nvim
       - xorg
       - xterm
