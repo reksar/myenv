@@ -9,11 +9,12 @@ version_check=$scripts/version.py
 
 . $scripts/lib/log.sh
 . $scripts/lib/alt.sh
+. $scripts/lib/runnable.sh
 
 
 check() {
   local python=$1
-  which $python > /dev/null \
+  runnable $python \
     && $python $version_check $MIN_PY_VERSION \
     && OK "$python ready." \
     && return

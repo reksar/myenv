@@ -8,12 +8,12 @@ scripts=$(cd $(dirname $BASH_SOURCE[0]) && pwd)
 myenv=$(cd $(dirname $(dirname $scripts)) && pwd)
 venv=$myenv/venv
 
-
 . $scripts/lib/log.sh
+. $scripts/lib/runnable.sh
 
 
 has_ansible() {
-  which ansible > /dev/null && which ansible-playbook > /dev/null && return
+  runnable ansible && runnable ansible-playbook && return
   return 1
 }
 
