@@ -43,22 +43,35 @@ apt_cyg_packages() {
 
   local packages="
     curl
-    wget
     git
     make
-    build-essential
-    tk-dev
-    xz-utils
-    zlib1g-dev
-    libbz2-dev
-    libffi-dev
-    liblzma-dev
-    libncursesw5-dev
-    libreadline-dev
-    libsqlite3-dev
-    libssl-dev
-    libxml2-dev
-    libxmlsec1-dev
+    automake
+    gcc-core
+    gcc-g++
+    libcurl4
+    libcom_err2
+    libidn12
+    libidn2_0
+    libgcrypt20
+    libgpg-error0
+    libgssapi_krb5_2
+    libk5crypto3
+    libkrb5_3
+    libkrb5support0
+    libnghttp2_14
+    libntlm0
+    libopenldap2
+    libpsl5
+    libsasl2_3
+    libssh2_1
+    libunistring5
+    libffi-devel
+    libbrotlicommon1
+    libbrotlidec1
+    libgsasl18
+    libzstd1
+    zlib
+    zlib-devel
   "
 
   INFO "Installing with apt-cyg."
@@ -79,7 +92,12 @@ ensure_apt_cyg() {
 
   runnable apt-cyg && return
 
-  local destination=/usr/local/bin
+  # Some ported UNIX-like utils like *curl* or *wget* does not works with abs
+  # UNIX paths correctly, so instead of using abs `/usr` path we need to `cd /`
+  # and use the relative `usr` path.
+  cd /
+  local destination=usr/local/bin
+
   local url=https://raw.githubusercontent.com/transcode-open/apt-cyg/master/apt-cyg
   wget -P $destination $url
 
@@ -102,51 +120,21 @@ ensure_wget() {
 
   if ! runnable curl
   then
+    # TODO: try bat downloader.
     ERR "Cannot proceed without wget or curl!"
     return
   fi
 
-  local tmp=/usr/tmp
-
-  # The `curl` can be at the Windows system dir and `which curl` can give
-  # "/cygdrive/c/Windows/system32/curl" or "C:\Windows\System32\curl.exe".
-  if where curl | grep -i "windows[\/]system32[\/]curl" > /dev/null
-  then
-    # In this case we need a `prefix` for the `tmp` path.
-    # The `env` output must contain some like "!D:=d:\path\to\cygwin".
-    prefix=`env | grep ":=\w" | sed "s/^.*=//"`
-
-    # // - replace every
-    # / - slash
-    # / - with
-    # \\ - backslash
-    local destination=$prefix${tmp////\\}\\
-  else
-    local destination=$tmp/
-  fi
-
   INFO "Getting wget with curl."
+  local url=https://eternallybored.org/misc/wget/1.21.3/64/wget.exe
 
-  local url_base=https://mirrors.163.com/cygwin/x86_64/release
+  # Some ported UNIX-like utils like *curl* or *wget* does not works with abs
+  # UNIX paths correctly, so instead of using abs `/usr` path we need to `cd /`
+  # and use the relative `usr` path.
+  cd /
+  local outfile=usr/local/bin/wget.exe
 
-  for url in \
-    wget/wget-1.21.3-1.tar.xz \
-    libpsl/libpsl5/libpsl5-0.21.2-1.tar.xz \
-    nettle/libnettle6/libnettle6-3.4.1-1.tar.xz \
-    libmetalink/libmetalink3/libmetalink3-0.1.3-1.tar.xz \
-    libidn2/libidn2_0/libidn2_0-2.3.2-1.tar.xz \
-    gpgme/libgpgme11/libgpgme11-1.9.0-1.tar.xz \
-    gnutls/libgnutls30/libgnutls30-3.6.9-1.tar.xz \
-    c-ares/libcares2/libcares2-1.14.0-1.tar.xz
-  do
-    local source=$url_base/$url
-    local filename=${url##*/}
-    local package=$tmp/$filename
-    local destfile=$destination$filename
-    curl --silent --output "$destfile" $source
-    tar -xf "$package" -C /
-    rm "$package"
-  done
+  curl --silent --output "$outfile" $url
 
   if wget --help > /dev/null 2>&1
   then
