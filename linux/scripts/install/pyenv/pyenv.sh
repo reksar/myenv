@@ -77,7 +77,11 @@ apt_cyg_packages() {
     libntlm0
     libopenldap2
     libpsl5
+    libreadline7
+    libreadline-devel
     libsasl2_3
+    libsqlite3_0
+    libsqlite3-devel
     libssh2_1
     libssl-devel
     libuuid-devel
@@ -210,6 +214,9 @@ add_cygwin_hook() {
   #
   # Replaces the hook `$stub` in the `$pyenv_script` with the real `$hook`
   # function from `$hook_script` file.
+  #
+  # NOTE: this hook is fragile, because Cygwin + GCC is not supported by the
+  # CPython core team, see https://peps.python.org/pep-0011
 
   local pyenv_script=$HOME/.pyenv/plugins/python-build/bin/python-build
 
