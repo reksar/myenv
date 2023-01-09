@@ -1,6 +1,9 @@
 # Functions to work with the `update-alternatives`.
 
 
+. $(cd $(dirname $BASH_SOURCE[0]) && pwd)/bool.sh
+
+
 alt_max_priority() {
 
   local name=$1
@@ -26,12 +29,19 @@ alt_increment_priority() {
 
 
 alt_install() {
+
   local name=$1
   local path=$2
-  local link=/usr/bin/$name
+  local link=/usr/local/bin/$name
   local priority=`alt_increment_priority $name`
-  [ `id -u` -eq 0 ] || sudo=sudo
+
+  if [ `id -u` -ne 0 ] && ! is_cygwin && runnable sudo
+  then
+    local sudo=sudo
+  fi
+
   ${sudo:-} update-alternatives --force --install $link $name $path $priority \
     && return
+
   return 1
 }

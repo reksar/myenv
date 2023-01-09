@@ -2,14 +2,14 @@
 
 # Ensures that `python --version` >= `MIN_PY_VERSION`.
 
-MIN_PY_VERSION=3.10
+MIN_PY_VERSION=3.11
 
 scripts=`cd $(dirname $BASH_SOURCE[0]) && pwd`
 version_check=$scripts/version.py
 
 . $scripts/lib/log.sh
 . $scripts/lib/alt.sh
-. $scripts/lib/runnable.sh
+. $scripts/lib/bool.sh
 
 
 check() {
@@ -32,23 +32,26 @@ update_alternatives() {
 install_python() {
 
   # Python will be installed using `pyenv`, not a package manager.
-  $scripts/install/pyenv.sh || return 1
-  # If pyenv has been instaled just now, we can't to init it with .bashrc
-  . $scripts/install/pyenvrc || return 2
+  $scripts/install/pyenv/pyenv.sh || return 1
+
+  # If the shell was not restarted after installing `pyenv`, we need to init
+  # `pyenv`. The `.bashrc` usually prevents non-interactive execution, so use
+  # `pyenvrc`.
+  . $scripts/install/pyenv/pyenvrc || return 2
 
   # Latest matched Python version available with `pyenv`.
   local ver=`pyenv install -l | grep "^\s*$MIN_PY_VERSION[.0-9]*$" | tail -1`
 
-  INFO "Checking that Python $ver exists but not global."
+  INFO "Checking that Python $ver exists but not set as pyenv global."
   pyenv versions | grep $ver \
     && pyenv global $ver \
-    && OK "Python $ver set as global with pyenv." \
+    && OK "Python $ver was set as pyenv global." \
     && return
 
   INFO "Installing Python $ver with pyenv."
   pyenv install $ver \
     && pyenv global $ver \
-    && OK "Python $ver installed as global with pyenv." \
+    && OK "Python $ver installed as pyenv global." \
     && return
 
   ERR "Cannot install the Python $ver with pyenv!"

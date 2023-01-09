@@ -9,7 +9,7 @@ myenv=$(cd $(dirname $(dirname $scripts)) && pwd)
 venv=$myenv/venv
 
 . $scripts/lib/log.sh
-. $scripts/lib/runnable.sh
+. $scripts/lib/bool.sh
 
 
 has_ansible() {
