@@ -4,7 +4,7 @@
 
 MIN_PY_VERSION=3.11
 
-scripts=`cd $(dirname $BASH_SOURCE[0]) && pwd`
+scripts=$(cd $(dirname $(dirname $(dirname $BASH_SOURCE[0]))) && pwd)
 version_check=$scripts/version.py
 
 . $scripts/lib/log.sh

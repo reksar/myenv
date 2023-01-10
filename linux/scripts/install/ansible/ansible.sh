@@ -4,7 +4,7 @@
 # NOTE: sourcing allows to keep the Python venv active.
 
 
-scripts=$(cd $(dirname $BASH_SOURCE[0]) && pwd)
+scripts=$(cd $(dirname $(dirname $(dirname $BASH_SOURCE[0]))) && pwd)
 myenv=$(cd $(dirname $(dirname $scripts)) && pwd)
 venv=$myenv/venv
 
@@ -14,7 +14,7 @@ venv=$myenv/venv
 
 ensure_venv() {
 
-  $scripts/ensure-python.sh || return 1
+  $scripts/install/python/python.sh || return 1
 
   # Init `pyenv` if the shell was not restarted after installing `pyenv`.
   # The `.bashrc` usually prevents non-interactive execution, so `pyenvrc` is
