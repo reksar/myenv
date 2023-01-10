@@ -14,7 +14,7 @@ version_check=$scripts/version.py
 
 check() {
   local python=$1
-  runnable $python \
+  is_runnable $python \
     && $python $version_check $MIN_PY_VERSION \
     && OK "$python ready." \
     && return
@@ -34,9 +34,9 @@ install_python() {
   # Python will be installed using `pyenv`, not a package manager.
   $scripts/install/pyenv/pyenv.sh || return 1
 
-  # If the shell was not restarted after installing `pyenv`, we need to init
-  # `pyenv`. The `.bashrc` usually prevents non-interactive execution, so use
-  # `pyenvrc`.
+  # Init `pyenv` if the shell was not restarted after installing `pyenv`.
+  # The `.bashrc` usually prevents non-interactive execution, so `pyenvrc` is
+  # used instead.
   . $scripts/install/pyenv/pyenvrc || return 2
 
   # Latest matched Python version available with `pyenv`.

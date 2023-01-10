@@ -121,7 +121,7 @@ ensure_apt_cyg() {
 
   ensure_wget
 
-  runnable apt-cyg && return
+  is_runnable apt-cyg && return
 
   # Some ported third-party utils like *curl* or *wget* does not works
   # correctly with the abs UNIX-like paths, so instead of using abs `/path` we
@@ -132,7 +132,7 @@ ensure_apt_cyg() {
   local url=https://raw.githubusercontent.com/transcode-open/apt-cyg/master/apt-cyg
   wget -P $destination $url
 
-  runnable apt-cyg && return
+  is_runnable apt-cyg && return
 
   ERR "Cannot install apt-cyg!"
   return 1
@@ -149,7 +149,7 @@ ensure_wget() {
 
   # The `wget` is not found or broken.
 
-  if ! runnable curl
+  if ! is_runnable curl
   then
     # TODO: try `windows/scripts/download.bat`
     ERR "Cannot proceed without wget or curl!"
@@ -182,7 +182,7 @@ install_packages() {
   # NOTE: the llvm package is optional.
   INFO "Installing packages for building a Python with pyenv."
 
-  runnable apt-get && apt_get_packages && return
+  is_runnable apt-get && apt_get_packages && return
   is_cygwin && ensure_apt_cyg && apt_cyg_packages && return
 
   ERR "Cannot install packages!"
@@ -277,8 +277,8 @@ ensure_pyenv() {
 }
 
 
-runnable pyenv && OK "pyenv ready." && exit
-ensure_pyenv && runnable pyenv && OK "pyenv ready." && exit
+is_runnable pyenv && OK "pyenv ready." && exit
+ensure_pyenv && is_runnable pyenv && OK "pyenv ready." && exit
 
 ERR "Cannot ensure the pyenv!"
 exit 1

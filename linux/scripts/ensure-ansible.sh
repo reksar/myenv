@@ -12,22 +12,21 @@ venv=$myenv/venv
 . $scripts/lib/bool.sh
 
 
-has_ansible() {
-  runnable ansible && runnable ansible-playbook && return
-  return 1
-}
-
-
 ensure_venv() {
 
   $scripts/ensure-python.sh || return 1
+
+  # Init `pyenv` if the shell was not restarted after installing `pyenv`.
+  # The `.bashrc` usually prevents non-interactive execution, so `pyenvrc` is
+  # used instead.
+  . $scripts/install/pyenv/pyenvrc || return 2
 
   [[ ! -z ${VIRTUAL_ENV:-} ]] && OK "Python venv is active." && return
 
   if [[ ! -x $venv/bin/python ]] || [[ ! -f $venv/bin/activate ]]
   then
     INFO "Creating Python venv."
-    python -m venv $venv || return 2
+    python -m venv $venv || return 3
   fi
 
   INFO "Activating Python venv."
@@ -36,13 +35,18 @@ ensure_venv() {
   [[ ! -z ${VIRTUAL_ENV:-} ]] && OK "Python venv is active." && return
 
   ERR "Activating Python venv failed!"
-  return 3
+  return 4
 }
 
 
 install_ansible() {
 
   INFO "Installing Ansible."
+
+  # Init `pyenv` if the shell was not restarted after installing `pyenv`.
+  # The `.bashrc` usually prevents non-interactive execution, so `pyenvrc` is
+  # used instead.
+  . $scripts/install/pyenv/pyenvrc || return 1
 
   python -m pip install --upgrade pip
 
@@ -56,20 +60,11 @@ install_ansible() {
   python -m pip install ansible==4.10.0
 }
 
-if ! has_ansible
-then
-  ensure_venv || exit 1
 
-  if ! has_ansible
-  then
-    install_ansible || exit 2
+has_ansible || ensure_venv || exit 1
+has_ansible || install_ansible || exit 2
 
-    if ! has_ansible
-    then
-      ERR "Cannot ensure the Ansible!"
-      exit 3
-    fi
-  fi
-fi
+has_ansible && OK "Ansible ready." && exit
 
-OK "Ansible ready."
+ERR "Cannot ensure the Ansible!"
+exit 3

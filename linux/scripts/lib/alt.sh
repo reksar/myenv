@@ -35,7 +35,7 @@ alt_install() {
   local link=/usr/local/bin/$name
   local priority=`alt_increment_priority $name`
 
-  if [ `id -u` -ne 0 ] && ! is_cygwin && runnable sudo
+  if [ `id -u` -ne 0 ] && ! is_cygwin && is_runnable sudo
   then
     local sudo=sudo
   fi
