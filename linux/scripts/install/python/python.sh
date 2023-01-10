@@ -29,6 +29,56 @@ update_alternatives() {
 }
 
 
+rename_lib_config_dir() {
+  # This is a logical continuation of the `modify_ext_suffix()` from the
+  # `$scripts/install/pyenv/before_install_package`, but this part can be done
+  # without modifying `pyenv`.
+
+  local ver_xyz=$1
+
+  [[ ! $ver_xyz =~ ^[0-9]+.[0-9]+.[0-9]+$ ]] \
+    && ERR "Python version $ver_xyz does follow the X.Y.Z format!" \
+    && return 1
+
+  local ver_xy=${ver_xyz%.*}
+
+  [[ ! $ver_xy =~ ^[0-9]+.[0-9]+$ ]] \
+    && ERR "Cannot reduce the Python version to X.Y" \
+    && return 2
+
+  local lib="$HOME/.pyenv/versions/$ver_xyz/lib/python$ver_xy"
+
+  [ ! -d "$lib" ] \
+    && ERR "Python lib dir not found: $lib" \
+    && return 3
+
+  [ -d "$lib/config" ] \
+    && INFO "Python lib config already has a valid name." \
+    && return 0
+
+  local config_pattern=config-$ver_xy*
+  local config=`ls -d1 "$lib"/$config_pattern | head -1`
+
+  [ ! -d "$config" ] \
+    && ERR "Dir not found: $lib/$config_pattern" \
+    && return 4
+
+  cp -r "$config" "$lib/config" \
+    && rm -rf "$config" \
+    && OK "Python lib config dir has been renamed." \
+    && return 0
+
+  ERR "Cannot rename the $config"
+  return 5
+}
+
+
+tweak_python() {
+  is_cygwin && rename_lib_config_dir $1 || return 1
+  return 0
+}
+
+
 install_python() {
 
   # Python will be installed using `pyenv`, not a package manager.
@@ -51,6 +101,7 @@ install_python() {
   INFO "Installing Python $ver with pyenv."
   pyenv install $ver \
     && pyenv global $ver \
+    && tweak_python $ver \
     && OK "Python $ver installed as pyenv global." \
     && return
 
