@@ -30,23 +30,13 @@ update_alternatives() {
 
 
 rename_lib_config_dir() {
-  # This is a logical continuation of the `modify_ext_suffix()` from the
-  # `$scripts/install/pyenv/before_install_package`, but this part can be done
-  # without modifying `pyenv`.
+  # Renames dir `.pyenv/versions/x.y.z/lib/pythonx.y/config-x.y`
+  # to `.pyenv/versions/x.y.z/lib/pythonx.y/config`.
 
-  local ver_xyz=$1
+  local lib_base="$1"
+  local ver_xy=$2
 
-  [[ ! $ver_xyz =~ ^[0-9]+.[0-9]+.[0-9]+$ ]] \
-    && ERR "Python version $ver_xyz does follow the X.Y.Z format!" \
-    && return 1
-
-  local ver_xy=${ver_xyz%.*}
-
-  [[ ! $ver_xy =~ ^[0-9]+.[0-9]+$ ]] \
-    && ERR "Cannot reduce the Python version to X.Y" \
-    && return 2
-
-  local lib="$HOME/.pyenv/versions/$ver_xyz/lib/python$ver_xy"
+  local lib="$lib_base/python$ver_xy"
 
   [ ! -d "$lib" ] \
     && ERR "Python lib dir not found: $lib" \
@@ -73,8 +63,61 @@ rename_lib_config_dir() {
 }
 
 
+link_libpython_for_cygwin() {
+
+  local lib="$1"
+  local ver_xy=$2
+
+  local libpython=libpython$ver_xy.dll.a
+
+  local destination_file="$lib/$libpython"
+
+  [ -e "$destination_file" ] \
+    && OK "Already exists: $destination_file" \
+    && return 0
+
+  local source_file="$lib/python$ver_xy/config/$libpython"
+
+  [ ! -e "$source_file" ] \
+    && ERR "Not found: $source_file" \
+    && return 1
+
+  ln -s "$source_file" "$destination_file" && return 0
+
+  ERR "Cant link the $source_file at $lib"
+  return 2
+}
+
+
+tweak_python_lib_for_cygwin() {
+  # This is a logical continuation of the `modify_ext_suffix()` from the
+  # `$scripts/install/pyenv/before_install_package`, but this part can be done
+  # without modifying `pyenv`.
+
+  local ver_xyz=$1
+
+  [[ ! $ver_xyz =~ ^[0-9]+.[0-9]+.[0-9]+$ ]] \
+    && ERR "Python version $ver_xyz does follow the X.Y.Z format!" \
+    && return 1
+
+  local ver_xy=${ver_xyz%.*}
+
+  [[ ! $ver_xy =~ ^[0-9]+.[0-9]+$ ]] \
+    && ERR "Cannot reduce the Python version to X.Y" \
+    && return 2
+
+  local lib="$HOME/.pyenv/versions/$ver_xyz/lib"
+
+  rename_lib_config_dir "$lib" $ver_xy || return 3
+  link_libpython_for_cygwin "$lib" $ver_xy || return 4
+  return 0
+}
+
+
 tweak_python() {
-  is_cygwin && rename_lib_config_dir $1 || return 1
+  # Tweak the Python installed in `.pyenv/versions/$ver`.
+  local ver=$1
+  is_cygwin && tweak_python_lib_for_cygwin $ver || return 1
   return 0
 }
 

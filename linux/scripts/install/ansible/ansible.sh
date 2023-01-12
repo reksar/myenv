@@ -63,8 +63,7 @@ install_ansible() {
 
 has_ansible || ensure_venv || exit 1
 has_ansible || install_ansible || exit 2
-
-has_ansible && OK "Ansible ready." && exit
+has_ansible && OK "Ansible ready." && exit 0
 
 ERR "Cannot ensure the Ansible!"
 exit 3
