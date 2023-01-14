@@ -37,7 +37,7 @@ apt_get_packages() {
   sudo apt-get update \
     && sudo apt-get install -y $packages \
     && OK "Packages installed." \
-    && return
+    && return 0
 
   return 1
 }
@@ -62,8 +62,12 @@ apt_cyg_packages() {
     libidn2_0
     libisl23
     libcrypt2
+    libcrypt-devel
     libgc1
     libgcrypt20
+    libffi8
+    libffi-devel
+    libgdbm-devel
     libguile3.0_1
     libgpg-error0
     libgssapi_krb5_2
@@ -76,6 +80,7 @@ apt_cyg_packages() {
     libnghttp2_14
     libntlm0
     libopenldap2
+    libpkgconf4
     libpsl5
     libreadline7
     libreadline-devel
@@ -87,12 +92,12 @@ apt_cyg_packages() {
     libuuid-devel
     libunistring2
     libunistring5
-    libffi-devel
     libbrotlicommon1
     libbrotlidec1
     libgsasl18
     libzstd1
-    mingw64-x86_64-libffi
+    pkg-config
+    pkgconf
     w32api-runtime
     zlib
     zlib-devel
@@ -101,19 +106,23 @@ apt_cyg_packages() {
   INFO "Installing with apt-cyg."
   apt-cyg install $packages \
     && OK "Packages installed." \
-    && move_cygwin_packages \
-    && return
+    && tweak_cygwin_packages \
+    && return 0
 
   return 1
 }
 
 
-move_cygwin_packages() {
-  # Some package files are misplaced by `apt-cyg`.
-  local mingw=/usr/x86_64-w64-mingw32
-  local cygwin=/usr/x86_64-pc-cygwin
-  cp -r $mingw/sys-root/mingw/* /usr/local 2> /dev/null
-  rm -rf $mingw $cygwin
+tweak_cygwin_packages() {
+
+  # The linker does not understand `dll.a` extension when building
+  # the `_ctypes` Python module.
+  #
+  # NOTE: copying is important, because creating a link does not work.
+  cp /lib/libffi.dll.a /lib/libffi.a
+
+  # Remove unnecessary dir left after installing packages.
+  rm -rf /usr/x86_64-pc-cygwin
 }
 
 
@@ -121,7 +130,7 @@ ensure_apt_cyg() {
 
   ensure_wget
 
-  is_runnable apt-cyg && return
+  is_runnable apt-cyg && return 0
 
   # Some ported third-party utils like *curl* or *wget* does not works
   # correctly with the abs UNIX-like paths, so instead of using abs `/path` we
@@ -132,7 +141,7 @@ ensure_apt_cyg() {
   local url=https://raw.githubusercontent.com/transcode-open/apt-cyg/master/apt-cyg
   wget -P $destination $url
 
-  is_runnable apt-cyg && return
+  is_runnable apt-cyg && return 0
 
   ERR "Cannot install apt-cyg!"
   return 1
@@ -144,16 +153,16 @@ ensure_wget() {
   if wget --help > /dev/null 2>&1
   then
     OK "wget found."
-    return
+    return 0
   fi
 
   # The `wget` is not found or broken.
 
   if ! is_runnable curl
   then
-    # TODO: try `windows/scripts/download.bat`
+    # TODO: try `windows/scripts/download.bat` for Cygwin.
     ERR "Cannot proceed without wget or curl!"
-    return
+    return 1
   fi
 
   INFO "Getting wget with curl."
@@ -182,8 +191,8 @@ install_packages() {
   # NOTE: the llvm package is optional.
   INFO "Installing packages for building a Python with pyenv."
 
-  is_runnable apt-get && apt_get_packages && return
-  is_cygwin && ensure_apt_cyg && apt_cyg_packages && return
+  is_runnable apt-get && apt_get_packages && return 0
+  is_cygwin && ensure_apt_cyg && apt_cyg_packages && return 0
 
   ERR "Cannot install packages!"
   return 1
@@ -254,13 +263,13 @@ plug_pyenv() {
     && grep "eval \"\$(pyenv init --path)\"" $bashrc \
     && . $pyenvrc \
     && OK "pyenv already plugged." \
-    && return
+    && return 0
 
   INFO "Plugging pyenv into $bashrc"
   cat $pyenvrc >> $bashrc \
     && . $pyenvrc \
     && OK "pyenv plugged." \
-    && return
+    && return 0
 
   ERR "Cannot plug the pyenv in $bashrc"
   return 1
@@ -277,8 +286,8 @@ ensure_pyenv() {
 }
 
 
-is_runnable pyenv && OK "pyenv ready." && exit
-ensure_pyenv && is_runnable pyenv && OK "pyenv ready." && exit
+is_runnable pyenv && OK "pyenv ready." && exit 0
+ensure_pyenv && is_runnable pyenv && OK "pyenv ready." && exit 0
 
 ERR "Cannot ensure the pyenv!"
 exit 1
