@@ -17,7 +17,7 @@ check() {
   is_runnable $python \
     && $python $version_check $MIN_PY_VERSION \
     && OK "$python ready." \
-    && return
+    && return 0
   return 1
 }
 
@@ -25,7 +25,7 @@ check() {
 update_alternatives() {
   # Update the `python` alternative for `python3`.
   # The is no valid `python`, but the `python3` is OK.
-  alt_install python `which python3` && return || return 1
+  alt_install python `which python3` && return 0 || return 1
 }
 
 
@@ -33,10 +33,10 @@ rename_lib_config_dir() {
   # Renames dir `.pyenv/versions/x.y.z/lib/pythonx.y/config-x.y`
   # to `.pyenv/versions/x.y.z/lib/pythonx.y/config`.
 
-  local lib_base="$1"
+  local ver_xyz=$1
   local ver_xy=$2
 
-  local lib="$lib_base/python$ver_xy"
+  local lib="$HOME/.pyenv/versions/$ver_xyz/lib/python$ver_xy"
 
   [ ! -d "$lib" ] \
     && ERR "Python lib dir not found: $lib" \
@@ -53,20 +53,19 @@ rename_lib_config_dir() {
     && ERR "Dir not found: $lib/$config_pattern" \
     && return 4
 
-  cp -r "$config" "$lib/config" \
-    && rm -rf "$config" \
-    && OK "Python lib config dir has been renamed." \
-    && return 0
+  cp -r "$config" "$lib/config" && rm -rf "$config" && return 0
 
   ERR "Cannot rename the $config"
   return 5
 }
 
 
-link_libpython_for_cygwin() {
+copy_libpython_for_cygwin() {
 
-  local lib="$1"
+  local ver_xyz=$1
   local ver_xy=$2
+
+  local lib="$HOME/.pyenv/versions/$ver_xyz/lib"
 
   local libpython=libpython$ver_xy.dll.a
 
@@ -82,10 +81,24 @@ link_libpython_for_cygwin() {
     && ERR "Not found: $source_file" \
     && return 1
 
-  ln -s "$source_file" "$destination_file" && return 0
+  cp "$source_file" "$destination_file" && return 0
 
-  ERR "Cant link the $source_file at $lib"
+  ERR "Cannot copy $source_file to $lib"
   return 2
+}
+
+
+rebase_libpython_for_cygwin() {
+  # Fixes the availability of memory address space for this lib.
+
+  local ver_xyz=$1
+  local ver_xy=$2
+  local libpython="$HOME/.pyenv/versions/$ver_xyz/bin/libpython$ver_xy.dll"
+
+  rebase --database "$libpython" && return 0
+
+  ERR "Cannot update rebase database for libpython DLL."
+  return 1
 }
 
 
@@ -106,10 +119,9 @@ tweak_python_lib_for_cygwin() {
     && ERR "Cannot reduce the Python version to X.Y" \
     && return 2
 
-  local lib="$HOME/.pyenv/versions/$ver_xyz/lib"
-
-  rename_lib_config_dir "$lib" $ver_xy || return 3
-  link_libpython_for_cygwin "$lib" $ver_xy || return 4
+  rename_lib_config_dir $ver_xyz $ver_xy || return 3
+  copy_libpython_for_cygwin $ver_xyz $ver_xy || return 4
+  rebase_libpython_for_cygwin $ver_xyz $ver_xy || return 5
   return 0
 }
 
@@ -139,21 +151,21 @@ install_python() {
   pyenv versions | grep $ver \
     && pyenv global $ver \
     && OK "Python $ver was set as pyenv global." \
-    && return
+    && return 0
 
   INFO "Installing Python $ver with pyenv."
   pyenv install $ver \
     && pyenv global $ver \
     && tweak_python $ver \
     && OK "Python $ver installed as pyenv global." \
-    && return
+    && return 0
 
   ERR "Cannot install the Python $ver with pyenv!"
   return 3
 }
 
 
-check python && exit
-check python3 && update_alternatives && check python && exit
-install_python && check python && exit
+check python && exit 0
+check python3 && update_alternatives && check python && exit 0
+install_python && check python && exit 0
 exit 1
