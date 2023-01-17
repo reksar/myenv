@@ -1,21 +1,19 @@
 #!/bin/bash
 
-# Ensures that `python --version` >= `MIN_PY_VERSION`.
-
-MIN_PY_VERSION=3.11
+# Ensures that system `python --version` >= `$MIN_PYTHON_VERSION`.
 
 scripts=$(cd $(dirname $(dirname $(dirname $BASH_SOURCE[0]))) && pwd)
-version_check=$scripts/version.py
 
-. $scripts/lib/log.sh
-. $scripts/lib/alt.sh
-. $scripts/lib/bool.sh
+. "$scripts/lib/log.sh"
+. "$scripts/lib/alt.sh"
+. "$scripts/lib/bool.sh"
+. "$scripts/install/python/version.sh"
 
 
 check() {
   local python=$1
   is_runnable $python \
-    && $python $version_check $MIN_PY_VERSION \
+    && is_python_version_ok $python \
     && OK "$python ready." \
     && return 0
   return 1
@@ -33,10 +31,10 @@ rename_lib_config_dir() {
   # Renames dir `.pyenv/versions/x.y.z/lib/pythonx.y/config-x.y`
   # to `.pyenv/versions/x.y.z/lib/pythonx.y/config`.
 
-  local ver_xyz=$1
-  local ver_xy=$2
+  local version_xyz=$1
+  local version_xy=$2
 
-  local lib="$HOME/.pyenv/versions/$ver_xyz/lib/python$ver_xy"
+  local lib="$HOME/.pyenv/versions/$version_xyz/lib/python$version_xy"
 
   [ ! -d "$lib" ] \
     && ERR "Python lib dir not found: $lib" \
@@ -46,7 +44,7 @@ rename_lib_config_dir() {
     && INFO "Python lib config already has a valid name." \
     && return 0
 
-  local config_pattern=config-$ver_xy*
+  local config_pattern=config-$version_xy*
   local config=`ls -d1 "$lib"/$config_pattern | head -1`
 
   [ ! -d "$config" ] \
@@ -62,12 +60,12 @@ rename_lib_config_dir() {
 
 copy_libpython_for_cygwin() {
 
-  local ver_xyz=$1
-  local ver_xy=$2
+  local version_xyz=$1
+  local version_xy=$2
 
-  local lib="$HOME/.pyenv/versions/$ver_xyz/lib"
+  local lib="$HOME/.pyenv/versions/$version_xyz/lib"
 
-  local libpython=libpython$ver_xy.dll.a
+  local libpython=libpython$version_xy.dll.a
 
   local destination_file="$lib/$libpython"
 
@@ -75,7 +73,7 @@ copy_libpython_for_cygwin() {
     && OK "Already exists: $destination_file" \
     && return 0
 
-  local source_file="$lib/python$ver_xy/config/$libpython"
+  local source_file="$lib/python$version_xy/config/$libpython"
 
   [ ! -e "$source_file" ] \
     && ERR "Not found: $source_file" \
@@ -91,9 +89,11 @@ copy_libpython_for_cygwin() {
 rebase_libpython_for_cygwin() {
   # Fixes the availability of memory address space for this lib.
 
-  local ver_xyz=$1
-  local ver_xy=$2
-  local libpython="$HOME/.pyenv/versions/$ver_xyz/bin/libpython$ver_xy.dll"
+  local version_xyz=$1
+  local version_xy=$2
+
+  local filename="libpython$version_xy.dll"
+  local libpython="$HOME/.pyenv/versions/$version_xyz/bin/$filename"
 
   rebase --database "$libpython" && return 0
 
@@ -107,60 +107,58 @@ tweak_python_lib_for_cygwin() {
   # `$scripts/install/pyenv/before_install_package`, but this part can be done
   # without modifying `pyenv`.
 
-  local ver_xyz=$1
+  local version_xyz=$1
 
-  [[ ! $ver_xyz =~ ^[0-9]+.[0-9]+.[0-9]+$ ]] \
-    && ERR "Python version $ver_xyz does follow the X.Y.Z format!" \
+  [[ ! $version_xyz =~ ^[0-9]+.[0-9]+.[0-9]+$ ]] \
+    && ERR "Python version $version_xyz does follow the X.Y.Z format!" \
     && return 1
 
-  local ver_xy=${ver_xyz%.*}
+  local version_xy=${version_xyz%.*}
 
-  [[ ! $ver_xy =~ ^[0-9]+.[0-9]+$ ]] \
+  [[ ! $version_xy =~ ^[0-9]+.[0-9]+$ ]] \
     && ERR "Cannot reduce the Python version to X.Y" \
     && return 2
 
-  rename_lib_config_dir $ver_xyz $ver_xy || return 3
-  copy_libpython_for_cygwin $ver_xyz $ver_xy || return 4
-  rebase_libpython_for_cygwin $ver_xyz $ver_xy || return 5
+  rename_lib_config_dir $version_xyz $version_xy || return 3
+  copy_libpython_for_cygwin $version_xyz $version_xy || return 4
+  rebase_libpython_for_cygwin $version_xyz $version_xy || return 5
   return 0
 }
 
 
 tweak_python() {
-  # Tweak the Python installed in `.pyenv/versions/$ver`.
-  local ver=$1
-  is_cygwin && tweak_python_lib_for_cygwin $ver || return 1
-  return 0
+  # Tweak the Python installed in `.pyenv/versions/$version`.
+  local version=$1
+  is_cygwin && tweak_python_lib_for_cygwin $version && return 0
+  return 1
 }
 
 
 install_python() {
 
   # Python will be installed using `pyenv`, not a package manager.
-  $scripts/install/pyenv/pyenv.sh || return 1
-
-  # Init `pyenv` if the shell was not restarted after installing `pyenv`.
-  # The `.bashrc` usually prevents non-interactive execution, so `pyenvrc` is
-  # used instead.
-  . $scripts/install/pyenv/pyenvrc || return 2
+  "$scripts/install/pyenv/pyenv.sh" || return 1
+  ensure_pyenv || return 2
 
   # Latest matched Python version available with `pyenv`.
-  local ver=`pyenv install -l | grep "^\s*$MIN_PY_VERSION[.0-9]*$" | tail -1`
+  local version=`
+    pyenv install -l | grep "^\s*$MIN_PYTHON_VERSION[.0-9]*$" | tail -1
+  `
 
-  INFO "Checking that Python $ver exists but not set as pyenv global."
-  pyenv versions | grep $ver \
-    && pyenv global $ver \
-    && OK "Python $ver was set as pyenv global." \
+  INFO "Checking that Python $version exists but not set as pyenv global."
+  pyenv versions | grep $version \
+    && pyenv global $version \
+    && OK "Python $version was set as pyenv global." \
     && return 0
 
-  INFO "Installing Python $ver with pyenv."
-  pyenv install $ver \
-    && pyenv global $ver \
-    && tweak_python $ver \
-    && OK "Python $ver installed as pyenv global." \
+  INFO "Installing Python $version with pyenv."
+  pyenv install $version \
+    && pyenv global $version \
+    && tweak_python $version \
+    && OK "Python $version installed as pyenv global." \
     && return 0
 
-  ERR "Cannot install the Python $ver with pyenv!"
+  ERR "Cannot install the Python $version with pyenv!"
   return 3
 }
 

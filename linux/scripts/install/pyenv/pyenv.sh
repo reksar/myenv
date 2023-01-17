@@ -7,8 +7,9 @@
 dir0=`cd $(dirname $BASH_SOURCE[0]) && pwd`
 scripts=`cd $(dirname $(dirname $dir0)) && pwd`
 
-. $scripts/lib/log.sh
-. $scripts/lib/bool.sh
+. "$scripts/lib/log.sh"
+. "$scripts/lib/bool.sh"
+. "$scripts/install/pyenv/ensure.sh"
 
 
 apt_get_packages() {
@@ -201,15 +202,14 @@ install_packages() {
 
 install_pyenv() {
 
-  local pyenv=$HOME/.pyenv
+  local pyenv="$HOME/.pyenv"
 
-  if [[ -x $pyenv/bin/pyenv ]] && [[ `ls $pyenv/libexec | wc -l` -gt 20 ]]
-  then
-    OK "pyenv executables are exists."
-  else
-    INFO "Installing pyenv."
-    curl https://pyenv.run | bash
-  fi
+  [[ -x "$pyenv/bin/pyenv" ]] && [[ `ls "$pyenv/libexec" | wc -l` -gt 20 ]] \
+    && OK "pyenv already installed." \
+    && return 0
+
+  INFO "Installing pyenv."
+  curl https://pyenv.run | bash
 }
 
 
@@ -267,7 +267,6 @@ plug_pyenv() {
 
   INFO "Plugging pyenv into $bashrc"
   cat $pyenvrc >> $bashrc \
-    && . $pyenvrc \
     && OK "pyenv plugged." \
     && return 0
 
@@ -276,18 +275,21 @@ plug_pyenv() {
 }
 
 
-ensure_pyenv() {
-  # Install packages before pyenv! It is assumed that if the pyenv executables
-  # are available, then the required packages are already installed.
+install_all() {
+  # Install packages before `pyenv`! It is assumed that if the `pyenv`
+  # executables are available, then the required packages are already
+  # installed.
   install_packages || return 1
   install_pyenv || return 2
   tweak_pyenv || return 3
   plug_pyenv || return 4
+  ensure_pyenv || return 5
+  return 0
 }
 
 
 is_runnable pyenv && OK "pyenv ready." && exit 0
-ensure_pyenv && is_runnable pyenv && OK "pyenv ready." && exit 0
+install_all && OK "pyenv ready." && exit 0
 
 ERR "Cannot ensure the pyenv!"
 exit 1
