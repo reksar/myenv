@@ -1,145 +1,151 @@
 {
-  "editor.fontSize": 18,
-  "editor.tabSize": 4,
-  "editor.insertSpaces": true,
-  "editor.wordWrapColumn": 80,
-  "editor.rulers": [80],
-  // The Colorization of 'ALL' Bracket-pairs
-  "editor.bracketPairColorization.enabled": false,
-  // The Colorization of 'ACTIVE' Bracket-pairs
-  "editor.guides.highlightActiveBracketPair": true,
-  // The Colorization of 'ACTIVE' indent-guides
-  "editor.guides.highlightActiveIndentation": true,
-  // The Colorization of 'INACTIVE' indent-guides
-  // Note: this is usually set as a very dark or dim-transparent color
-  "editor.guides.indentation": false,
-  // A border that that wraps the bracket-pairs in a box.
-  "editor.guides.bracketPairs": false,
+"editor.fontSize": 18,
+"editor.tabSize": 4,
+"editor.insertSpaces": true,
+"editor.wordWrapColumn": 80,
+"editor.rulers": [80],
+"editor.minimap.enabled": false,
+"editor.cursorStyle": "line",
+"editor.lineNumbers": "on",
+"editor.wordSeparators": "/\\()\"':,.;<>~!@#$%^&*|+=[]{}`?-",
+"editor.wordWrap": "off",
+// The Colorization of 'ALL' Bracket-pairs
+"editor.bracketPairColorization.enabled": false,
+// The Colorization of 'ACTIVE' Bracket-pairs
+"editor.guides.highlightActiveBracketPair": true,
+// The Colorization of 'ACTIVE' indent-guides
+"editor.guides.highlightActiveIndentation": true,
+// The Colorization of 'INACTIVE' indent-guides
+// Note: this is usually set as a very dark or dim-transparent color
+"editor.guides.indentation": false,
+// A border that that wraps the bracket-pairs in a box.
+"editor.guides.bracketPairs": false,
 
-  "terminal.integrated.profiles.windows": {
-    "PowerShell": {
-      "source": "PowerShell",
-      "icon": "terminal-powershell"
-    },
-    "myenv": {
-      "path": [
-        "${env:COMSPEC}"
-      ],
-      "args": [
-        "/k",
-        "${env:MYENV}"
-      ],
-      "icon": "terminal-cmd"
-    }
-  },
-  "terminal.integrated.defaultProfile.windows": "myenv",
-  "terminal.integrated.inheritEnv": false,
-  "terminal.integrated.fontSize": 18,
+"explorer.confirmDelete": false,
+"explorer.confirmDragAndDrop": false,
 
-  "workbench.iconTheme": "vs-seti",
-  "git.ignoreMissingGitWarning": true,
+"workbench.iconTheme": "vs-seti",
+"workbench.startupEditor": "none",
+"workbench.colorTheme": "Low Color",
+"workbench.editorAssociations": {
+  "*.ipynb": "jupyter.notebook.ipynb"
+},
 
-  "[json]": {
-    "editor.tabSize": 2
-  },
-  "[sass]": {
-    "editor.tabSize": 2
-  },
-  "[html]": {
-    "editor.tabSize": 2
-  },
-  "[javascript]": {
-    "editor.tabSize": 2
-  },
-  "[csharp]": {
-    "editor.tabSize": 2,
-    "editor.rulers": [120]
-  },
-  "[cpp]": {
-    "editor.tabSize": 2
-  },
+"debug.terminal.clearBeforeReusing": true,
+"debug.showSubSessionsInToolBar": true,
+"debug.openDebug": "openOnSessionStart",
+"debug.internalConsoleOptions": "openOnSessionStart",
+"debug.showInStatusBar": "always",
+"debug.console.closeOnEnd": true,
 
-  "editor.minimap.enabled": false,
-  "explorer.confirmDelete": false,
-  "workbench.startupEditor": "none",
-  "explorer.confirmDragAndDrop": false,
-  "workbench.editorAssociations": {
-    "*.ipynb": "jupyter.notebook.ipynb"
-  },
-  "workbench.colorTheme": "Low Color",
-  "editor.cursorStyle": "line",
-  "editor.lineNumbers": "on",
-  "editor.wordSeparators": "/\\()\"':,.;<>~!@#$%^&*|+=[]{}`?-",
-  "editor.wordWrap": "off",
-  "debug.terminal.clearBeforeReusing": true,
-  "debug.showSubSessionsInToolBar": true,
-  "debug.openDebug": "openOnSessionStart",
-  "debug.internalConsoleOptions": "openOnSessionStart",
-  "debug.showInStatusBar": "always",
-  "debug.console.closeOnEnd": true,
-  "terminal.integrated.tabs.enabled": false,
-  "files.watcherExclude": {
-    "**/__pycache__/**": true,
-    "**/build/**": true,
-    "**/dist/**": true,
-    "**/node_modules/**": true,
-    "**/tmp/**": true,
-    "**/venv/**": true
-  },
-  "files.exclude": {
-    "**/__pycache__/**": true
-  },
-  "problems.exclude": {
-    "**/__pycache__/**": true,
-    "**/build/**": true,
-    "**/dist/**": true,
-    "**/node_modules/**": true,
-    "**/tmp/**": true,
-    "**/venv/**": true
-  },
+"git.ignoreMissingGitWarning": true,
 
-  // --- Extensinos ---
+"terminal.integrated.defaultProfile.windows": "myenv",
+"terminal.integrated.inheritEnv": false,
+"terminal.integrated.fontSize": 18,
+"terminal.integrated.tabs.enabled": false,
+"terminal.integrated.profiles.windows": {
+  "PowerShell": {
+    "source": "PowerShell",
+    "icon": "terminal-powershell"
+  },
+  "myenv": {
+    "path": [
+      "${env:COMSPEC}"
+    ],
+    "args": [
+      "/k",
+      "${env:MYENV}"
+    ],
+    "icon": "terminal-cmd"
+  }
+},
 
-  // Vim
-  "vim.useSystemClipboard": true,
+// File extensions {{{
+"[json]": {
+  "editor.tabSize": 2
+},
+"[sass]": {
+  "editor.tabSize": 2
+},
+"[html]": {
+  "editor.tabSize": 2
+},
+"[javascript]": {
+  "editor.tabSize": 2
+},
+"[csharp]": {
+  "editor.tabSize": 2,
+  "editor.rulers": [120]
+},
+"[cpp]": {
+  "editor.tabSize": 2
+},
+// }}}
 
-  // TODO Highlight
-  "todohighlight.isCaseSensitive": true,
-  "todohighlight.keywords": [
-    {
-      "text": "TODO:",
-      "color": "#21201d",
-      "backgroundColor": "#d39d28"
-    },
-    {
-      "text": "FIXME:",
-      "color": "#21201d",
-      "backgroundColor": "#e46b27",
-      "overviewRulerColor": "#e46b27"
-    }
-  ],
-  "todohighlight.include": [
-    "**/*.html",
-    "**/*.css",
-    "**/*.c",
-    "**/*.cpp",
-    "**/*.cxx",
-    "**/*.h",
-    "**/*.hpp",
-    "**/*.js",
-    "**/*.jsx",
-    "**/*.php",
-    "**/*.py",
-    "**/*.scss",
-    "**/*.ts",
-    "**/*.tsx"
-  ],
-  "todohighlight.exclude": [
-    "**/__pycache__/**",
-    "**/build/**",
-    "**/dist/**",
-    "**/node_modules/**",
-    "**/tmp/**",
-    "**/venv/**"
-  ]
+"files.watcherExclude": {
+  "**/__pycache__/**": true,
+  "**/build/**": true,
+  "**/dist/**": true,
+  "**/node_modules/**": true,
+  "**/tmp/**": true,
+  "**/venv/**": true
+},
+"files.exclude": {
+  "**/__pycache__/**": true
+},
+"problems.exclude": {
+  "**/__pycache__/**": true,
+  "**/build/**": true,
+  "**/dist/**": true,
+  "**/node_modules/**": true,
+  "**/tmp/**": true,
+  "**/venv/**": true
+},
+
+// VS Code Extensinos {{{
+
+// Vim
+"vim.useSystemClipboard": true,
+
+// TODO Highlight
+"todohighlight.isCaseSensitive": true,
+"todohighlight.keywords": [
+  {
+    "text": "TODO:",
+    "color": "#21201d",
+    "backgroundColor": "#d39d28"
+  },
+  {
+    "text": "FIXME:",
+    "color": "#21201d",
+    "backgroundColor": "#e46b27",
+    "overviewRulerColor": "#e46b27"
+  }
+],
+"todohighlight.include": [
+  "**/*.html",
+  "**/*.css",
+  "**/*.c",
+  "**/*.cpp",
+  "**/*.cxx",
+  "**/*.h",
+  "**/*.hpp",
+  "**/*.js",
+  "**/*.jsx",
+  "**/*.php",
+  "**/*.py",
+  "**/*.scss",
+  "**/*.ts",
+  "**/*.tsx"
+],
+"todohighlight.exclude": [
+  "**/__pycache__/**",
+  "**/build/**",
+  "**/dist/**",
+  "**/node_modules/**",
+  "**/tmp/**",
+  "**/venv/**"
+]
+// }}}
 }
