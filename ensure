@@ -1,7 +1,7 @@
 #!/bin/bash
 
-myconf=`cd $(dirname $BASH_SOURCE[0]) && pwd`
-. $myconf/linux/scripts/install/ansible/ansible.sh
+myenv=`cd $(dirname $BASH_SOURCE[0]) && pwd`
+. $myenv/linux/scripts/install/ansible/ansible.sh
 
-ansible-playbook --ask-become-pass -i $myconf/ansible/hosts \
-  $myconf/ansible/install/$1.yml
+ansible-playbook --ask-become-pass -i $myenv/ansible/hosts \
+  $myenv/ansible/install/$1.yml

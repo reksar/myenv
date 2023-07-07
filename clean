@@ -1,11 +1,11 @@
 #!/bin/bash
 
-myconf=`cd $(dirname $BASH_SOURCE[0]) && pwd`
-. $myconf/linux/scripts/lib/log.sh
+myenv=`cd $(dirname $BASH_SOURCE[0]) && pwd`
+. $myenv/linux/scripts/lib/log.sh
 
 # Ansible creates *.retry files when something goes wrong.
 INFO "Removing Ansible *.retry"
-find $myconf/ansible/ -type f -name '*.retry' -delete
+find $myenv/ansible/ -type f -name '*.retry' -delete
 
 INFO "Removing Python venv."
-rm -rf $myconf/venv
+rm -rf $myenv/venv

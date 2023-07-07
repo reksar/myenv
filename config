@@ -1,7 +1,7 @@
 #!/bin/bash
 
-myconf=`cd $(dirname $BASH_SOURCE[0]) && pwd`
-. $myconf/linux/scripts/install/ansible/ansible.sh
+myenv=`cd $(dirname $BASH_SOURCE[0]) && pwd`
+. $myenv/linux/scripts/install/ansible/ansible.sh
 
 if [ -n "${1:-}" ]
 then
@@ -14,5 +14,5 @@ else
   tasks="main.yml"
 fi
 
-ansible-playbook --ask-become-pass -i $myconf/ansible/hosts $vars \
-  $myconf/ansible/config/$tasks
+ansible-playbook --ask-become-pass -i $myenv/ansible/hosts $vars \
+  $myenv/ansible/config/$tasks
