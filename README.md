@@ -13,14 +13,14 @@ git clone --recurse-submodules https://github.com/reksar/myenv.git
 
 ### Settings
 
-Edit the `./ansible/settings.yml` if nedded.
+Edit `./ansible/settings.yml` if needed.
 
 ### sudo
 
-Ansible asks for **sudo** password for a tasks that `become: true`.
+Ansible asks for **sudo** password when running a task with `become: true`.
 
-Additionally, a shell script may ask for **sudo** password during ensuring the
-Ansible / Python / pyenv. Usually just at the first run on a new system.
+A shell script may ask for **sudo** password during ensuring the
+Ansible / Python / pyenv. Usually only on first run on a new system.
 
 ### Ensuring the Ansible
 
