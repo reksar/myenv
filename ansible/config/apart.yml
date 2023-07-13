@@ -11,7 +11,7 @@
 
   - name: Settings
     include_vars:
-      file: "{{ myenv }}/ansible/settings.yml"
+      file: "{{ myenv }}/settings.yml"
       name: settings
 
   - name: Run task - {{ task }}
