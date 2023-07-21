@@ -1,30 +1,24 @@
 # My ENV
 
-Configures working environment with 
-[Ansible](https://docs.ansible.com/ansible/latest/index.html)
+Configs for my working environment. Mainly for Windows and Debian based Linux.
 
 ```sh
 git clone --recurse-submodules https://github.com/reksar/myenv.git
 ```
 
+Edit `./settings.yml` if needed.
+
 # Linux
 
-## Notes
+## sudo
 
-### Settings
+Prompts for the *sudo* password for some shell scripts or
+[Ansible](https://docs.ansible.com/ansible/latest/index.html) tasks with
+`become: true`.
 
-Edit `./ansible/settings.yml` if needed.
+## Ensuring the Ansible
 
-### sudo
-
-Ansible asks for **sudo** password when running a task with `become: true`.
-
-A shell script may ask for **sudo** password during ensuring the
-Ansible / Python / pyenv. Usually only on first run on a new system.
-
-### Ensuring the Ansible
-
-The `./ensure` or `./config` uses this script chain:
+Automatically runs this script chain on before `./ensure` or `./config`:
 * `linux/scripts/install/ansible/ansible.sh`
 * `linux/scripts/install/python/python.sh`
 * `linux/scripts/install/pyenv/pyenv.sh`
@@ -45,9 +39,9 @@ installation script, then Python >= `MIN_PY_VERSION` will be installed with
 
 ## Ensure
 
-`./ensure <program>` to install specific <program> using the
+`./ensure <program>` to install specific *program* using the
 `./ansible/install/<program>.yml` task and then automatically configure it with
-`./ansible/config/tasks/<task>.yml` if needed.
+`./ansible/config/tasks/<program>.yml` if needed.
 
 ## Cleanup
 

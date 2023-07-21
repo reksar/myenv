@@ -1,6 +1,7 @@
 #!/bin/bash
 
-myenv=`cd $(dirname $BASH_SOURCE[0]) && pwd`
+myenv=$(cd $(dirname $BASH_SOURCE[0]) && pwd)
+
 . $myenv/linux/scripts/install/ansible/ansible.sh
 
 if [ -n "${1:-}" ]
