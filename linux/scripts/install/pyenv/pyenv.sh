@@ -248,7 +248,8 @@ add_cygwin_hook() {
 
 
 tweak_pyenv() {
-  is_cygwin && add_cygwin_hook || return 1
+  is_cygwin && { add_cygwin_hook && return 0 || return 1; }
+  return 0
 }
 
 
