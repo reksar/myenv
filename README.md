@@ -16,6 +16,10 @@ Prompts for the *sudo* password for some shell scripts or
 [Ansible](https://docs.ansible.com/ansible/latest/index.html) tasks with
 `become: true`.
 
+Can be installed with `./linux/scripts/install/sudo/sudo.sh`. If the current
+user was not in the *sudo* group, then group memberships must be updated.
+Start a new shell instance, relogin or run `newgrp sudo`.
+
 ## Ensuring the Ansible
 
 Automatically runs this script chain on before `./ensure` or `./config`:
