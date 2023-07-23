@@ -29,8 +29,9 @@ ensure_venv() {
   local venv="$myenv/venv"
   local activate="$venv/bin/activate"
 
-  [[ ! -x "$venv/bin/python" ]] || [[ ! -f "$venv/bin/activate" ]] \
-    && (INFO "Creating Python venv." && python -m venv "$venv" || return 3)
+  [[ ! -x "$venv/bin/python" ]] || [[ ! -f "$venv/bin/activate" ]] && {
+    INFO "Creating Python venv." && python -m venv "$venv" || return 3
+  }
 
   INFO "Activating Python venv."
   . $venv/bin/activate
