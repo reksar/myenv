@@ -127,10 +127,15 @@ tweak_python_lib_for_cygwin() {
 
 
 tweak_python() {
+
   # Tweak the Python installed in `.pyenv/versions/$version`.
   local version=$1
-  is_cygwin && tweak_python_lib_for_cygwin $version && return 0
-  return 1
+
+  is_cygwin && {
+    tweak_python_lib_for_cygwin $version && return 0 || return 1
+  }
+
+  return 0
 }
 
 
