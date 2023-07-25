@@ -31,9 +31,9 @@ This allows to ensure the Ansible availability. If the Ansible is not installed
 in the system, it will be installed into the `./venv` dir after ensuring the
 Python virtual environment there.
 
-If the system Python version < `MIN_PY_VERSION`, that is set in the `python.sh`
-installation script, then Python >= `MIN_PY_VERSION` will be installed with
-`pyenv`.
+If the system Python version < `MIN_PYTHON_VERSION`, that is set in the
+`python.sh` installation script, then Python >= `MIN_PYTHON_VERSION` will be
+installed with `pyenv`.
 
 ## Config
 
